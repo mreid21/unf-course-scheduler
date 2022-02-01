@@ -1,3 +1,49 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  input[type="radio"] + label,
+  input[type="radio"] + span {
+    @apply text-blue-600 bg-blue-100;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply inline-block py-2 px-4 mx-1 my-1.5 font-bold cursor-pointer border uppercase rounded-md text-sm transition-all duration-200;
+  }
+
+  .btn--accept-filled {
+    @apply text-white bg-green-500 border-green-500 hover:bg-green-600;
+  }
+  .btn--accept-filled {
+    @apply text-white bg-red-500 border-red-500 hover:bg-red-600;
+  }
+
+  .btn--accept-outlined {
+    @apply text-cc-faded-lightgreen border-cc-faded-lightgreen hover:bg-cc-faded-lightgreen hover:text-white;
+  }
+
+  .btn--reject-outlined {
+    @apply text-cc-faded-lightred border-cc-faded-lightred hover:bg-cc-faded-lightred hover:text-white;
+  }
+  .btn--info-outlined {
+    @apply text-cc-azure border-cc-azure hover:bg-cc-azure hover:text-white;
+  }
+
+  .btn--neutral-outlined {
+    @apply text-cc-dark-blue border-cc-dark-blue hover:bg-cc-dark-blue hover:text-white;
+  }
+}
+
+@layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+}
