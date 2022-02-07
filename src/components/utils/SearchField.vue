@@ -9,7 +9,10 @@ interface Props {
 }
 
 const { placeholder, items, filter } = defineProps<Props>();
+
 const input = ref<string>();
+const clearInput = () => input.value = ''
+
 const selection = reactive<{ id: number; choice: string }>({
   id: 0,
   choice: "",
@@ -19,7 +22,7 @@ const showDropdown = ref<boolean>(false);
 const closeDropdown = () => {
   setTimeout(() => {
     showDropdown.value = false
-  }, 500)
+  }, 100)
 }
 const filteredList = computed(() =>
   input.value
@@ -32,8 +35,7 @@ const filteredList = computed(() =>
 const changeSelection = (id: number, choice: string) => {
   selection.id = id;
   selection.choice = choice;
-  console.log(id);
-  showDropdown.value = false;
+  clearInput()
 };
 </script>
 
