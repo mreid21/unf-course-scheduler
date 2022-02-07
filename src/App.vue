@@ -31,7 +31,6 @@ const fetchInstructors = async () => {
     const { data, error } = await supabase
       .from<Instructor>("instructors")
       .select("*");
-    console.log(data);
 
     if (error) throw error;
 

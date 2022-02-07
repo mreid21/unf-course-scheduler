@@ -15,6 +15,12 @@ const selection = reactive<{ id: number; choice: string }>({
   choice: "",
 });
 const showDropdown = ref<boolean>(false);
+
+const closeDropdown = () => {
+  setTimeout(() => {
+    showDropdown.value = false
+  }, 500)
+}
 const filteredList = computed(() =>
   input.value
     ? items.filter((item: any) =>
@@ -35,7 +41,9 @@ const changeSelection = (id: number, choice: string) => {
   <div class="relative mb-4">
     <input
       @focus="showDropdown = true"
+      @blur="closeDropdown"
       :placeholder="selection.choice ? selection.choice : placeholder"
+      :class="[selection.choice ? 'placeholder-black': '']"
       class="appearance-none rounded-md py-1 px-2 border-2 border-gray-100 w-full"
       type="text"
       v-model="input"
