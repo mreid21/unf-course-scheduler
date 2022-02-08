@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
-import SearchField from "./components/utils/SearchField.vue";
+import SearchField from "./components/SearchField.vue";
 import { supabase } from "./supabase";
 import Course from "./types/course";
-import SearchFieldItem from "./components/utils/SearchFieldItem.vue";
+import SearchFieldItem from "./components/SearchFieldItem.vue";
 import Instructor from "./types/professor";
-import SquareRadio from "./components/SquareRadio.vue";
+import RadioGroup from "./components/RadioGroup.vue";
 import options from "./assets/campusoptions";
 
 const courses = ref<Course[] | null | undefined>(null);
@@ -78,7 +78,7 @@ const fetchInstructors = async () => {
             @mousedown="select(item.instructor_id, item.instructor_name)"
           ></search-field-item>
         </search-field>
-        <square-radio :fields="options"></square-radio>
+        <radio-group :fields="options"></radio-group>
       </main>
     </div>
   </div>
