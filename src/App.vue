@@ -6,6 +6,7 @@ import Course from "./types/course";
 import SearchFieldItem from "./components/utils/SearchFieldItem.vue";
 import Instructor from "./types/professor";
 import SquareRadio from "./components/SquareRadio.vue";
+import options from "./assets/campusoptions";
 
 const courses = ref<Course[] | null | undefined>(null);
 const instructors = ref<Instructor[] | null | undefined>(null);
@@ -77,7 +78,7 @@ const fetchInstructors = async () => {
             @click="select(item.instructor_id, item.instructor_name)"
           ></SearchFieldItem>
         </SearchField>
-        <SquareRadio></SquareRadio>
+        <SquareRadio :fields="options"></SquareRadio>
       </main>
     </div>
   </div>
