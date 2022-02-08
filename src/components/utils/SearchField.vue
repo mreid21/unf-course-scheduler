@@ -22,6 +22,10 @@ const openDropdown = () => {
   showDropdown.value = true;
 };
 
+const closeDropdown = () => {
+  showDropdown.value = false;
+};
+
 const selection = reactive<{ id: number; choice: string }>({
   id: 0,
   choice: "",
@@ -54,6 +58,7 @@ const filteredList = computed(() =>
   <div class="relative mb-4">
     <input
       @focus="openDropdown"
+      @blur="closeDropdown"
       @keydown.esc="clearInput"
       :placeholder="selection.choice ? selection.choice : placeholder"
       :class="[selection.choice ? 'placeholder-black' : '']"

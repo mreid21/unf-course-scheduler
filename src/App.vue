@@ -60,7 +60,7 @@ const fetchInstructors = async () => {
           <SearchFieldItem
             :name="item.course_code"
             :meta="item.course_title"
-            @click="select(item.course_id, item.course_code)"
+            @mousedown="select(item.course_id, item.course_code)"
           ></SearchFieldItem>
         </SearchField>
 
@@ -75,7 +75,7 @@ const fetchInstructors = async () => {
         >
           <SearchFieldItem
             :name="item.instructor_name"
-            @click="select(item.instructor_id, item.instructor_name)"
+            @mousedown="select(item.instructor_id, item.instructor_name)"
           ></SearchFieldItem>
         </SearchField>
         <SquareRadio :fields="options"></SquareRadio>
