@@ -48,7 +48,7 @@ const fetchInstructors = async () => {
     <div class="app-container">
       <main class="p-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
         <nav>NAVIGATION</nav>
-        <SearchField
+        <search-field
           v-if="courses"
           v-slot="{ item, select }"
           :placeholder="'Courses'"
@@ -57,14 +57,14 @@ const fetchInstructors = async () => {
           :id="'course_id'"
           :icon="'graduation-cap'"
         >
-          <SearchFieldItem
+          <search-field-item
             :name="item.course_code"
             :meta="item.course_title"
             @mousedown="select(item.course_id, item.course_code)"
-          ></SearchFieldItem>
-        </SearchField>
+          ></search-field-item>
+        </search-field>
 
-        <SearchField
+        <search-field
           v-if="instructors"
           v-slot="{ item, select }"
           :placeholder="'Instructors'"
@@ -73,12 +73,12 @@ const fetchInstructors = async () => {
           :id="'instructor_id'"
           :icon="'chalkboard-teacher'"
         >
-          <SearchFieldItem
+          <search-field-item
             :name="item.instructor_name"
             @mousedown="select(item.instructor_id, item.instructor_name)"
-          ></SearchFieldItem>
-        </SearchField>
-        <SquareRadio :fields="options"></SquareRadio>
+          ></search-field-item>
+        </search-field>
+        <square-radio :fields="options"></square-radio>
       </main>
     </div>
   </div>
