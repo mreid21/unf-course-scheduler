@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref, watchEffect } from "vue";
+import { computed, reactive, ref } from "vue";
 
 //TODO: add close dropdown on blur
 
@@ -48,10 +48,6 @@ const filteredList = computed(() =>
       )
     : items
 );
-
-watchEffect(() => {
-  console.log(selection.choice);
-});
 </script>
 
 <template>
@@ -70,7 +66,7 @@ watchEffect(() => {
       class="absolute right-3 top-2 cursor-pointer"
       :icon="selection.choice ? 'window-close' : icon"
     ></font-awesome-icon>
-    <div v-if="showDropdown" class="absolute dropdown bg-white border">
+    <div v-show="showDropdown" class="absolute dropdown bg-white border">
       <div v-for="item in filteredList" :key="item[id]" class="overflow-hidden">
         <slot :id="item[id]" :item="item" :select="changeSelection"></slot>
       </div>
