@@ -5,8 +5,6 @@ interface Props {
 }
 
 const { name, meta } = defineProps<Props>();
-
-console.log(name);
 </script>
 
 <template>

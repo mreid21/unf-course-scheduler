@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from "vue";
+import { computed, reactive, ref, watchEffect } from "vue";
+
+//TODO: add close dropdown on blur
 
 interface Props {
   placeholder: string;
@@ -20,22 +22,16 @@ const openDropdown = () => {
   showDropdown.value = true;
 };
 
-const closeDropdown = () => {
-  input.value = "";
-  setTimeout(() => {
-    showDropdown.value = false;
-  }, 100);
-};
-
 const selection = reactive<{ id: number; choice: string }>({
   id: 0,
   choice: "",
 });
 
 const changeSelection = (id: number, choice: string) => {
+  clearInput();
   selection.id = id;
   selection.choice = choice;
-  clearInput();
+  showDropdown.value = false;
 };
 
 const clearSelection = () => {
@@ -52,13 +48,16 @@ const filteredList = computed(() =>
       )
     : items
 );
+
+watchEffect(() => {
+  console.log(selection.choice);
+});
 </script>
 
 <template>
   <div class="relative mb-4">
     <input
       @focus="openDropdown"
-      @blur="closeDropdown"
       @keydown.esc="clearInput"
       :placeholder="selection.choice ? selection.choice : placeholder"
       :class="[selection.choice ? 'placeholder-black' : '']"
@@ -71,8 +70,8 @@ const filteredList = computed(() =>
       class="absolute right-3 top-2 cursor-pointer"
       :icon="selection.choice ? 'window-close' : icon"
     ></font-awesome-icon>
-    <div v-show="showDropdown" class="absolute dropdown bg-white border">
-      <div v-for="item in filteredList" :key="item[id]">
+    <div v-if="showDropdown" class="absolute dropdown bg-white border">
+      <div v-for="item in filteredList" :key="item[id]" class="overflow-hidden">
         <slot :id="item[id]" :item="item" :select="changeSelection"></slot>
       </div>
     </div>
