@@ -53,6 +53,7 @@ const fetchInstructors = async () => {
           :items="courses"
           :filter="'course_code'"
           :id="'course_id'"
+          :icon="'graduation-cap'"
         >
           <SearchFieldItem
             :name="item.course_code"
@@ -68,6 +69,7 @@ const fetchInstructors = async () => {
           :items="instructors"
           :filter="'instructor_name'"
           :id="'instructor_id'"
+          :icon="'chalkboard-teacher'"
         >
           <SearchFieldItem
             :name="item.instructor_name"
