@@ -16,7 +16,7 @@ const clearInput = () => (input.value = "");
 
 const showDropdown = ref<boolean>(false);
 
-const openDropDown = () => {
+const openDropdown = () => {
   showDropdown.value = true;
 };
 
@@ -57,7 +57,7 @@ const filteredList = computed(() =>
 <template>
   <div class="relative mb-4">
     <input
-      @focus="openDropDown"
+      @focus="openDropdown"
       @blur="closeDropdown"
       @keydown.esc="clearInput"
       :placeholder="selection.choice ? selection.choice : placeholder"
