@@ -3,19 +3,17 @@ import { ref, watchEffect } from 'vue';
 import Radio from '../types/radio';
 
 interface Props {
-  modelValue?: string,
-  fields: Radio[]
+  modelValue?: string | number;
+  fields: Radio[];
 }
 
 const { fields } = defineProps<Props>();
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue']);
 
 const update = (event: any) => {
-  emit('update:modelValue', event.target.value)
-}
-
-
+  emit('update:modelValue', event.target.value);
+};
 </script>
 
 <template>

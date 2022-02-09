@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, watchEffect } from 'vue';
 
 //TODO: add close dropdown on blur
 
@@ -9,9 +9,16 @@ interface Props {
   filter: string;
   id: string;
   icon?: string;
+  modelValue?: string | number;
 }
 
 const { placeholder, items, filter, icon } = defineProps<Props>();
+
+const emit = defineEmits(['update:modelValue']);
+
+watchEffect(() => {
+  emit('update:modelValue', selection.choice);
+})
 
 const input = ref<string>();
 const clearInput = () => (input.value = '');
@@ -36,6 +43,7 @@ const changeSelection = (id: number, choice: string) => {
   selection.id = id;
   selection.choice = choice;
   showDropdown.value = false;
+  
 };
 
 const clearSelection = () => {

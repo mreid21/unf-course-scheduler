@@ -46,10 +46,12 @@ const fetchInstructors = async () => {
 const addSection = () => {
   console.log('added section');
 };
+
 </script>
 
 <template>
   <form id="course-scheduler" @submit.prevent="addSection">
+    <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-if="courses"
       v-slot="{ item, select }"
@@ -65,6 +67,8 @@ const addSection = () => {
         @mousedown="select(item.course_id, item.course_code)"
       ></search-field-item>
     </search-field>
+
+
     <search-field
       v-if="instructors"
       v-slot="{ item, select }"
@@ -79,6 +83,8 @@ const addSection = () => {
         @mousedown="select(item.instructor_id, item.instructor_name)"
       ></search-field-item>
     </search-field>
+
+
     <radio-group :fields="options"></radio-group>
 
     <div class="xl:flex gap-2">
@@ -96,6 +102,8 @@ const addSection = () => {
           @mousedown="select(item.instructor_id, item.instructor_name)"
         ></search-field-item>
       </search-field>
+
+
       <search-field
         v-if="instructors"
         v-slot="{ item, select }"
@@ -111,6 +119,8 @@ const addSection = () => {
         ></search-field-item>
       </search-field>
     </div>
+
+
     <day-picker></day-picker>
     <input type="submit" value="Submit" />
   </form>
