@@ -32,7 +32,7 @@ onMounted(async () => {
   formOptions.courses = await fetchCourses();
   formOptions.instructors = await fetchInstructors();
   formOptions.buildings = await fetchBuildings()
-  formOptions.rooms = await fetchRooms()
+  formOptions.rooms = await fetchRooms(2)
 });
 
 const {courses, instructors, buildings, rooms} = toRefs(formOptions)
