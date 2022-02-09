@@ -32,9 +32,10 @@ onMounted(async () => {
   formOptions.courses = await fetchCourses();
   formOptions.instructors = await fetchInstructors();
   formOptions.buildings = await fetchBuildings()
+  formOptions.rooms = await fetchRooms()
 });
 
-const {courses, instructors, buildings} = toRefs(formOptions)
+const {courses, instructors, buildings, rooms} = toRefs(formOptions)
 
 const addSection = () => {
   console.log('added section');
@@ -90,28 +91,29 @@ const test = ref(0)
         :items="buildings"
         :filter="'building_number'"
         :id="'building_id'"
-        :icon="'chalkboard-teacher'"
+        :icon="'building'"
       >
         <search-field-item
           :name="`Building ${item.building_number}`"
           :meta="item.building_name"
-          @mousedown="select(item.building_id, item.building_number)"
+          @mousedown="select(item.building_id, `Building ${item.building_number}`)"
         ></search-field-item>
       </search-field>
 
 
       <search-field
-        v-if="instructors"
+        v-if="rooms"
         v-slot="{ item, select }"
-        :placeholder="'Instructors'"
-        :items="instructors"
-        :filter="'instructor_name'"
-        :id="'instructor_id'"
-        :icon="'chalkboard-teacher'"
+        :placeholder="'Rooms'"
+        :items="rooms"
+        :filter="'room_number'"
+        :id="'room_id'"
+        :icon="'door-open'"
       >
         <search-field-item
-          :name="item.instructor_name"
-          @mousedown="select(item.instructor_id, item.instructor_name)"
+          :name="`Room ${item.room_number}`"
+          :meta="item.capacity"
+          @mousedown="select(item.room_id, `Room ${item.room_number}`)"
         ></search-field-item>
       </search-field>
 

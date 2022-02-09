@@ -9,6 +9,8 @@ import {
   faGraduationCap,
   faChalkboardTeacher,
   faWindowClose,
+  faBuilding,
+  faDoorOpen
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
@@ -19,7 +21,9 @@ library.add(
   faArrowDown,
   faGraduationCap,
   faChalkboardTeacher,
-  faWindowClose
+  faWindowClose,
+  faBuilding,
+  faDoorOpen
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
