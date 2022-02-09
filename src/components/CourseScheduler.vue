@@ -1,4 +1,47 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { supabase } from '../supabase';
+import { onMounted, ref } from 'vue';
+import options from '../assets/campusoptions';
+import Course from '../types/course';
+import Instructor from '../types/professor';
+import RadioGroup from './RadioGroup.vue';
+import SearchField from './SearchField.vue';
+import SearchFieldItem from './SearchFieldItem.vue';
+
+const courses = ref<Course[] | null | undefined>(null);
+const instructors = ref<Instructor[] | null | undefined>(null);
+
+onMounted(async () => {
+  courses.value = await fetchCourses();
+  instructors.value = await fetchInstructors();
+});
+
+const fetchCourses = async () => {
+  try {
+    const { data, error } = await supabase.from<Course>('courses').select('*');
+
+    if (error) throw error;
+
+    return data;
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
+
+const fetchInstructors = async () => {
+  try {
+    const { data, error } = await supabase
+      .from<Instructor>('instructors')
+      .select('*');
+
+    if (error) throw error;
+
+    return data;
+  } catch (error: any) {
+    alert(error.message);
+  }
+};
+</script>
 
 <template>
   <search-field
