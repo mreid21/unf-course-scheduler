@@ -55,7 +55,7 @@ const filteredList = computed(() =>
 </script>
 
 <template>
-  <div class="relative mb-4">
+  <div class="relative mb-4 w-full">
     <input
       @focus="openDropdown"
       @blur="closeDropdown"
