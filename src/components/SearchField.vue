@@ -16,8 +16,6 @@ const { placeholder, items, filter, icon } = defineProps<Props>();
 
 const emit = defineEmits(['update:modelValue']);
 
-
-
 const input = ref<string>();
 const clearInput = () => (input.value = '');
 
@@ -37,15 +35,14 @@ const selection = reactive<{ id: number; choice: string }>({
 });
 
 watch(selection, () => {
-  emit('update:modelValue', selection.choice);
-})
+  emit('update:modelValue', selection.id);
+});
 
 const changeSelection = (id: number, choice: string) => {
   clearInput();
   selection.id = id;
   selection.choice = choice;
   showDropdown.value = false;
-  
 };
 
 const clearSelection = () => {

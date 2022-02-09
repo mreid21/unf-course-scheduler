@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { onMounted, reactive, ref, toRefs } from 'vue';
 import useSupabase from '../composables/useSupabase'
-import { onMounted, ref } from 'vue';
 import options from '../assets/campusoptions';
 import Course from '../types/course';
 import Instructor from '../types/professor';
@@ -8,15 +8,33 @@ import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
+import Building from '../types/building';
+import Room from '../types/room';
 
-const courses = ref<Course[] | null | undefined>(null);
-const instructors = ref<Instructor[] | null | undefined>(null);
-const {fetchCourses, fetchInstructors} = useSupabase()
+const {fetchCourses, fetchInstructors, fetchBuildings, fetchRooms} = useSupabase()
+
+interface FormData {
+  courses: Course[] | null | undefined,
+  instructors: Instructor[] | null | undefined,
+  buildings: Building[] | null | undefined,
+  rooms: Room[] | null | undefined
+}
+
+const formOptions = reactive({
+  courses: null,
+  instructors: null,
+  buildings: null,
+  rooms: null
+}) as FormData
+
 
 onMounted(async () => {
-  courses.value = await fetchCourses();
-  instructors.value = await fetchInstructors();
+  formOptions.courses = await fetchCourses();
+  formOptions.instructors = await fetchInstructors();
+  formOptions.buildings = await fetchBuildings()
 });
+
+const {courses, instructors, buildings} = toRefs(formOptions)
 
 const addSection = () => {
   console.log('added section');
@@ -65,19 +83,19 @@ const test = ref(0)
 
     <radio-group :fields="options"></radio-group>
 
-    <div class="xl:flex gap-2">
-      <search-field
-        v-if="instructors"
+    <search-field
+        v-if="buildings"
         v-slot="{ item, select }"
-        :placeholder="'Instructors'"
-        :items="instructors"
-        :filter="'instructor_name'"
-        :id="'instructor_id'"
+        :placeholder="'Buildings'"
+        :items="buildings"
+        :filter="'building_number'"
+        :id="'building_id'"
         :icon="'chalkboard-teacher'"
       >
         <search-field-item
-          :name="item.instructor_name"
-          @mousedown="select(item.instructor_id, item.instructor_name)"
+          :name="`Building ${item.building_number}`"
+          :meta="item.building_name"
+          @mousedown="select(item.building_id, item.building_number)"
         ></search-field-item>
       </search-field>
 
@@ -96,7 +114,6 @@ const test = ref(0)
           @mousedown="select(item.instructor_id, item.instructor_name)"
         ></search-field-item>
       </search-field>
-    </div>
 
 
     <day-picker></day-picker>
