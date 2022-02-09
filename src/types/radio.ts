@@ -1,7 +1,7 @@
 type Radio = {
-  id: string;
-  textContent: string;
-  name: string;
+      id: string;
+      textContent: string;
+      name: string;
 };
 
 export default Radio;
