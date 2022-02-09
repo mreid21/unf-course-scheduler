@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { supabase } from '../supabase';
+import useSupabase from '../composables/useSupabase'
 import { onMounted, ref } from 'vue';
 import options from '../assets/campusoptions';
 import Course from '../types/course';
@@ -11,41 +11,18 @@ import DayPicker from './DayPicker.vue';
 
 const courses = ref<Course[] | null | undefined>(null);
 const instructors = ref<Instructor[] | null | undefined>(null);
+const {fetchCourses, fetchInstructors} = useSupabase()
 
 onMounted(async () => {
   courses.value = await fetchCourses();
   instructors.value = await fetchInstructors();
 });
 
-const fetchCourses = async () => {
-  try {
-    const { data, error } = await supabase.from<Course>('courses').select('*');
-
-    if (error) throw error;
-
-    return data;
-  } catch (error: any) {
-    alert(error.message);
-  }
-};
-
-const fetchInstructors = async () => {
-  try {
-    const { data, error } = await supabase
-      .from<Instructor>('instructors')
-      .select('*');
-
-    if (error) throw error;
-
-    return data;
-  } catch (error: any) {
-    alert(error.message);
-  }
-};
-
 const addSection = () => {
   console.log('added section');
 };
+
+const test = ref(0)
 
 </script>
 
@@ -53,6 +30,7 @@ const addSection = () => {
   <form id="course-scheduler" @submit.prevent="addSection">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
+      v-model="test"
       v-if="courses"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
@@ -123,5 +101,6 @@ const addSection = () => {
 
     <day-picker></day-picker>
     <input type="submit" value="Submit" />
+    <p>{{test}}</p>
   </form>
 </template>
