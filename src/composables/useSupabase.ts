@@ -3,6 +3,7 @@ import Building from '../types/building';
 import Course from '../types/course';
 import Instructor from '../types/professor';
 import Room from '../types/room';
+import TimeSlot from '../types/timeslot';
 
 const useSupabase = () => {
   const fetchCourses = async () => {
@@ -62,11 +63,27 @@ const useSupabase = () => {
     }
   };
 
+  const fetchTimeSlots = async (day: string) => {
+    try {
+      const { data, error } = await supabase
+        .from<TimeSlot>('time_slots')
+        .select('*')
+        .eq('slot_days', day)
+
+      if (error) throw error;
+
+      return data;
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
   return {
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
     fetchRooms,
+    fetchTimeSlots,
   };
 };
 

@@ -11,15 +11,22 @@ import DayPicker from './DayPicker.vue';
 import Building from '../types/building';
 import Room from '../types/room';
 import SlotPicker from './SlotPicker.vue';
+import TimeSlot from '../types/timeslot';
 
-const { fetchCourses, fetchInstructors, fetchBuildings, fetchRooms } =
-  useSupabase();
+const {
+  fetchCourses,
+  fetchInstructors,
+  fetchBuildings,
+  fetchRooms,
+  fetchTimeSlots,
+} = useSupabase();
 
 interface FormData {
   courses: Course[] | null | undefined;
   instructors: Instructor[] | null | undefined;
   buildings: Building[] | null | undefined;
   rooms: Room[] | null | undefined;
+  timeSlots: TimeSlot[] | null | undefined;
 }
 
 const formOptions = reactive({
@@ -27,6 +34,7 @@ const formOptions = reactive({
   instructors: null,
   buildings: null,
   rooms: null,
+  timeSlots: null,
 }) as FormData;
 
 onMounted(async () => {
@@ -34,9 +42,11 @@ onMounted(async () => {
   formOptions.instructors = await fetchInstructors();
   formOptions.buildings = await fetchBuildings();
   formOptions.rooms = await fetchRooms(2);
+  formOptions.timeSlots = await fetchTimeSlots('MW');
 });
 
-const { courses, instructors, buildings, rooms } = toRefs(formOptions);
+const { courses, instructors, buildings, rooms, timeSlots } =
+  toRefs(formOptions);
 
 const addSection = () => {
   console.log('added section');
@@ -117,7 +127,7 @@ const test = ref(0);
     </search-field>
 
     <day-picker></day-picker>
-    <slot-picker></slot-picker>
+    <slot-picker v-if="timeSlots" :timeSlots="timeSlots"></slot-picker>
     <input type="submit" value="Submit" />
     <p>{{ test }}</p>
   </form>
