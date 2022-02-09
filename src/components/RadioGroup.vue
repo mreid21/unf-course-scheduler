@@ -2,13 +2,20 @@
 import { ref, watchEffect } from 'vue';
 import Radio from '../types/radio';
 
-const { fields } = defineProps<{ fields: Radio[] }>();
+interface Props {
+  modelValue?: string,
+  fields: Radio[]
+}
 
-const campus = ref<string>('');
+const { fields } = defineProps<Props>();
 
-watchEffect(() => {
-  console.log(campus.value);
-});
+const emit = defineEmits(['update:modelValue'])
+
+const update = (event: any) => {
+  emit('update:modelValue', event.target.value)
+}
+
+
 </script>
 
 <template>
@@ -23,7 +30,7 @@ watchEffect(() => {
       :for="field.id"
     >
       <input
-        v-model="campus"
+        @change="update"
         class="absolute appearance-none visibility-hidden hidden"
         type="radio"
         :value="field.value"
