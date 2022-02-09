@@ -128,7 +128,9 @@ const test = ref(0);
 
     <day-picker></day-picker>
     <slot-picker v-if="timeSlots" :timeSlots="timeSlots"></slot-picker>
-    <input type="submit" value="Submit" />
-    <p>{{ test }}</p>
+    <div class="lg:flex">
+      <input class="btn btn--confirm" type="submit" value="Add" />
+      <button class="btn btn--reject">Clear</button>
+    </div>
   </form>
 </template>

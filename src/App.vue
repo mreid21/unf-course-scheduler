@@ -6,7 +6,6 @@ import CourseScheduler from './components/CourseScheduler.vue';
   <div class="lg:h-screen bg-gray-50">
     <div class="app-container">
       <main class="p-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
-        <nav>NAVIGATION</nav>
         <course-scheduler></course-scheduler>
       </main>
     </div>
