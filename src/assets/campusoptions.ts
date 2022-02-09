@@ -4,27 +4,32 @@ const options: Radio[] = [
   {
     id: 'face-to-face',
     name: 'campus',
-    textContent: 'Face-to-Face',
+    text: 'Face-to-Face',
+    value: 1
   },
   {
     id: 'hybrid',
     name: 'campus',
-    textContent: 'Hybrid',
+    text: 'Hybrid',
+    value: 2
   },
   {
     id: 'online',
     name: 'campus',
-    textContent: 'Online',
+    text: 'Online',
+    value: 3
   },
   {
     id: 'independent',
     name: 'campus',
-    textContent: 'Independent',
+    text: 'Independent',
+    value: 4
   },
   {
     id: 'off-campus',
     name: 'campus',
-    textContent: 'Off Campus',
+    text: 'Off Campus',
+    value: 5
   },
 ];
 

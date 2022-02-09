@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { ref, watchEffect } from 'vue';
 import Radio from '../types/radio';
 
 const { fields } = defineProps<{ fields: Radio[] }>();
+
+const campus = ref<string>('')
+
+watchEffect(() => {
+  console.log(campus.value)
+})
 </script>
 
 <template>
@@ -16,13 +23,15 @@ const { fields } = defineProps<{ fields: Radio[] }>();
       :for="field.id"
     >
       <input
+        v-model="campus"
         class="absolute appearance-none visibility-hidden hidden"
         type="radio"
+        :value="field.value"
         :id="field.id"
         :name="field.name"
       />
       <span class="w-full h-10 grid place-items-center">
-        <span>{{ field.textContent }}</span>
+        <span>{{ field.text }}</span>
       </span>
     </label>
   </div>
