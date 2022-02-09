@@ -7,6 +7,7 @@ import Instructor from '../types/professor';
 import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
+import DayPicker from './DayPicker.vue';
 
 const courses = ref<Course[] | null | undefined>(null);
 const instructors = ref<Instructor[] | null | undefined>(null);
@@ -110,6 +111,7 @@ const addSection = () => {
         ></search-field-item>
       </search-field>
     </div>
+    <day-picker></day-picker>
     <input type="submit" value="Submit" />
   </form>
 </template>
