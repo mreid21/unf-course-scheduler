@@ -43,8 +43,8 @@ const fetchInstructors = async () => {
 };
 
 const addSection = () => {
-  console.log('added section')
-} 
+  console.log('added section');
+};
 </script>
 
 <template>
@@ -79,6 +79,37 @@ const addSection = () => {
       ></search-field-item>
     </search-field>
     <radio-group :fields="options"></radio-group>
-    <input type="submit" value="Submit">
+
+    <div class="xl:flex gap-2">
+      <search-field
+        v-if="instructors"
+        v-slot="{ item, select }"
+        :placeholder="'Instructors'"
+        :items="instructors"
+        :filter="'instructor_name'"
+        :id="'instructor_id'"
+        :icon="'chalkboard-teacher'"
+      >
+        <search-field-item
+          :name="item.instructor_name"
+          @mousedown="select(item.instructor_id, item.instructor_name)"
+        ></search-field-item>
+      </search-field>
+      <search-field
+        v-if="instructors"
+        v-slot="{ item, select }"
+        :placeholder="'Instructors'"
+        :items="instructors"
+        :filter="'instructor_name'"
+        :id="'instructor_id'"
+        :icon="'chalkboard-teacher'"
+      >
+        <search-field-item
+          :name="item.instructor_name"
+          @mousedown="select(item.instructor_id, item.instructor_name)"
+        ></search-field-item>
+      </search-field>
+    </div>
+    <input type="submit" value="Submit" />
   </form>
 </template>

@@ -4,11 +4,11 @@ import Radio from '../types/radio';
 
 const { fields } = defineProps<{ fields: Radio[] }>();
 
-const campus = ref<string>('')
+const campus = ref<string>('');
 
 watchEffect(() => {
-  console.log(campus.value)
-})
+  console.log(campus.value);
+});
 </script>
 
 <template>
