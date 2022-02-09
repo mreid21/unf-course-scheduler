@@ -21,7 +21,7 @@ const {
   fetchTimeSlots,
 } = useSupabase();
 
-interface FormData {
+interface FormOptions {
   courses: Course[] | null | undefined;
   instructors: Instructor[] | null | undefined;
   buildings: Building[] | null | undefined;
@@ -35,16 +35,36 @@ const formOptions = reactive({
   buildings: null,
   rooms: null,
   timeSlots: null,
-}) as FormData;
+}) as FormOptions;
 
 onMounted(async () => {
-  formOptions.courses = await fetchCourses();
-  formOptions.instructors = await fetchInstructors();
-  formOptions.buildings = await fetchBuildings();
-  formOptions.rooms = await fetchRooms(2);
-  formOptions.timeSlots = await fetchTimeSlots('MW');
+  const result = await parallelFetch();
+
+  formOptions.courses = result.courses;
+  formOptions.instructors = result.instructors;
+  formOptions.buildings = result.buildings;
+  formOptions.rooms = result.rooms;
+  formOptions.timeSlots = result.timeSlots;
 });
 
+const parallelFetch = async () => {
+  const [courseTask, instructorTask, buildingTask, roomTask, timeSlotTask] =
+    await Promise.all([
+      fetchCourses(),
+      fetchInstructors(),
+      fetchBuildings(),
+      fetchRooms(2),
+      fetchTimeSlots('T'),
+    ]);
+
+  return {
+    courses: courseTask,
+    instructors: instructorTask,
+    buildings: buildingTask,
+    rooms: roomTask,
+    timeSlots: timeSlotTask,
+  } as FormOptions;
+};
 const { courses, instructors, buildings, rooms, timeSlots } =
   toRefs(formOptions);
 
