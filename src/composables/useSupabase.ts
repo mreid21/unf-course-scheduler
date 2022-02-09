@@ -49,7 +49,10 @@ const useSupabase = () => {
 
   const fetchRooms = async (buildingID: number) => {
     try {
-      const { data, error } = await supabase.from<Room>('rooms').select('*').eq('building_id', buildingID)
+      const { data, error } = await supabase
+        .from<Room>('rooms')
+        .select('*')
+        .eq('building_id', buildingID);
 
       if (error) throw error;
 

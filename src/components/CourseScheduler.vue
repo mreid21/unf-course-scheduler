@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, toRefs } from 'vue';
-import useSupabase from '../composables/useSupabase'
+import useSupabase from '../composables/useSupabase';
 import options from '../assets/campusoptions';
 import Course from '../types/course';
 import Instructor from '../types/professor';
@@ -10,39 +10,39 @@ import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import Building from '../types/building';
 import Room from '../types/room';
+import SlotPicker from './SlotPicker.vue';
 
-const {fetchCourses, fetchInstructors, fetchBuildings, fetchRooms} = useSupabase()
+const { fetchCourses, fetchInstructors, fetchBuildings, fetchRooms } =
+  useSupabase();
 
 interface FormData {
-  courses: Course[] | null | undefined,
-  instructors: Instructor[] | null | undefined,
-  buildings: Building[] | null | undefined,
-  rooms: Room[] | null | undefined
+  courses: Course[] | null | undefined;
+  instructors: Instructor[] | null | undefined;
+  buildings: Building[] | null | undefined;
+  rooms: Room[] | null | undefined;
 }
 
 const formOptions = reactive({
   courses: null,
   instructors: null,
   buildings: null,
-  rooms: null
-}) as FormData
-
+  rooms: null,
+}) as FormData;
 
 onMounted(async () => {
   formOptions.courses = await fetchCourses();
   formOptions.instructors = await fetchInstructors();
-  formOptions.buildings = await fetchBuildings()
-  formOptions.rooms = await fetchRooms(2)
+  formOptions.buildings = await fetchBuildings();
+  formOptions.rooms = await fetchRooms(2);
 });
 
-const {courses, instructors, buildings, rooms} = toRefs(formOptions)
+const { courses, instructors, buildings, rooms } = toRefs(formOptions);
 
 const addSection = () => {
   console.log('added section');
 };
 
-const test = ref(0)
-
+const test = ref(0);
 </script>
 
 <template>
@@ -65,7 +65,6 @@ const test = ref(0)
       ></search-field-item>
     </search-field>
 
-
     <search-field
       v-if="instructors"
       v-slot="{ item, select }"
@@ -81,45 +80,45 @@ const test = ref(0)
       ></search-field-item>
     </search-field>
 
-
     <radio-group :fields="options"></radio-group>
 
     <search-field
-        v-if="buildings"
-        v-slot="{ item, select }"
-        :placeholder="'Buildings'"
-        :items="buildings"
-        :filter="'building_number'"
-        :id="'building_id'"
-        :icon="'building'"
-      >
-        <search-field-item
-          :name="`Building ${item.building_number}`"
-          :meta="item.building_name"
-          @mousedown="select(item.building_id, `Building ${item.building_number}`)"
-        ></search-field-item>
-      </search-field>
+      v-if="buildings"
+      v-slot="{ item, select }"
+      :placeholder="'Buildings'"
+      :items="buildings"
+      :filter="'building_number'"
+      :id="'building_id'"
+      :icon="'building'"
+    >
+      <search-field-item
+        :name="`Building ${item.building_number}`"
+        :meta="item.building_name"
+        @mousedown="
+          select(item.building_id, `Building ${item.building_number}`)
+        "
+      ></search-field-item>
+    </search-field>
 
-
-      <search-field
-        v-if="rooms"
-        v-slot="{ item, select }"
-        :placeholder="'Rooms'"
-        :items="rooms"
-        :filter="'room_number'"
-        :id="'room_id'"
-        :icon="'door-open'"
-      >
-        <search-field-item
-          :name="`Room ${item.room_number}`"
-          :meta="item.capacity"
-          @mousedown="select(item.room_id, `Room ${item.room_number}`)"
-        ></search-field-item>
-      </search-field>
-
+    <search-field
+      v-if="rooms"
+      v-slot="{ item, select }"
+      :placeholder="'Rooms'"
+      :items="rooms"
+      :filter="'room_number'"
+      :id="'room_id'"
+      :icon="'door-open'"
+    >
+      <search-field-item
+        :name="`Room ${item.room_number}`"
+        :meta="item.capacity"
+        @mousedown="select(item.room_id, `Room ${item.room_number}`)"
+      ></search-field-item>
+    </search-field>
 
     <day-picker></day-picker>
+    <slot-picker></slot-picker>
     <input type="submit" value="Submit" />
-    <p>{{test}}</p>
+    <p>{{ test }}</p>
   </form>
 </template>

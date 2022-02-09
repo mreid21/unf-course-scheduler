@@ -10,7 +10,7 @@ import {
   faChalkboardTeacher,
   faWindowClose,
   faBuilding,
-  faDoorOpen
+  faDoorOpen,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
