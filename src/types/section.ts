@@ -1,12 +1,4 @@
-export type SectionField =
-  | 'section_id'
-  | 'course_code'
-  | 'credit_hours'
-  | 'instructor_name'
-  | 'room_number'
-  | 'buidling_number'
-  | 'building_name'
-  | 'campus_name';
+export type SectionField = keyof Section;
 
 export interface Section {
   section_id: number;
