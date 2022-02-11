@@ -1,7 +1,7 @@
 <script setup lang="ts">
 interface Props {
   name: string;
-  meta?: string;
+  meta?: string | number;
 }
 
 const { name, meta } = defineProps<Props>();

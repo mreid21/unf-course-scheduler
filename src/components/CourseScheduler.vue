@@ -19,6 +19,7 @@ const {
   fetchBuildings,
   fetchRooms,
   fetchTimeSlots,
+  fetchParallel
 } = useSupabase();
 
 interface FormOptions {
@@ -38,35 +39,21 @@ const formOptions = reactive({
 }) as FormOptions;
 
 onMounted(async () => {
-  const result = await parallelFetch();
+  const result = await fetchParallel([
+    fetchCourses,
+    fetchInstructors,
+    fetchBuildings,
+  ])
 
-  formOptions.courses = result.courses;
-  formOptions.instructors = result.instructors;
-  formOptions.buildings = result.buildings;
-  formOptions.rooms = result.rooms;
-  formOptions.timeSlots = result.timeSlots;
+  Object.keys(formOptions).forEach((key, index) => {
+    formOptions[key as keyof FormOptions] = result[index]
+  })
 });
 
-const parallelFetch = async () => {
-  const [courseTask, instructorTask, buildingTask, roomTask, timeSlotTask] =
-    await Promise.all([
-      fetchCourses(),
-      fetchInstructors(),
-      fetchBuildings(),
-      fetchRooms(2),
-      fetchTimeSlots('T'),
-    ]);
 
-  return {
-    courses: courseTask,
-    instructors: instructorTask,
-    buildings: buildingTask,
-    rooms: roomTask,
-    timeSlots: timeSlotTask,
-  } as FormOptions;
-};
 const { courses, instructors, buildings, rooms, timeSlots } =
   toRefs(formOptions);
+
 
 const addSection = () => {
   console.log('added section');

@@ -78,12 +78,25 @@ const useSupabase = () => {
     }
   };
 
+  interface AsyncFn {
+    (args?: any): Promise<any>,
+  }
+
+  const fetchParallel = async (resources: AsyncFn[]) => {
+
+    const calls = resources.map(fn => fn())
+    return await Promise.all(calls)
+  }
+
+  
+
   return {
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
     fetchRooms,
     fetchTimeSlots,
+    fetchParallel
   };
 };
 
