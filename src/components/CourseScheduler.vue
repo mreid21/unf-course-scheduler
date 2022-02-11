@@ -43,6 +43,8 @@ onMounted(async () => {
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
+    () => fetchRooms(2),
+    () => fetchTimeSlots('T')
   ])
 
   Object.keys(formOptions).forEach((key, index) => {
