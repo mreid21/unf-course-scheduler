@@ -2,16 +2,12 @@
 import { onMounted, reactive, ref, toRefs } from 'vue';
 import useSupabase from '../composables/useSupabase';
 import options from '../assets/campusoptions';
-import Course from '../types/course';
-import Instructor from '../types/professor';
 import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
-import Building from '../types/building';
-import Room from '../types/room';
 import SlotPicker from './SlotPicker.vue';
-import TimeSlot from '../types/timeslot';
+import { CourseForm, FormOptions } from '../types/courseform';
 
 const {
   fetchCourses,
@@ -19,16 +15,8 @@ const {
   fetchBuildings,
   fetchRooms,
   fetchTimeSlots,
-  fetchParallel
+  fetchParallel,
 } = useSupabase();
-
-interface FormOptions {
-  courses: Course[] | null | undefined;
-  instructors: Instructor[] | null | undefined;
-  buildings: Building[] | null | undefined;
-  rooms: Room[] | null | undefined;
-  timeSlots: TimeSlot[] | null | undefined;
-}
 
 const formOptions = reactive({
   courses: null,
@@ -38,37 +26,33 @@ const formOptions = reactive({
   timeSlots: null,
 }) as FormOptions;
 
+const section = reactive({}) as CourseForm;
+
 onMounted(async () => {
   const result = await fetchParallel([
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
-    () => fetchRooms(2),
-    () => fetchTimeSlots('T')
-  ])
+  ]);
 
   Object.keys(formOptions).forEach((key, index) => {
-    formOptions[key as keyof FormOptions] = result[index]
-  })
+    formOptions[key as keyof FormOptions] = result[index];
+  });
 });
-
 
 const { courses, instructors, buildings, rooms, timeSlots } =
   toRefs(formOptions);
 
-
 const addSection = () => {
   console.log('added section');
 };
-
-const test = ref(0);
 </script>
 
 <template>
   <form id="course-scheduler" @submit.prevent="addSection">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
-      v-model="test"
+      v-model="section.course"
       v-if="courses"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
@@ -85,6 +69,7 @@ const test = ref(0);
     </search-field>
 
     <search-field
+      v-model="section.instructor"
       v-if="instructors"
       v-slot="{ item, select }"
       :placeholder="'Instructors'"
@@ -102,6 +87,7 @@ const test = ref(0);
     <radio-group :fields="options"></radio-group>
 
     <search-field
+      v-model="section.building"
       v-if="buildings"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
@@ -120,6 +106,7 @@ const test = ref(0);
     </search-field>
 
     <search-field
+      v-model="section.room"
       v-if="rooms"
       v-slot="{ item, select }"
       :placeholder="'Rooms'"
@@ -137,6 +124,9 @@ const test = ref(0);
 
     <day-picker></day-picker>
     <slot-picker v-if="timeSlots" :timeSlots="timeSlots"></slot-picker>
+    <div>
+      <p>{{ section }}</p>
+    </div>
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
       <button class="btn btn--reject">Clear</button>

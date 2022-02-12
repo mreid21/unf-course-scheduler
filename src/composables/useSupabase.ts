@@ -68,7 +68,7 @@ const useSupabase = () => {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
         .select('*')
-        .eq('slot_days', day)
+        .eq('slot_days', day);
 
       if (error) throw error;
 
@@ -79,16 +79,13 @@ const useSupabase = () => {
   };
 
   interface AsyncFn {
-    (args?: any): Promise<any>,
+    (args?: any): Promise<any>;
   }
 
   const fetchParallel = async (resources: AsyncFn[]) => {
-
-    const calls = resources.map(fn => fn())
-    return await Promise.all(calls)
-  }
-
-  
+    const calls = resources.map((fn) => fn());
+    return await Promise.all(calls);
+  };
 
   return {
     fetchCourses,
@@ -96,7 +93,7 @@ const useSupabase = () => {
     fetchBuildings,
     fetchRooms,
     fetchTimeSlots,
-    fetchParallel
+    fetchParallel,
   };
 };
 
