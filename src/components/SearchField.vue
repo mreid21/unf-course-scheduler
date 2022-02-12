@@ -10,6 +10,7 @@ interface Props {
   filter: string;
   id: string;
   icon?: string;
+  active?: boolean
   modelValue?: Option;
 }
 
@@ -56,6 +57,7 @@ const filteredList = computed(() =>
       @focus="showDropdown = true"
       @blur="showDropdown = false"
       @keydown.esc="clearInput"
+      :disabled="active"
       :placeholder="selection ? selection.value : placeholder"
       :class="[selection ? 'placeholder-black' : '']"
       class="appearance-none rounded-md py-1 px-2 border-2 border-gray-100 w-full"

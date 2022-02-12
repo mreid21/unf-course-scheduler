@@ -107,8 +107,8 @@ const addSection = () => {
 
     <search-field
       v-model="section.room"
-      v-if="rooms"
       v-slot="{ item, select }"
+      :active="rooms !== null"
       :placeholder="'Rooms'"
       :items="rooms"
       :filter="'room_number'"
@@ -122,7 +122,7 @@ const addSection = () => {
       ></search-field-item>
     </search-field>
 
-    <day-picker></day-picker>
+    <day-picker v-model="section.day"></day-picker>
     <slot-picker v-if="timeSlots" :timeSlots="timeSlots"></slot-picker>
     <div>
       <p>{{ section }}</p>

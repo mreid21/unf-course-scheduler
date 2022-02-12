@@ -13,13 +13,16 @@ interface FormOptions {
   timeSlots: TimeSlot[] | null | undefined;
 }
 
+type DayOfWeek = 'MWF' | 'MW' | 'TR' | 'M' | 'T' | 'W' | 'R' | 'F'
+
 type CourseForm = {
   course: Option;
   instructor: Option;
   campus: Option;
+  day: DayOfWeek
   building?: Option;
   room?: Option;
   slot: Option;
 };
 
-export { FormOptions, CourseForm };
+export { FormOptions, CourseForm, DayOfWeek};
