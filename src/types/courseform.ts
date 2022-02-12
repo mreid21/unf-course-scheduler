@@ -16,13 +16,13 @@ interface FormOptions {
 type DayOfWeek = 'MWF' | 'MW' | 'TR' | 'M' | 'T' | 'W' | 'R' | 'F'
 
 type CourseForm = {
-  course: Option;
-  instructor: Option;
-  campus: Option;
-  day: DayOfWeek
-  building?: Option;
-  room?: Option;
-  slot: Option;
+  course: Option | undefined;
+  instructor: Option | undefined;
+  campus: Option | undefined;
+  day: DayOfWeek | undefined
+  building?: Option | undefined
+  room?: Option | undefined
+  slot: Option | undefined
 };
 
 export { FormOptions, CourseForm, DayOfWeek};

@@ -8,6 +8,7 @@ import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
 import { CourseForm, FormOptions } from '../types/courseform';
+import Course from '../types/course';
 
 const {
   fetchCourses,
@@ -46,6 +47,12 @@ const { courses, instructors, buildings, rooms, timeSlots } =
 const addSection = () => {
   console.log('added section');
 };
+
+const clearForm = () => {
+  for(let option in section){
+    section[option as keyof CourseForm] = undefined
+  }
+}
 </script>
 
 <template>
@@ -129,7 +136,7 @@ const addSection = () => {
     </div>
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
-      <button class="btn btn--reject">Clear</button>
+      <button @click="clearForm" class="btn btn--reject">Clear</button>
     </div>
   </form>
 </template>
