@@ -115,7 +115,7 @@ const clearForm = () => {
     <search-field
       v-model="section.room"
       v-slot="{ item, select }"
-      :active="rooms !== null"
+      v-if="section.building"
       :placeholder="'Rooms'"
       :items="rooms"
       :filter="'room_number'"
