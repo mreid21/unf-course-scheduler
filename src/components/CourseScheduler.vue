@@ -33,6 +33,7 @@ const buildingSelected = ref(false);
 watch(
   () => section.building,
   async () => {
+    section.room = undefined
     if (section.building) {
       buildingSelected.value = false;
       formOptions.rooms = await fetchRooms(section.building.id);
