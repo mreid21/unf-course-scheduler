@@ -31,10 +31,13 @@
     top: calc(100% + 0.25rem);
     width: 100%;
     z-index: 9999;
-    height: 200px;
     overflow-y: auto;
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
+  }
+
+  .dropdown-scroll {
+    height: 200px;
   }
 
   .no-scrollbar {
