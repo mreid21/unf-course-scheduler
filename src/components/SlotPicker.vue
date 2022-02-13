@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, ref} from 'vue';
+import { computed, ref } from 'vue';
 import TimeSlot from '../types/timeslot';
 import SlotPickerItem from './SlotPickerItem.vue';
 
@@ -11,7 +11,6 @@ interface Props {
 const { timeSlots, pageSize } = withDefaults(defineProps<Props>(), {
   pageSize: 9,
 });
-
 
 const pages = computed(() => {
   if (timeSlots) {
@@ -35,7 +34,12 @@ const nextPage = () => {
 };
 
 const currentPageItems = computed(() =>
-  pageSize > 1 ? timeSlots.slice((currentPage.value - 1) * pageSize, pageSize * currentPage.value) : timeSlots
+  pageSize > 1
+    ? timeSlots.slice(
+        (currentPage.value - 1) * pageSize,
+        pageSize * currentPage.value
+      )
+    : timeSlots
 );
 </script>
 

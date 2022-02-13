@@ -18,6 +18,8 @@ import {
 import App from './App.vue';
 import './index.css';
 
+const pinia = createPinia();
+
 library.add(
   faTrashAlt,
   faArrowUp,
@@ -33,5 +35,5 @@ library.add(
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
-  .use(createPinia)
+  .use(pinia)
   .mount('#app');

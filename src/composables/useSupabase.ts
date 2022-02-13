@@ -69,7 +69,7 @@ const useSupabase = () => {
         .from<TimeSlot>('time_slots')
         .select('*')
         .eq('slot_days', day)
-        .order('begin_time', {ascending: true})
+        .order('begin_time', { ascending: true });
 
       if (error) throw error;
 

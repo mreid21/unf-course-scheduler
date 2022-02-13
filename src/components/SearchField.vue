@@ -67,7 +67,11 @@ const filteredList = computed(() =>
       class="absolute right-3 top-2 cursor-pointer"
       :icon="modelValue ? 'window-close' : icon"
     ></font-awesome-icon>
-    <div v-show="showDropdown" :class="[filteredList.length > 8 ? 'dropdown-scroll' : '']" class="absolute dropdown bg-white border">
+    <div
+      v-show="showDropdown"
+      :class="[filteredList.length > 8 ? 'dropdown-scroll' : '']"
+      class="absolute dropdown bg-white border"
+    >
       <div v-for="item in filteredList" :key="item[id]" class="overflow-hidden">
         <slot :id="item[id]" :item="item" :select="changeSelection"></slot>
       </div>
