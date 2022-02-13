@@ -1,28 +1,66 @@
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from 'vue';
+import { computed, ref } from 'vue';
 import TimeSlot from '../types/timeslot';
-import SlotPickerItem from './SlotPickerItem.vue'
+import SlotPickerItem from './SlotPickerItem.vue';
 
 interface Props {
   timeSlots: TimeSlot[];
+  pageSize: number;
 }
 
-const { timeSlots } = defineProps<Props>();
+const { timeSlots, pageSize } = withDefaults(defineProps<Props>(), {
+  pageSize: 9,
+});
 
-const currentPage = computed(() => timeSlots.slice(0, 10))
+const pages = computed(() => {
+  if (timeSlots) {
+    console.log(timeSlots.length + '/' + pageSize);
+    return Math.ceil(timeSlots.length / pageSize);
+  } else return 1;
+});
 
+const currentPage = ref(1);
+
+const previousPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+const nextPage = () => {
+  if (currentPage.value < pages.value) {
+    currentPage.value++;
+  }
+};
+
+const currentPageItems = computed(() =>
+  pageSize > 1 ? timeSlots.slice(0, pageSize) : timeSlots
+);
 </script>
 
 <template>
-  <div class="flex gap-2">
-    <div class="basis-4 grow-0 shrink-0 flex items-center">
-      <font-awesome-icon  :icon="'chevron-left'"></font-awesome-icon>
-    </div>
+  <div class="flex gap-4 items-center">
+    <font-awesome-icon
+      @click="previousPage"
+      v-if="pages > 1"
+      class="hover:scale-125 transition-all ease-in-out duration-100 mb-4"
+      size="lg"
+      icon="chevron-left"
+    ></font-awesome-icon>
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 w-full">
-      <SlotPickerItem :timeSlot="time" v-for="time in currentPage" :key="time.slot_id"></SlotPickerItem>
+      <SlotPickerItem
+        :timeSlot="time"
+        v-for="time in currentPageItems"
+        :key="time.slot_id"
+      ></SlotPickerItem>
     </div>
-    <div class="basis-4 grow-0 shrink-0 flex items-center">
-      <font-awesome-icon  :icon="'chevron-right'"></font-awesome-icon>
-    </div>
+    <font-awesome-icon
+      @click="nextPage"
+      v-if="pages > 1"
+      class="hover:scale-125 transition-all ease-in-out duration-100 mb-4"
+      size="lg"
+      icon="chevron-right"
+    ></font-awesome-icon>
   </div>
+  <p>{{ currentPage }}</p>
 </template>

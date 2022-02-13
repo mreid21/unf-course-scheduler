@@ -26,35 +26,37 @@ const formOptions = reactive({
   timeSlots: null,
 }) as FormOptions;
 
-
-
 const section = reactive({}) as CourseForm;
 
-const buildingSelected = ref(false)
+const buildingSelected = ref(false);
 
-watch(() => section.building, async () => {
-  if(section.building){
-    buildingSelected.value = false
-    formOptions.rooms = await fetchRooms(section.building.id)
-    buildingSelected.value = true
+watch(
+  () => section.building,
+  async () => {
+    if (section.building) {
+      buildingSelected.value = false;
+      formOptions.rooms = await fetchRooms(section.building.id);
+      buildingSelected.value = true;
+    } else {
+      buildingSelected.value = false;
+    }
   }
-  else {
-    buildingSelected.value = false
-  } 
-})
+);
 
-const daySelected = ref(false)
+const daySelected = ref(false);
 
-watch(() => section.day, async () => {
-  if(section.day){
-    daySelected.value = false
-    formOptions.timeSlots = await fetchTimeSlots(section.day)
-    daySelected.value = true
+watch(
+  () => section.day,
+  async () => {
+    if (section.day) {
+      daySelected.value = false;
+      formOptions.timeSlots = await fetchTimeSlots(section.day);
+      daySelected.value = true;
+    } else {
+      daySelected.value = false;
+    }
   }
-  else {
-    daySelected.value = false
-  }
-})
+);
 
 onMounted(async () => {
   const result = await fetchParallel([
@@ -76,12 +78,12 @@ const addSection = () => {
 };
 
 const clearForm = () => {
-  for(let option in section){
-    if(option !== 'day' && option !== 'campus'){
-      section[option as keyof CourseForm] = undefined
+  for (let option in section) {
+    if (option !== 'day' && option !== 'campus') {
+      section[option as keyof CourseForm] = undefined;
     }
   }
-}
+};
 </script>
 
 <template>
@@ -159,7 +161,10 @@ const clearForm = () => {
     </search-field>
 
     <day-picker v-model="section.day"></day-picker>
-    <slot-picker v-if="daySelected && timeSlots" :timeSlots="timeSlots"></slot-picker>
+    <slot-picker
+      v-if="daySelected && timeSlots"
+      :timeSlots="timeSlots"
+    ></slot-picker>
     <div>
       <p>{{ section }}</p>
     </div>

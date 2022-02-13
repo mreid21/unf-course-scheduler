@@ -13,7 +13,7 @@ import {
   faDoorOpen,
   faClock,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';

@@ -13,7 +13,7 @@ const { fields } = defineProps<Props>();
 const emit = defineEmits(['update:modelValue']);
 
 const update = (event: any) => {
-  emit('update:modelValue', {id: event.target.value, value: event.target.id});
+  emit('update:modelValue', { id: event.target.value, value: event.target.id });
 };
 </script>
 
