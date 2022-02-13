@@ -159,7 +159,7 @@ const clearForm = () => {
     </search-field>
 
     <day-picker v-model="section.day"></day-picker>
-    <slot-picker v-if="timeSlots" :timeSlots="timeSlots"></slot-picker>
+    <slot-picker v-if="daySelected && timeSlots" :timeSlots="timeSlots"></slot-picker>
     <div>
       <p>{{ section }}</p>
     </div>

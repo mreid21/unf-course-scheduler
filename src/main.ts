@@ -12,6 +12,8 @@ import {
   faBuilding,
   faDoorOpen,
   faClock,
+  faChevronLeft,
+  faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
@@ -25,7 +27,9 @@ library.add(
   faWindowClose,
   faBuilding,
   faDoorOpen,
-  faClock
+  faClock,
+  faChevronLeft,
+  faChevronRight
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
