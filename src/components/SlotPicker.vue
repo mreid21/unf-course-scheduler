@@ -63,5 +63,4 @@ const currentPageItems = computed(() =>
       icon="chevron-right"
     ></font-awesome-icon>
   </div>
-  <p>{{ currentPage }}</p>
 </template>

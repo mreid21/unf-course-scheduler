@@ -165,9 +165,6 @@ const clearForm = () => {
       v-if="daySelected && timeSlots"
       :timeSlots="timeSlots"
     ></slot-picker>
-    <div>
-      <p>{{ section }}</p>
-    </div>
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
       <button @click="clearForm" class="btn btn--reject">Clear</button>
