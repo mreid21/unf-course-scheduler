@@ -2,7 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { DayOfWeek } from '../types/courseform';
 
-const days = ref<DayOfWeek[]>(['MWF', 'MW', 'TR', 'M', 'T', 'W', 'R', 'F'])
+const days = ref<DayOfWeek[]>(['MWF', 'MW', 'TR', 'M', 'T', 'W', 'R'])
 
 const changeSelection = (e: any) => {
   emit('update:modelValue', e.target.value)

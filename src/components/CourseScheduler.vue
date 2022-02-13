@@ -8,7 +8,6 @@ import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
 import { CourseForm, FormOptions } from '../types/courseform';
-import Course from '../types/course';
 
 const {
   fetchCourses,
@@ -42,6 +41,19 @@ watch(() => section.building, async () => {
   else {
     buildingSelected.value = false
   } 
+})
+
+const daySelected = ref(false)
+
+watch(() => section.day, async () => {
+  if(section.day){
+    daySelected.value = false
+    formOptions.timeSlots = await fetchTimeSlots(section.day)
+    daySelected.value = true
+  }
+  else {
+    daySelected.value = false
+  }
 })
 
 onMounted(async () => {
