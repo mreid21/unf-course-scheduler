@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import Option from '../types/option';
 import TimeSlot from '../types/timeslot';
 
-const { timeSlot } = defineProps<{ timeSlot: TimeSlot, isSelected: boolean }>();
+const { timeSlot } = defineProps<{ timeSlot: TimeSlot; isSelected: boolean }>();
 
 const emit = defineEmits<{
   (e: 'selected', choice: Option): void;
@@ -33,6 +33,10 @@ const endTime = computed(() => formatTime(timeSlot.end_time));
     class="px-2 py-4 border border-gray-400 rounded-lg text-center text-sm text-gray-700 transition-transform duration-200 hover:bg-blue-100 cursor-pointer"
     :class="[isSelected ? 'bg-blue-100' : '']"
   >
-    <span :class="[isSelected ? 'text-blue-700' : '']" class="inline-block mr-2">{{ `${beginTime} - ${endTime}` }}</span>
+    <span
+      :class="[isSelected ? 'text-blue-700' : '']"
+      class="inline-block mr-2"
+      >{{ `${beginTime} - ${endTime}` }}</span
+    >
   </div>
 </template>

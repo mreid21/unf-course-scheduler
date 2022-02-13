@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref, toRefs, watch } from 'vue';
-import useSupabase from '../composables/useSupabase';
+import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
@@ -16,7 +16,7 @@ const {
   fetchRooms,
   fetchTimeSlots,
   fetchParallel,
-} = useSupabase();
+} = useDatabase();
 
 const formOptions = reactive({
   courses: null,

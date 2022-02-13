@@ -5,7 +5,7 @@ import Instructor from '../types/professor';
 import Room from '../types/room';
 import TimeSlot from '../types/timeslot';
 
-const useSupabase = () => {
+const useDatabase = () => {
   const fetchCourses = async () => {
     try {
       const { data, error } = await supabase
@@ -98,4 +98,4 @@ const useSupabase = () => {
   };
 };
 
-export default useSupabase;
+export default useDatabase;

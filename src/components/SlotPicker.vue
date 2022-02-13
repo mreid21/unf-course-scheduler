@@ -7,7 +7,7 @@ import SlotPickerItem from './SlotPickerItem.vue';
 interface Props {
   timeSlots: TimeSlot[];
   pageSize: number;
-  modelValue?: Option
+  modelValue?: Option;
 }
 
 const { timeSlots, pageSize } = withDefaults(defineProps<Props>(), {
@@ -47,7 +47,7 @@ const currentPageItems = computed(() =>
 );
 
 const update = (choice: Option) => {
-  emit('update:modelValue', choice)
+  emit('update:modelValue', choice);
 };
 </script>
 
@@ -63,7 +63,9 @@ const update = (choice: Option) => {
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 w-full">
       <SlotPickerItem
         @selected="update"
-        :isSelected="modelValue && modelValue.id === time.slot_id ? true : false"
+        :isSelected="
+          modelValue && modelValue.id === time.slot_id ? true : false
+        "
         :timeSlot="time"
         v-for="time in currentPageItems"
         :key="time.slot_id"
