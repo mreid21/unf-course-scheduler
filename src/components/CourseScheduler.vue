@@ -77,7 +77,9 @@ const addSection = () => {
 
 const clearForm = () => {
   for(let option in section){
-    section[option as keyof CourseForm] = undefined
+    if(option !== 'day' && option !== 'campus'){
+      section[option as keyof CourseForm] = undefined
+    }
   }
 }
 </script>
