@@ -68,7 +68,8 @@ const useSupabase = () => {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
         .select('*')
-        .eq('slot_days', day);
+        .eq('slot_days', day)
+        .order('begin_time', {ascending: true})
 
       if (error) throw error;
 
