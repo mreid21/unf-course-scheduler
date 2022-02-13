@@ -164,6 +164,7 @@ const clearForm = () => {
     <day-picker v-model="section.day"></day-picker>
     <slot-picker
       v-if="daySelected && timeSlots"
+      v-model="section.slot"
       :timeSlots="timeSlots"
     ></slot-picker>
     <div class="lg:flex">

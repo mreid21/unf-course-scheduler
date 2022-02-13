@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
+import Option from '../types/option';
 import TimeSlot from '../types/timeslot';
 import SlotPickerItem from './SlotPickerItem.vue';
 
 interface Props {
   timeSlots: TimeSlot[];
   pageSize: number;
+  modelValue?: Option
 }
 
 const { timeSlots, pageSize } = withDefaults(defineProps<Props>(), {
   pageSize: 9,
 });
+
+const emit = defineEmits(['update:modelValue']);
 
 const pages = computed(() => {
   if (timeSlots) {
@@ -41,6 +45,10 @@ const currentPageItems = computed(() =>
       )
     : timeSlots
 );
+
+const update = (choice: Option) => {
+  emit('update:modelValue', choice)
+};
 </script>
 
 <template>
@@ -54,6 +62,8 @@ const currentPageItems = computed(() =>
     ></font-awesome-icon>
     <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 w-full">
       <SlotPickerItem
+        @selected="update"
+        :isSelected="modelValue && modelValue.id === time.slot_id ? true : false"
         :timeSlot="time"
         v-for="time in currentPageItems"
         :key="time.slot_id"
