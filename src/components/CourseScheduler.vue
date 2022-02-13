@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, toRefs } from 'vue';
+import { onMounted, reactive, ref, toRefs, watch } from 'vue';
 import useSupabase from '../composables/useSupabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -27,7 +27,22 @@ const formOptions = reactive({
   timeSlots: null,
 }) as FormOptions;
 
+
+
 const section = reactive({}) as CourseForm;
+
+const buildingSelected = ref(false)
+
+watch(() => section.building, async () => {
+  if(section.building){
+    buildingSelected.value = false
+    formOptions.rooms = await fetchRooms(section.building.id)
+    buildingSelected.value = true
+  }
+  else {
+    buildingSelected.value = false
+  } 
+})
 
 onMounted(async () => {
   const result = await fetchParallel([
@@ -91,7 +106,7 @@ const clearForm = () => {
       ></search-field-item>
     </search-field>
 
-    <radio-group :fields="options"></radio-group>
+    <radio-group v-model="section.campus" :fields="options"></radio-group>
 
     <search-field
       v-model="section.building"
@@ -115,7 +130,7 @@ const clearForm = () => {
     <search-field
       v-model="section.room"
       v-slot="{ item, select }"
-      v-if="section.building"
+      v-if="buildingSelected"
       :placeholder="'Rooms'"
       :items="rooms"
       :filter="'room_number'"

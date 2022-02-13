@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
+import Option from '../types/option';
 import Radio from '../types/radio';
 
 interface Props {
-  modelValue?: string | number;
+  modelValue?: Option;
   fields: Radio[];
 }
 
@@ -12,7 +13,7 @@ const { fields } = defineProps<Props>();
 const emit = defineEmits(['update:modelValue']);
 
 const update = (event: any) => {
-  emit('update:modelValue', event.target.value);
+  emit('update:modelValue', {id: event.target.value, value: event.target.id});
 };
 </script>
 
