@@ -18,7 +18,6 @@ const emit = defineEmits(['update:modelValue']);
 
 const pages = computed(() => {
   if (timeSlots) {
-    console.log(timeSlots.length + '/' + pageSize);
     return Math.ceil(timeSlots.length / pageSize);
   } else return 1;
 });

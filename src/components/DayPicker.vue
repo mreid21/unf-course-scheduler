@@ -6,7 +6,6 @@ const days = ref<DayOfWeek[]>(['MWF', 'MW', 'TR', 'M', 'T', 'W', 'R']);
 
 const changeSelection = (e: any) => {
   emit('update:modelValue', e.target.value);
-  console.log(e.target.value);
 };
 
 defineProps<{ modelValue?: string }>();
