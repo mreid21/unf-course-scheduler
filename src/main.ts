@@ -11,6 +11,7 @@ import {
   faWindowClose,
   faBuilding,
   faDoorOpen,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
@@ -23,7 +24,8 @@ library.add(
   faChalkboardTeacher,
   faWindowClose,
   faBuilding,
-  faDoorOpen
+  faDoorOpen,
+  faClock
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
