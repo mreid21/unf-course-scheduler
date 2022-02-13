@@ -1,7 +1,7 @@
 import { supabase } from '../supabase';
 import Building from '../types/building';
 import Course from '../types/course';
-import Instructor from '../types/professor';
+import Instructor from '../types/instructor';
 import Room from '../types/room';
 import TimeSlot from '../types/timeslot';
 
