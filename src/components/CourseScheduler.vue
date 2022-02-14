@@ -47,11 +47,12 @@ watch(
 const daySelected = ref(false);
 
 watch(
-  () => section.day,
+  [() => section.day,
+  () => section.course],
   async () => {
-    if (section.day) {
+    if (section.day && section.course) {
       daySelected.value = false;
-      formOptions.timeSlots = await fetchTimeSlots(section.day);
+      formOptions.timeSlots = await fetchTimeSlots(section.day, section.course.meta as number);
       daySelected.value = true;
     } else {
       daySelected.value = false;

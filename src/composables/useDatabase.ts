@@ -63,12 +63,13 @@ const useDatabase = () => {
     }
   };
 
-  const fetchTimeSlots = async (day: string) => {
+  const fetchTimeSlots = async (day: string, credits: number) => {
     try {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
         .select('*')
         .eq('slot_days', day)
+        .eq('credits', credits)
         .order('begin_time', { ascending: true });
 
       if (error) throw error;
