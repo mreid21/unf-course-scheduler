@@ -169,7 +169,12 @@ const clearForm = () => {
     ></slot-picker>
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
-      <button @click="clearForm" class="btn btn--reject">Clear</button>
+      <input
+        type="button"
+        value="Clear"
+        @click="clearForm"
+        class="btn btn--reject"
+      />
     </div>
   </form>
   <p>{{ section }}</p>
