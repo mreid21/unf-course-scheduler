@@ -5,24 +5,21 @@ interface Section {
   course_code: string;
   credit_hours: number;
   instructor_name: string;
-  room_number?: string;
-  building_number?: string;
+  room_number?: string | number;
+  building_number?: string | number;
   building_name?: string;
+  begin_time: string,
+  end_time: string
   campus_name: string;
 }
 
 type SectionBuilder = {
-  course_id: number,
-  instructor_id: number,
-  room_id?: number,
-  campus_id: number,
-  slot_id: number,
-  building_id?: number
-}
+  course_id: number;
+  instructor_id: number;
+  room_id?: number;
+  campus_id: number;
+  slot_id: number;
+  building_id?: number;
+};
 
-
-export {
-  SectionField,
-  Section,
-  SectionBuilder
-}
+export { SectionField, Section, SectionBuilder };
