@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Option from '../types/option';
-import TimeSlot from '../types/timeslot';
+import TimeSlot from '../types/timeSlot';
 
 const { timeSlot } = defineProps<{ timeSlot: TimeSlot; isSelected: boolean }>();
 

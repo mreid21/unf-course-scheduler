@@ -3,7 +3,7 @@ import Building from '../types/building';
 import Course from '../types/course';
 import Instructor from '../types/instructor';
 import Room from '../types/room';
-import TimeSlot from '../types/timeslot';
+import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
   const fetchCourses = async () => {

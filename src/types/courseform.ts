@@ -2,7 +2,7 @@ import Building from './building';
 import Course from './course';
 import Instructor from './instructor';
 import Room from './room';
-import TimeSlot from './timeslot';
+import TimeSlot from './timeSlot';
 import Option from './option';
 
 interface FormOptions {

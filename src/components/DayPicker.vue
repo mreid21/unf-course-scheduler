@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
-import { DayOfWeek } from '../types/courseform';
+import { DayOfWeek } from '../types/courseForm';
 
 const days = ref<DayOfWeek[]>(['MWF', 'MW', 'TR', 'M', 'T', 'W', 'R']);
 

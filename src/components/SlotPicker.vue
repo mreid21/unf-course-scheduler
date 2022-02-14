@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import Option from '../types/option';
-import TimeSlot from '../types/timeslot';
+import TimeSlot from '../types/timeSlot';
 import SlotPickerItem from './SlotPickerItem.vue';
 
 interface Props {

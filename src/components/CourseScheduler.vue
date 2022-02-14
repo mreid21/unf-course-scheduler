@@ -7,7 +7,7 @@ import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
-import { CourseForm, FormOptions } from '../types/courseform';
+import { CourseForm, FormOptions } from '../types/courseForm';
 
 const {
   fetchCourses,
