@@ -59,7 +59,10 @@ const update = (choice: Option) => {
       size="lg"
       icon="chevron-left"
     ></font-awesome-icon>
-    <div v-if="timeSlots.length > 0" class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 w-full">
+    <div
+      v-if="timeSlots.length > 0"
+      class="grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 w-full"
+    >
       <SlotPickerItem
         @selected="update"
         :isSelected="

@@ -29,12 +29,15 @@ watch(selection, () => {
   emit('update:modelValue', selection.value);
 });
 
-const changeSelection = (id: number, value: string, meta?: Object | string | number) => {
+const changeSelection = (
+  id: number,
+  value: string,
+  meta?: Object | string | number
+) => {
   clearInput();
-  if(meta){
-    selection.value = {id, value, meta}
-  }
-  else {
+  if (meta) {
+    selection.value = { id, value, meta };
+  } else {
     selection.value = { id, value };
   }
   showDropdown.value = false;

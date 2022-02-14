@@ -46,19 +46,18 @@ watch(
 
 const daySelected = ref(false);
 
-watch(
-  [() => section.day,
-  () => section.course],
-  async () => {
-    if (section.day && section.course) {
-      daySelected.value = false;
-      formOptions.timeSlots = await fetchTimeSlots(section.day, section.course.meta as number);
-      daySelected.value = true;
-    } else {
-      daySelected.value = false;
-    }
+watch([() => section.day, () => section.course], async () => {
+  if (section.day && section.course) {
+    daySelected.value = false;
+    formOptions.timeSlots = await fetchTimeSlots(
+      section.day,
+      section.course.meta as number
+    );
+    daySelected.value = true;
+  } else {
+    daySelected.value = false;
   }
-);
+});
 
 onMounted(async () => {
   const result = await fetchParallel([
@@ -173,5 +172,5 @@ const clearForm = () => {
       <button @click="clearForm" class="btn btn--reject">Clear</button>
     </div>
   </form>
-  <p>{{section}}</p>
+  <p>{{ section }}</p>
 </template>
