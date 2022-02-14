@@ -70,7 +70,7 @@ const update = (choice: Option) => {
         :key="time.slot_id"
       ></SlotPickerItem>
     </div>
-    <p v-else class="text-center">No Items to Show</p>
+    <p v-else class="mx-auto mb-4">No Items to Show</p>
     <font-awesome-icon
       @click="nextPage"
       v-if="pages > 1"
