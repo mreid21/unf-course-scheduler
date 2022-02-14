@@ -3,6 +3,7 @@ import Building from '../types/building';
 import Course from '../types/course';
 import Instructor from '../types/instructor';
 import Room from '../types/room';
+import { Section } from '../types/section';
 import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
@@ -80,6 +81,24 @@ const useDatabase = () => {
     }
   };
 
+  const fetchSections = async () => {
+    try {
+      const { data, error } = await supabase
+        .from<Section>('all_courses')
+        .select('*')
+        .order('section_id', {ascending: true})
+
+      if (error) throw error;
+
+      return data;
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+
+
+
   interface AsyncFn {
     (args?: any): Promise<any>;
   }
@@ -96,6 +115,7 @@ const useDatabase = () => {
     fetchRooms,
     fetchTimeSlots,
     fetchParallel,
+    fetchSections
   };
 };
 
