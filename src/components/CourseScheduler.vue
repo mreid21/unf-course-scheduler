@@ -103,7 +103,7 @@ const clearForm = () => {
       <search-field-item
         :name="item.course_code"
         :meta="item.course_title"
-        @mousedown="select(item.course_id, item.course_code)"
+        @mousedown="select(item.course_id, item.course_code, item.credit_hours)"
       ></search-field-item>
     </search-field>
 
@@ -172,4 +172,5 @@ const clearForm = () => {
       <button @click="clearForm" class="btn btn--reject">Clear</button>
     </div>
   </form>
+  <p>{{section}}</p>
 </template>
