@@ -10,14 +10,7 @@ import SlotPicker from './SlotPicker.vue';
 import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 
-const {
-  fetchCourses,
-  fetchInstructors,
-  fetchBuildings,
-  fetchRooms,
-  fetchTimeSlots,
-  fetchParallel,
-} = useDatabase();
+const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
 const store = useCourseStore();
 
@@ -32,6 +25,8 @@ onMounted(async () => {
     instructors,
     buildings,
   });
+
+  console.log(store.$state);
 });
 
 const section = reactive({}) as CourseForm;
@@ -70,7 +65,7 @@ const clearForm = () => {
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="section.course"
-      v-if="store.courses"
+      v-if="store.courses.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
       :items="store.courses"
@@ -87,7 +82,7 @@ const clearForm = () => {
 
     <search-field
       v-model="section.instructor"
-      v-if="store.instructors"
+      v-if="store.instructors.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Instructors'"
       :items="store.instructors"
@@ -105,7 +100,7 @@ const clearForm = () => {
 
     <search-field
       v-model="section.building"
-      v-if="store.buildings"
+      v-if="store.buildings.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
       :items="store.buildings"
