@@ -1,4 +1,5 @@
 import { supabase } from '../supabase';
+import AsyncFn from '../types/asyncFn';
 import Building from '../types/building';
 import Course from '../types/course';
 import Instructor from '../types/instructor';
@@ -7,7 +8,7 @@ import { Section } from '../types/section';
 import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
-  const fetchCourses = async () => {
+  const fetchCourses = async (): Promise<Course[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<Course>('courses')
@@ -19,9 +20,12 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally{
+      return undefined
+    }
   };
 
-  const fetchInstructors = async () => {
+  const fetchInstructors = async (): Promise<Instructor[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<Instructor>('instructors')
@@ -33,9 +37,12 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally {
+      return undefined
+    }
   };
 
-  const fetchBuildings = async () => {
+  const fetchBuildings = async (): Promise<Building[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<Building>('buildings')
@@ -47,9 +54,12 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally {
+      return undefined
+    }
   };
 
-  const fetchRooms = async (buildingID: number) => {
+  const fetchRooms = async (buildingID: number): Promise<Room[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<Room>('rooms')
@@ -62,9 +72,12 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally {
+      return undefined
+    }
   };
 
-  const fetchTimeSlots = async (day: string, credits: number) => {
+  const fetchTimeSlots = async (day: string, credits: number): Promise<TimeSlot[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
@@ -79,9 +92,12 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally {
+      return undefined
+    }
   };
 
-  const fetchSections = async () => {
+  const fetchSections = async (): Promise<Section[] | undefined> => {
     try {
       const { data, error } = await supabase
         .from<Section>('all_courses')
@@ -94,14 +110,15 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
+    finally {
+      return undefined
+    }
   };
 
 
 
 
-  interface AsyncFn {
-    (args?: any): Promise<any>;
-  }
+  
 
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
