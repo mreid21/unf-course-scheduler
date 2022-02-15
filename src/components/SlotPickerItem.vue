@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import Option from '../types/option';
+import useTime from '../composables/useTime';
 import TimeSlot from '../types/timeSlot';
 
 const { timeSlot } = defineProps<{ timeSlot: TimeSlot; isSelected: boolean }>();
@@ -9,13 +10,7 @@ const emit = defineEmits<{
   (e: 'selected', choice: Option): void;
 }>();
 
-const formatTime = (time: string) => {
-  let hours = parseInt(time.slice(0, 2));
-  const minutes = time.slice(3, 5);
-  const suffix = hours >= 12 ? 'PM' : 'AM';
-  hours = hours % 12 || 12;
-  return `${hours}:${minutes}${suffix}`;
-};
+const { formatTime } = useTime();
 
 const beginTime = computed(() => formatTime(timeSlot.begin_time));
 
