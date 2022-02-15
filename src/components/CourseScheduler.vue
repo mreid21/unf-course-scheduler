@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, toRefs, watch } from 'vue';
+import { onMounted, reactive, watch } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -7,7 +7,8 @@ import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
-import { CourseForm, FormOptions } from '../types/courseForm';
+import { CourseForm } from '../types/courseForm';
+import { useCourseStore } from '../stores/useCourseStore';
 
 const {
   fetchCourses,
@@ -18,65 +19,42 @@ const {
   fetchParallel,
 } = useDatabase();
 
-const formOptions = reactive({
-  courses: null,
-  instructors: null,
-  buildings: null,
-  rooms: null,
-  timeSlots: null,
-}) as FormOptions;
-
-const section = reactive({}) as CourseForm;
-
-const buildingSelected = ref(false);
-
-watch(
-  () => section.building,
-  async () => {
-    section.room = undefined;
-    if (section.building) {
-      buildingSelected.value = false;
-      formOptions.rooms = await fetchRooms(section.building.id);
-      buildingSelected.value = true;
-    } else {
-      buildingSelected.value = false;
-    }
-  }
-);
-
-const daySelected = ref(false);
-
-watch([() => section.day, () => section.course], async () => {
-  if (section.day && section.course) {
-    daySelected.value = false;
-    formOptions.timeSlots = await fetchTimeSlots(
-      section.day,
-      section.course.meta as number
-    );
-    daySelected.value = true;
-  } else {
-    daySelected.value = false;
-  }
-});
+const store = useCourseStore();
 
 onMounted(async () => {
-  const result = await fetchParallel([
+  const [courses, instructors, buildings] = await store.getFieldData([
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
   ]);
-
-  Object.keys(formOptions).forEach((key, index) => {
-    formOptions[key as keyof FormOptions] = result[index];
+  store.$patch({
+    courses,
+    instructors,
+    buildings,
   });
 });
 
-const { courses, instructors, buildings, rooms, timeSlots } =
-  toRefs(formOptions);
+const section = reactive({}) as CourseForm;
 
-const addSection = () => {
-  console.log('added section');
-};
+watch(
+  () => section.building,
+  async () => {
+    if (section.building) {
+      await store.getRooms(section.building.id);
+    } else {
+      section.room = undefined;
+      store.rooms = [];
+    }
+  }
+);
+
+watch([() => section.day, () => section.course], async () => {
+  if (section.day && section.course) {
+    await store.getTimeSlots(section.day, section.course.meta as number);
+  } else {
+    store.timeSlots = [];
+  }
+});
 
 const clearForm = () => {
   for (let option in section) {
@@ -88,14 +66,14 @@ const clearForm = () => {
 </script>
 
 <template>
-  <form id="course-scheduler" @submit.prevent="addSection">
+  <form id="course-scheduler" @submit.prevent="() => console.log('hello')">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="section.course"
-      v-if="courses"
+      v-if="store.courses"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
-      :items="courses"
+      :items="store.courses"
       :filter="'course_code'"
       :id="'course_id'"
       :icon="'graduation-cap'"
@@ -109,10 +87,10 @@ const clearForm = () => {
 
     <search-field
       v-model="section.instructor"
-      v-if="instructors"
+      v-if="store.instructors"
       v-slot="{ item, select }"
       :placeholder="'Instructors'"
-      :items="instructors"
+      :items="store.instructors"
       :filter="'instructor_name'"
       :id="'instructor_id'"
       :icon="'chalkboard-teacher'"
@@ -127,10 +105,10 @@ const clearForm = () => {
 
     <search-field
       v-model="section.building"
-      v-if="buildings"
+      v-if="store.buildings"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
-      :items="buildings"
+      :items="store.buildings"
       :filter="'building_number'"
       :id="'building_id'"
       :icon="'building'"
@@ -147,9 +125,9 @@ const clearForm = () => {
     <search-field
       v-model="section.room"
       v-slot="{ item, select }"
-      v-if="buildingSelected"
+      v-if="store.rooms.length > 0"
       :placeholder="'Rooms'"
-      :items="rooms"
+      :items="store.rooms"
       :filter="'room_number'"
       :id="'room_id'"
       :icon="'door-open'"
@@ -162,11 +140,13 @@ const clearForm = () => {
     </search-field>
 
     <day-picker v-model="section.day"></day-picker>
+
     <slot-picker
-      v-if="daySelected && timeSlots"
+      v-if="store.timeSlots.length > 0"
       v-model="section.slot"
-      :timeSlots="timeSlots"
+      :timeSlots="store.timeSlots"
     ></slot-picker>
+
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
       <input

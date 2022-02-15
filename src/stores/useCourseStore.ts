@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia'
 import useDatabase from '../composables/useDatabase'
 import AsyncFn from '../types/asyncFn'
-import Course from '../types/course'
-import Instructor from '../types/instructor'
-import { Section } from '../types/section'
+import Room from '../types/room'
+import TimeSlot from '../types/timeSlot'
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
@@ -15,19 +14,25 @@ export const useCourseStore = defineStore('courses', {
         courses: [], 
         instructors: [],
         buildings: [],
-        rooms: [],
-        timeSlots: []
+        rooms: [] as Room[],
+        timeSlots: [] as TimeSlot[]
       }
   },
+  
   actions: {
     async getFieldData(query: AsyncFn[]) {
         return await fetchParallel(query)
     },
     async getRooms(buildingID: number){
-        return await fetchRooms(buildingID)
+        this.rooms = []
+        const rooms = await fetchRooms(buildingID)
+        if(rooms)this.rooms = rooms
+        
     },
     async getTimeSlots(days: string, credits: number){
-        return await fetchTimeSlots(days, credits)
+        this.timeSlots = []
+        const slots = await fetchTimeSlots(days, credits)
+        if(slots) this.timeSlots = slots
     }
   }
 })

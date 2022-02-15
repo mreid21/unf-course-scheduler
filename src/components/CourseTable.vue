@@ -1,28 +1,9 @@
 <script setup lang="ts">
 import { Section } from '../types/section';
-import { useCourseStore } from '../stores/useCourseStore';
-import { onMounted } from 'vue';
-import useDatabase from '../composables/useDatabase';
 
 interface Props {
   sections?: Section[];
 }
-
-const store = useCourseStore();
-const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
-
-/*onMounted(async () => {
-  const [courses, instructors, buildings] = await store.getFieldData([
-    fetchCourses,
-    fetchInstructors,
-    fetchBuildings,
-  ]);
-  store.$patch({
-    courses,
-    instructors,
-    buildings,
-  });
-});*/
 
 const { sections } = defineProps<Props>();
 </script>
