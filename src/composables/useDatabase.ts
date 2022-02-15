@@ -102,14 +102,11 @@ const useDatabase = () => {
   };
 
 
-
-
-  
-
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
   };
+
 
   return {
     fetchCourses,
