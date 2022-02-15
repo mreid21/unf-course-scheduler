@@ -47,6 +47,7 @@ watch([() => section.day, () => section.course], async () => {
   if (section.day && section.course) {
     await store.getTimeSlots(section.day, section.course.meta as number);
   } else {
+    section.slot = undefined;
     store.timeSlots = [];
   }
 });
