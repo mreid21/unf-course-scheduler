@@ -20,9 +20,6 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    finally{
-      return undefined
-    }
   };
 
   const fetchInstructors = async (): Promise<Instructor[] | undefined> => {
@@ -36,9 +33,6 @@ const useDatabase = () => {
       return data;
     } catch (error: any) {
       alert(error.message);
-    }
-    finally {
-      return undefined
     }
   };
 
@@ -54,9 +48,7 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    finally {
-      return undefined
-    }
+
   };
 
   const fetchRooms = async (buildingID: number): Promise<Room[] | undefined> => {
@@ -72,9 +64,7 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    finally {
-      return undefined
-    }
+
   };
 
   const fetchTimeSlots = async (day: string, credits: number): Promise<TimeSlot[] | undefined> => {
@@ -92,9 +82,7 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    finally {
-      return undefined
-    }
+
   };
 
   const fetchSections = async (): Promise<Section[] | undefined> => {
@@ -110,9 +98,7 @@ const useDatabase = () => {
     } catch (error: any) {
       alert(error.message);
     }
-    finally {
-      return undefined
-    }
+
   };
 
 
