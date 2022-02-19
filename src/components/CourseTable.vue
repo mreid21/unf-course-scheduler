@@ -1,11 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
+import { useSectionStore } from '../stores/useSectionStore';
 import { Section } from '../types/section';
 
-interface Props {
-  sections?: Section[];
-}
+const store = useSectionStore();
 
-const { sections } = defineProps<Props>();
+onMounted(async () => {
+  await store.getSections();
+});
 </script>
 
 <template>
@@ -22,7 +24,7 @@ const { sections } = defineProps<Props>();
       </tr>
     </thead>
     <tbody class="text-center">
-      <tr v-for="section in sections" :key="section.section_id">
+      <tr v-for="section in store.sections" :key="section.section_id">
         <td>{{ section.course_code }}</td>
         <td>{{ section.instructor_name }}</td>
         <td>{{ section.building_number ? section.building_number : 'N/A' }}</td>

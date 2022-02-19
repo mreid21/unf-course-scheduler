@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CourseScheduler from './components/CourseScheduler.vue';
+import CourseTable from './components/CourseTable.vue';
 </script>
 
 <template>
@@ -8,7 +9,9 @@ import CourseScheduler from './components/CourseScheduler.vue';
       <main class="p-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
         <course-scheduler></course-scheduler>
       </main>
-      <div class="scrollable shadow-sm lg:col-span-7"></div>
+      <div class="scrollable shadow-sm lg:col-span-7">
+        <course-table></course-table>
+      </div>
     </div>
   </div>
 </template>

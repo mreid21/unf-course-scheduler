@@ -9,17 +9,13 @@ const {fetchSections} = useDatabase()
 export const useSectionStore = defineStore('section', {
   state: () => {
       return {
-          sections: [] as Section[] | null | undefined
+          sections: [] as Section[]
       }
   },
   actions: {
     async getSections(){
       const result = await fetchSections()
-      if(result){
-        this.$patch({
-          sections: result
-        })
-      }
+      if(result) this.sections = result
     }
   }
 })
