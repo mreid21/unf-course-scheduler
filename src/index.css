@@ -7,6 +7,30 @@
   input[type='radio']:checked + span {
     @apply text-blue-600 bg-blue-100;
   }
+
+
+  tr {
+    @apply border border-gray-100 bg-gray-100
+  }
+  thead tr {
+    @apply bg-white
+  }
+
+  tbody tr {
+    @apply cursor-pointer
+  }
+
+  tr:nth-child(even){
+    @apply bg-white
+  }
+
+  th, td {
+    @apply py-4 px-2
+  }
+
+  tbody tr:hover {
+    @apply outline outline-blue-300 transition-all duration-75 ease-linear
+  }
 }
 
 @layer components {

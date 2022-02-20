@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import CourseScheduler from './components/CourseScheduler.vue';
 import CourseTable from './components/CourseTable.vue';
+import CourseTableRow from './components/CourseTableRow.vue';
+import CourseTableHeader from './components/CourseTableHeader.vue';
+import { ref } from 'vue';
+
+const headers = ref(['code', 'instructors', 'building', 'room', 'campus', 'time'])
 </script>
 
 <template>
@@ -10,7 +15,27 @@ import CourseTable from './components/CourseTable.vue';
         <course-scheduler></course-scheduler>
       </main>
       <div class="scrollable shadow-sm lg:col-span-7">
-        <course-table></course-table>
+        <course-table>
+          <template #table-header>
+            <course-table-header :headers="headers">
+              <template v-slot="{header}">
+                <span class="mr-2">{{header}}</span>
+              </template>
+            </course-table-header>
+          </template>
+          <template #rows="{sections}">
+            <course-table-row :section="section" v-for="section in sections" :key="section.section_id">
+              <template #row="{code, instructor, building, room, campus, beginTime, endTime}">
+                <td>{{code}}</td>
+                <td>{{instructor}}</td>
+                <td>{{building ? building : 'N/A'}}</td>
+                <td>{{room ? room : 'N/A'}}</td>
+                <td>{{campus}}</td>
+                <td>{{`${beginTime} - ${endTime}`}}</td>
+              </template>
+            </course-table-row>
+          </template>
+        </course-table>
       </div>
     </div>
   </div>
