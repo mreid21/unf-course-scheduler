@@ -13,7 +13,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <table class="border-collapse shadow-sm w-full text-sm">
+  <table class="border-collapse shadow-sm w-full text-sm overflow-hidden">
     <thead class="sticky top-0 bg-white border-gray-500">
       <slot name="table-header"></slot>
     </thead>

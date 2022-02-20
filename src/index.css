@@ -9,7 +9,7 @@
   }
 
   tr {
-    @apply border border-gray-100 bg-gray-100;
+    @apply bg-gray-100;
   }
   thead tr {
     @apply bg-white;
@@ -29,7 +29,7 @@
   }
 
   tbody tr:hover {
-    @apply outline outline-blue-300 transition-all duration-75 ease-linear;
+    @apply border border-blue-300 transition-all duration-100;
   }
 }
 
