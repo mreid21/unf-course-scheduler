@@ -1,21 +1,21 @@
-import { defineStore } from 'pinia'
-import useDatabase from '../composables/useDatabase'
-import { Section } from '../types/section'
+import { defineStore } from 'pinia';
+import useDatabase from '../composables/useDatabase';
+import { Section } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
-const {fetchSections} = useDatabase()
+const { fetchSections } = useDatabase();
 
 export const useSectionStore = defineStore('section', {
   state: () => {
-      return {
-          sections: [] as Section[]
-      }
+    return {
+      sections: [] as Section[],
+    };
   },
   actions: {
-    async getSections(){
-      const result = await fetchSections()
-      if(result) this.sections = result
-    }
-  }
-})
+    async getSections() {
+      const result = await fetchSections();
+      if (result) this.sections = result;
+    },
+  },
+});

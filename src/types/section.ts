@@ -3,14 +3,14 @@ type SectionField = keyof Section;
 interface Section {
   section_id: number;
   course_code: string;
-  course_title?: string
+  course_title?: string;
   credit_hours: number;
   instructor_name: string;
   room_number?: string | number;
   building_number?: string | number;
   building_name?: string;
-  begin_time: string,
-  end_time: string
+  begin_time: string;
+  end_time: string;
   campus_name: string;
 }
 

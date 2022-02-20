@@ -1,5 +1,5 @@
-type AsyncFn =  {
-    (args?: any): Promise<any>;
-}
+type AsyncFn = {
+  (args?: any): Promise<any>;
+};
 
-export default AsyncFn
+export default AsyncFn;

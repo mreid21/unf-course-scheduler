@@ -8,28 +8,28 @@
     @apply text-blue-600 bg-blue-100;
   }
 
-
   tr {
-    @apply border border-gray-100 bg-gray-100
+    @apply border border-gray-100 bg-gray-100;
   }
   thead tr {
-    @apply bg-white
+    @apply bg-white;
   }
 
   tbody tr {
-    @apply cursor-pointer
+    @apply cursor-pointer;
   }
 
-  tr:nth-child(even){
-    @apply bg-white
+  tr:nth-child(even) {
+    @apply bg-white;
   }
 
-  th, td {
-    @apply py-4 px-2
+  th,
+  td {
+    @apply py-4 px-2;
   }
 
   tbody tr:hover {
-    @apply outline outline-blue-300 transition-all duration-75 ease-linear
+    @apply outline outline-blue-300 transition-all duration-75 ease-linear;
   }
 }
 
