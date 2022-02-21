@@ -3,7 +3,7 @@ import CourseScheduler from './components/CourseScheduler.vue';
 import CourseTable from './components/CourseTable.vue';
 import CourseTableRow from './components/CourseTableRow.vue';
 import CourseTableHeader from './components/CourseTableHeader.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const headers = ref([
   'code',
@@ -20,7 +20,7 @@ const headers = ref([
   <div class="lg:h-screen bg-gray-50">
     <div class="app-container">
       <main class="p-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
-        <course-scheduler :mode="'create'"></course-scheduler>
+        <course-scheduler></course-scheduler>
       </main>
       <div class="scrollable shadow-sm lg:col-span-7">
         <course-table>
@@ -39,6 +39,7 @@ const headers = ref([
             >
               <template
                 #row="{
+                  id,
                   code,
                   instructor,
                   building,
@@ -46,6 +47,7 @@ const headers = ref([
                   campus,
                   beginTime,
                   endTime,
+                  edit,
                 }"
               >
                 <td>{{ code }}</td>
@@ -59,6 +61,7 @@ const headers = ref([
                     type="button"
                     value="Edit"
                     class="btn btn--edit text-xs"
+                    @click="edit(id)"
                   />
                   <input
                     type="button"

@@ -4,7 +4,7 @@ import Building from '../types/building';
 import Course from '../types/course';
 import Instructor from '../types/instructor';
 import Room from '../types/room';
-import { Section } from '../types/section';
+import { Section, SectionBuilder } from '../types/section';
 import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
@@ -102,6 +102,23 @@ const useDatabase = () => {
     }
   };
 
+  const fetchSection = async (id: number) => {
+    try {
+      const {data, error} = await supabase
+        .from<SectionBuilder>('sections')
+        .select('*')
+        .eq('section_id', id)
+        .single()
+
+        if(error) throw error
+
+        return data
+    }
+    catch(error: any){
+      alert(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -115,6 +132,7 @@ const useDatabase = () => {
     fetchTimeSlots,
     fetchParallel,
     fetchSections,
+    fetchSection
   };
 };
 

@@ -4,24 +4,18 @@ import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
-import { SectionBuilder } from '../types/section';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
 import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
+import { CourseForm } from '../types/courseForm';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
 const store = useCourseStore();
-const { form, updateRooms, updateTimeSlots, clearForm } = useForm();
-
-const { mode, section } = defineProps<{
-  mode: 'edit' | 'create';
-  section?: SectionBuilder;
-}>();
-
-const modeIsCreate = ref<boolean>(mode === 'create');
+const { form, updateRooms, updateTimeSlots, clearForm, populateWith } =
+  useForm();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await store.getFieldData([
@@ -41,16 +35,10 @@ watch(
   () => updateRooms()
 );
 watch([() => form.day, () => form.course], () => updateTimeSlots());
-
-const submit = () => {
-  mode === 'create'
-    ? console.log('created section ' + mode)
-    : console.log('edited section');
-};
 </script>
 
 <template>
-  <form id="course-scheduler" @submit.prevent="submit">
+  <form id="course-scheduler">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="form.course"
@@ -132,11 +120,7 @@ const submit = () => {
     ></slot-picker>
 
     <div class="lg:flex">
-      <input
-        :class="[modeIsCreate ? 'btn btn--confirm' : 'btn btn--edit']"
-        type="submit"
-        :value="modeIsCreate ? 'Add' : 'Save'"
-      />
+      <input class="btn btn--confirm" type="submit" value="Add" />
       <input
         @click="clearForm"
         type="button"

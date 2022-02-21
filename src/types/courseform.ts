@@ -16,6 +16,7 @@ interface FormOptions {
 type DayOfWeek = 'MWF' | 'MW' | 'TR' | 'M' | 'T' | 'W' | 'R' | 'F';
 
 type CourseForm = {
+  sectionID?: number
   course?: Option
   instructor?: Option
   campus?: Option

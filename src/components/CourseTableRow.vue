@@ -2,6 +2,9 @@
 import { computed } from 'vue';
 import useTime from '../composables/useTime';
 import { Section } from '../types/section';
+import { useSectionStore } from '../stores/useSectionStore';
+
+const store = useSectionStore();
 
 const { formatTime } = useTime();
 const { section } = defineProps<{
@@ -10,12 +13,15 @@ const { section } = defineProps<{
 
 const beginTime = computed(() => formatTime(section.begin_time));
 const endTime = computed(() => formatTime(section.end_time));
+
+const edit = (id: number) => store.editSection(id);
 </script>
 
 <template>
   <tr>
     <slot
       name="row"
+      :id="section.section_id"
       :code="section.course_code"
       :instructor="section.instructor_name"
       :building="section.building_number"
@@ -23,6 +29,7 @@ const endTime = computed(() => formatTime(section.end_time));
       :campus="section.campus_name"
       :beginTime="beginTime"
       :endTime="endTime"
+      :edit="edit"
     ></slot>
   </tr>
 </template>
