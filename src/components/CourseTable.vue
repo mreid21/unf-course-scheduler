@@ -11,7 +11,7 @@ onMounted(async () => {
 
 <template>
   <table class="border-collapse shadow-sm w-full text-sm overflow-hidden">
-    <thead class="sticky top-0 bg-white border-gray-500 shadow-sm">
+    <thead class="bg-white border-gray-500 shadow-sm">
       <slot name="table-header"></slot>
     </thead>
     <tbody class="text-center">

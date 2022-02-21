@@ -12,6 +12,7 @@ const headers = ref([
   'room',
   'campus',
   'time',
+  'actions'
 ]);
 </script>
 
@@ -53,6 +54,10 @@ const headers = ref([
                 <td>{{ room ? room : 'N/A' }}</td>
                 <td>{{ campus }}</td>
                 <td>{{ `${beginTime} - ${endTime}` }}</td>
+                <td class="flex">
+                  <input type="button" value="Edit" class="btn btn--edit text-xs">
+                  <input type="button" value="Delete" class="btn btn--reject text-xs">
+                </td>
               </template>
             </course-table-row>
           </template>

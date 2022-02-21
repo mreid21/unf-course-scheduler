@@ -8,7 +8,7 @@ import { Section } from '../types/section';
 import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
-  const fetchCourses = async (): Promise<Course[] | undefined> => {
+  const fetchCourses = async ()=> {
     try {
       const { data, error } = await supabase
         .from<Course>('courses')
@@ -22,7 +22,7 @@ const useDatabase = () => {
     }
   };
 
-  const fetchInstructors = async (): Promise<Instructor[] | undefined> => {
+  const fetchInstructors = async () => {
     try {
       const { data, error } = await supabase
         .from<Instructor>('instructors')
@@ -36,7 +36,7 @@ const useDatabase = () => {
     }
   };
 
-  const fetchBuildings = async (): Promise<Building[] | undefined> => {
+  const fetchBuildings = async () => {
     try {
       const { data, error } = await supabase
         .from<Building>('buildings')
@@ -52,7 +52,7 @@ const useDatabase = () => {
 
   const fetchRooms = async (
     buildingID: number
-  ): Promise<Room[] | undefined> => {
+  )=> {
     try {
       const { data, error } = await supabase
         .from<Room>('rooms')
@@ -70,7 +70,7 @@ const useDatabase = () => {
   const fetchTimeSlots = async (
     day: string,
     credits: number
-  ): Promise<TimeSlot[] | undefined> => {
+  ) => {
     try {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
@@ -87,7 +87,7 @@ const useDatabase = () => {
     }
   };
 
-  const fetchSections = async (): Promise<Section[] | undefined> => {
+  const fetchSections = async () => {
     try {
       const { data, error } = await supabase
         .from<Section>('all_courses')

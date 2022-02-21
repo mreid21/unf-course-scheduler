@@ -15,10 +15,6 @@
     @apply bg-white;
   }
 
-  tbody tr {
-    @apply cursor-pointer;
-  }
-
   tr:nth-child(even) {
     @apply bg-white;
   }
@@ -28,9 +24,6 @@
     @apply py-6 px-2;
   }
 
-  tbody tr:hover {
-    @apply border border-gray-500;
-  }
 }
 
 @layer components {
