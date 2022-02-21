@@ -7,12 +7,13 @@ import SearchField from './SearchField.vue';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
-import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
+import useValidation from '../composables/useForm';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
 const store = useCourseStore();
+const { form, updateRooms, updateTimeSlots, clearForm } = useValidation();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await store.getFieldData([
@@ -25,47 +26,20 @@ onMounted(async () => {
     instructors,
     buildings,
   });
-
-  console.log(store.$state);
 });
-
-const section = reactive({}) as CourseForm;
 
 watch(
-  () => section.building,
-  async () => {
-    if (section.building) {
-      await store.getRooms(section.building.id);
-    } else {
-      section.room = undefined;
-      store.rooms = [];
-    }
-  }
+  () => form.building,
+  () => updateRooms()
 );
-
-watch([() => section.day, () => section.course], async () => {
-  if (section.day && section.course) {
-    await store.getTimeSlots(section.day, section.course.meta as number);
-  } else {
-    section.slot = undefined;
-    store.timeSlots = [];
-  }
-});
-
-const clearForm = () => {
-  for (let option in section) {
-    if (option !== 'day' && option !== 'campus') {
-      section[option as keyof CourseForm] = undefined;
-    }
-  }
-};
+watch([() => form.day, () => form.course], () => updateTimeSlots());
 </script>
 
 <template>
   <form id="course-scheduler" @submit.prevent="() => console.log('hello')">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
-      v-model="section.course"
+      v-model="form.course"
       v-if="store.courses.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
@@ -82,7 +56,7 @@ const clearForm = () => {
     </search-field>
 
     <search-field
-      v-model="section.instructor"
+      v-model="form.instructor"
       v-if="store.instructors.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Instructors'"
@@ -97,10 +71,10 @@ const clearForm = () => {
       ></search-field-item>
     </search-field>
 
-    <radio-group v-model="section.campus" :fields="options"></radio-group>
+    <radio-group v-model="form.campus" :fields="options"></radio-group>
 
     <search-field
-      v-model="section.building"
+      v-model="form.building"
       v-if="store.buildings.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
@@ -119,7 +93,7 @@ const clearForm = () => {
     </search-field>
 
     <search-field
-      v-model="section.room"
+      v-model="form.room"
       v-slot="{ item, select }"
       v-if="store.rooms.length > 0"
       :placeholder="'Rooms'"
@@ -135,23 +109,23 @@ const clearForm = () => {
       ></search-field-item>
     </search-field>
 
-    <day-picker v-model="section.day"></day-picker>
+    <day-picker v-model="form.day"></day-picker>
 
     <slot-picker
       v-if="store.timeSlots.length > 0"
-      v-model="section.slot"
+      v-model="form.slot"
       :timeSlots="store.timeSlots"
     ></slot-picker>
 
     <div class="lg:flex">
       <input class="btn btn--confirm" type="submit" value="Add" />
       <input
+        @click="clearForm"
         type="button"
         value="Clear"
-        @click="clearForm"
         class="btn btn--reject"
       />
     </div>
   </form>
-  <p>{{ section }}</p>
+  <p>{{ form }}</p>
 </template>

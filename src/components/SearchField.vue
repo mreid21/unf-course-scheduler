@@ -13,7 +13,7 @@ interface Props {
   modelValue?: Option;
 }
 
-const { placeholder, items, filter, icon } = defineProps<Props>();
+const { placeholder, items, filter, icon, modelValue } = defineProps<Props>();
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -23,7 +23,7 @@ const clearInput = () => (input.value = '');
 
 const showDropdown = ref<boolean>(false);
 
-const selection = ref<Option>(undefined);
+const selection = ref<Option>(modelValue);
 
 watch(selection, () => {
   emit('update:modelValue', selection.value);
