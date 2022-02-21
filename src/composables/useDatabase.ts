@@ -119,6 +119,22 @@ const useDatabase = () => {
     }
   }
 
+  const deleteSection = async (id: number) => {
+    try {
+      const {data, error} = await supabase
+        .from('sections')
+        .delete()
+        .match({'section_id': id})
+
+        if(error) throw error
+
+        return data
+    }
+    catch(error: any){
+      alert(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -132,7 +148,8 @@ const useDatabase = () => {
     fetchTimeSlots,
     fetchParallel,
     fetchSections,
-    fetchSection
+    fetchSection,
+    deleteSection
   };
 };
 

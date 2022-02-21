@@ -5,7 +5,7 @@ import { Section, SectionBuilder } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
-const { fetchSections, fetchSection } = useDatabase();
+const { fetchSections, fetchSection, deleteSection } = useDatabase();
 
 export const useSectionStore = defineStore('section', {
   state: () => ({
@@ -26,7 +26,7 @@ export const useSectionStore = defineStore('section', {
       }
     
       const section = this.findSectionByID(id)
-      const sectionMeta: SectionBuilder | undefined = await fetchSection(id)
+      const sectionMeta = await fetchSection(id)
 
       if(section && sectionMeta){
         this.$state.sectionEdit = {
@@ -41,5 +41,12 @@ export const useSectionStore = defineStore('section', {
       }
       console.log(this.$state.sectionEdit)
     },
+    async deleteSection(id: number){
+      const section = this.findSectionByID(id)
+      if(section){
+        this.sections = this.sections.filter(section => section.section_id !== id)
+        await deleteSection(id)
+      }
+    }
   },
 });

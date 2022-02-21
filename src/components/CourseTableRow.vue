@@ -14,7 +14,9 @@ const { section } = defineProps<{
 const beginTime = computed(() => formatTime(section.begin_time));
 const endTime = computed(() => formatTime(section.end_time));
 
-const edit = (id: number) => store.editSection(id);
+const editSection = (id: number) => store.editSection(id);
+
+const deleteSection = async(id: number) => await store.deleteSection(id)
 </script>
 
 <template>
@@ -29,7 +31,8 @@ const edit = (id: number) => store.editSection(id);
       :campus="section.campus_name"
       :beginTime="beginTime"
       :endTime="endTime"
-      :edit="edit"
+      :editSection="editSection"
+      :deleteSection="deleteSection"
     ></slot>
   </tr>
 </template>

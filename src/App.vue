@@ -47,7 +47,8 @@ const headers = ref([
                   campus,
                   beginTime,
                   endTime,
-                  edit,
+                  editSection,
+                  deleteSection
                 }"
               >
                 <td>{{ code }}</td>
@@ -61,12 +62,13 @@ const headers = ref([
                     type="button"
                     value="Edit"
                     class="btn btn--edit text-xs"
-                    @click="edit(id)"
+                    @click="editSection(id)"
                   />
                   <input
                     type="button"
                     value="Delete"
                     class="btn btn--reject text-xs"
+                    @click="deleteSection(id)"
                   />
                 </td>
               </template>
