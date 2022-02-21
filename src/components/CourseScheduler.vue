@@ -8,12 +8,12 @@ import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
 import { useCourseStore } from '../stores/useCourseStore';
-import useValidation from '../composables/useForm';
+import useForm from '../composables/useForm';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
 const store = useCourseStore();
-const { form, updateRooms, updateTimeSlots, clearForm } = useValidation();
+const { form, updateRooms, updateTimeSlots, clearForm } = useForm();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await store.getFieldData([
