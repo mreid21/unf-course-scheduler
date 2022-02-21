@@ -31,7 +31,7 @@ export const useSectionStore = defineStore('section', {
       if(section && sectionMeta){
         this.$state.sectionEdit = {
           sectionID: section.section_id,
-          course: {id: sectionMeta.course_id, value: section.course_code},
+          course: {id: sectionMeta.course_id, value: section.course_code, meta: section.credit_hours},
           instructor: {id: sectionMeta.instructor_id, value: section.instructor_name},
           campus: {id: sectionMeta.campus_id, value :section.campus_name},
           slot: {id: sectionMeta.slot_id, value: `${section.begin_time} - ${section.end_time}`}
@@ -39,6 +39,7 @@ export const useSectionStore = defineStore('section', {
         if(sectionMeta.building_id && section.building_number) this.$state.sectionEdit.building = {id: sectionMeta.building_id, value: section.building_number as string}
         if(sectionMeta.room_id && section.room_number) this.$state.sectionEdit.building = {id: sectionMeta.room_id, value: section.room_number as string}
       }
+      console.log(this.$state.sectionEdit)
     },
   },
 });
