@@ -10,31 +10,27 @@ import SlotPicker from './SlotPicker.vue';
 import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
 import { CourseForm } from '../types/courseForm';
+import { useSectionStore } from '../stores/useSectionStore';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
-const store = useCourseStore();
+const courseStore = useCourseStore();
+const sectionStore = useSectionStore();
 const { form, updateRooms, updateTimeSlots, clearForm, populateWith } =
   useForm();
 
 onMounted(async () => {
-  const [courses, instructors, buildings] = await store.getFieldData([
+  const [courses, instructors, buildings] = await courseStore.getFieldData([
     fetchCourses,
     fetchInstructors,
     fetchBuildings,
   ]);
-  store.$patch({
+  courseStore.$patch({
     courses,
     instructors,
     buildings,
   });
 });
-
-watch(
-  () => form.building,
-  () => updateRooms()
-);
-watch([() => form.day, () => form.course], () => updateTimeSlots());
 </script>
 
 <template>
@@ -42,10 +38,10 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="form.course"
-      v-if="store.courses.length > 0"
+      v-if="courseStore.courses.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Courses'"
-      :items="store.courses"
+      :items="courseStore.courses"
       :filter="'course_code'"
       :id="'course_id'"
       :icon="'graduation-cap'"
@@ -59,10 +55,10 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
 
     <search-field
       v-model="form.instructor"
-      v-if="store.instructors.length > 0"
+      v-if="courseStore.instructors.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Instructors'"
-      :items="store.instructors"
+      :items="courseStore.instructors"
       :filter="'instructor_name'"
       :id="'instructor_id'"
       :icon="'chalkboard-teacher'"
@@ -77,10 +73,10 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
 
     <search-field
       v-model="form.building"
-      v-if="store.buildings.length > 0"
+      v-if="courseStore.buildings.length > 0"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
-      :items="store.buildings"
+      :items="courseStore.buildings"
       :filter="'building_number'"
       :id="'building_id'"
       :icon="'building'"
@@ -97,9 +93,9 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
     <search-field
       v-model="form.room"
       v-slot="{ item, select }"
-      v-if="store.rooms.length > 0"
+      v-if="courseStore.rooms.length > 0"
       :placeholder="'Rooms'"
-      :items="store.rooms"
+      :items="courseStore.rooms"
       :filter="'room_number'"
       :id="'room_id'"
       :icon="'door-open'"
@@ -114,9 +110,9 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
     <day-picker v-model="form.day"></day-picker>
 
     <slot-picker
-      v-if="store.timeSlots.length > 0"
+      v-if="courseStore.timeSlots.length > 0"
       v-model="form.slot"
-      :timeSlots="store.timeSlots"
+      :timeSlots="courseStore.timeSlots"
     ></slot-picker>
 
     <div class="lg:flex">

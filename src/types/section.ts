@@ -15,7 +15,7 @@ interface Section {
 }
 
 type SectionBuilder = {
-  section_id: number
+  section_id: number;
   course_id: number;
   instructor_id: number;
   room_id?: number;

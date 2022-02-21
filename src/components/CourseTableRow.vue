@@ -16,7 +16,7 @@ const endTime = computed(() => formatTime(section.end_time));
 
 const editSection = (id: number) => store.editSection(id);
 
-const deleteSection = async(id: number) => await store.deleteSection(id)
+const deleteSection = async (id: number) => await store.deleteSection(id);
 </script>
 
 <template>

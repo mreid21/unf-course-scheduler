@@ -8,7 +8,7 @@ import { Section, SectionBuilder } from '../types/section';
 import TimeSlot from '../types/timeSlot';
 
 const useDatabase = () => {
-  const fetchCourses = async ()=> {
+  const fetchCourses = async () => {
     try {
       const { data, error } = await supabase
         .from<Course>('courses')
@@ -50,9 +50,7 @@ const useDatabase = () => {
     }
   };
 
-  const fetchRooms = async (
-    buildingID: number
-  )=> {
+  const fetchRooms = async (buildingID: number) => {
     try {
       const { data, error } = await supabase
         .from<Room>('rooms')
@@ -67,10 +65,7 @@ const useDatabase = () => {
     }
   };
 
-  const fetchTimeSlots = async (
-    day: string,
-    credits: number
-  ) => {
+  const fetchTimeSlots = async (day: string, credits: number) => {
     try {
       const { data, error } = await supabase
         .from<TimeSlot>('time_slots')
@@ -104,36 +99,34 @@ const useDatabase = () => {
 
   const fetchSection = async (id: number) => {
     try {
-      const {data, error} = await supabase
+      const { data, error } = await supabase
         .from<SectionBuilder>('sections')
         .select('*')
         .eq('section_id', id)
-        .single()
+        .single();
 
-        if(error) throw error
+      if (error) throw error;
 
-        return data
+      return data;
+    } catch (error: any) {
+      alert(error.message);
     }
-    catch(error: any){
-      alert(error.message)
-    }
-  }
+  };
 
   const deleteSection = async (id: number) => {
     try {
-      const {data, error} = await supabase
+      const { data, error } = await supabase
         .from('sections')
         .delete()
-        .match({'section_id': id})
+        .match({ section_id: id });
 
-        if(error) throw error
+      if (error) throw error;
 
-        return data
+      return data;
+    } catch (error: any) {
+      alert(error.message);
     }
-    catch(error: any){
-      alert(error.message)
-    }
-  }
+  };
 
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
@@ -149,7 +142,7 @@ const useDatabase = () => {
     fetchParallel,
     fetchSections,
     fetchSection,
-    deleteSection
+    deleteSection,
   };
 };
 

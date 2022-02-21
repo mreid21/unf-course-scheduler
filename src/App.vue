@@ -48,7 +48,7 @@ const headers = ref([
                   beginTime,
                   endTime,
                   editSection,
-                  deleteSection
+                  deleteSection,
                 }"
               >
                 <td>{{ code }}</td>
