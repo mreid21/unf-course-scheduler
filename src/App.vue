@@ -12,7 +12,7 @@ const headers = ref([
   'room',
   'campus',
   'time',
-  'actions'
+  'actions',
 ]);
 </script>
 
@@ -20,7 +20,7 @@ const headers = ref([
   <div class="lg:h-screen bg-gray-50">
     <div class="app-container">
       <main class="p-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
-        <course-scheduler></course-scheduler>
+        <course-scheduler :mode="'create'"></course-scheduler>
       </main>
       <div class="scrollable shadow-sm lg:col-span-7">
         <course-table>
@@ -55,8 +55,16 @@ const headers = ref([
                 <td>{{ campus }}</td>
                 <td>{{ `${beginTime} - ${endTime}` }}</td>
                 <td class="flex">
-                  <input type="button" value="Edit" class="btn btn--edit text-xs">
-                  <input type="button" value="Delete" class="btn btn--reject text-xs">
+                  <input
+                    type="button"
+                    value="Edit"
+                    class="btn btn--edit text-xs"
+                  />
+                  <input
+                    type="button"
+                    value="Delete"
+                    class="btn btn--reject text-xs"
+                  />
                 </td>
               </template>
             </course-table-row>

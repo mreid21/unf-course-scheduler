@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { onMounted, reactive, watch } from 'vue';
+import { onMounted, reactive, ref, watch } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
 import SearchField from './SearchField.vue';
+import { SectionBuilder } from '../types/section';
 import SearchFieldItem from './SearchFieldItem.vue';
 import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
@@ -14,6 +15,13 @@ const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
 const store = useCourseStore();
 const { form, updateRooms, updateTimeSlots, clearForm } = useForm();
+
+const { mode, section } = defineProps<{
+  mode: 'edit' | 'create';
+  section?: SectionBuilder;
+}>();
+
+const modeIsCreate = ref<boolean>(mode === 'create');
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await store.getFieldData([
@@ -33,10 +41,16 @@ watch(
   () => updateRooms()
 );
 watch([() => form.day, () => form.course], () => updateTimeSlots());
+
+const submit = () => {
+  mode === 'create'
+    ? console.log('created section ' + mode)
+    : console.log('edited section');
+};
 </script>
 
 <template>
-  <form id="course-scheduler" @submit.prevent="() => console.log('hello')">
+  <form id="course-scheduler" @submit.prevent="submit">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="form.course"
@@ -118,7 +132,11 @@ watch([() => form.day, () => form.course], () => updateTimeSlots());
     ></slot-picker>
 
     <div class="lg:flex">
-      <input class="btn btn--confirm" type="submit" value="Add" />
+      <input
+        :class="[modeIsCreate ? 'btn btn--confirm' : 'btn btn--edit']"
+        type="submit"
+        :value="modeIsCreate ? 'Add' : 'Save'"
+      />
       <input
         @click="clearForm"
         type="button"
