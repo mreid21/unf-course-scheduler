@@ -11,7 +11,7 @@ export const useSectionStore = defineStore('section', {
   state: () => ({
     sections: [] as Section[],
     sectionEdit: {} as CourseForm,
-
+    isEditing: false
   }),
   actions: {
     async getSections() {
@@ -20,6 +20,9 @@ export const useSectionStore = defineStore('section', {
     },
     findSectionByID(id: number) {
       return this.sections.find((section) => section.section_id === id);
+    },
+    stopEditing(){
+      this.isEditing = false
     },
     async editSection(id: number) {
       if (this.$state.sectionEdit && id === this.$state.sectionEdit.sectionID) {
@@ -44,6 +47,7 @@ export const useSectionStore = defineStore('section', {
 
         Object.assign(this.sectionEdit, model)
       }
+      this.isEditing = true
     },
     async deleteSection(id: number) {
       const section = this.findSectionByID(id);

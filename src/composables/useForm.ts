@@ -1,10 +1,13 @@
-import { computed, reactive, watch } from 'vue';
+import { computed, reactive, watch, watchEffect } from 'vue';
 import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
+import { useSectionStore } from '../stores/useSectionStore';
 
 const useForm = () => {
-  const store = useCourseStore();
+  const courseStore = useCourseStore();
+  const sectionStore = useSectionStore()
   const form = reactive({}) as CourseForm;
+
 
   const populateWith = (state: CourseForm) => {
     Object.assign(form, state);
@@ -12,19 +15,19 @@ const useForm = () => {
 
   const updateRooms = async () => {
     if (form.building) {
-      await store.getRooms(form.building.id);
+      await courseStore.getRooms(form.building.id);
     } else {
       form.room = undefined;
-      store.rooms = [];
+      courseStore.rooms = [];
     }
   };
 
   const updateTimeSlots = async () => {
     if (form.day && form.course) {
-      await store.getTimeSlots(form.day, form.course.meta as number);
+      await courseStore.getTimeSlots(form.day, form.course.meta as number);
     } else {
       form.slot = undefined;
-      store.timeSlots = [];
+      courseStore.timeSlots = [];
     }
   };
 
@@ -32,6 +35,7 @@ const useForm = () => {
     for (let field in form) {
       form[field as keyof CourseForm] = undefined;
     }
+    sectionStore.stopEditing()
   };
 
   watch(
@@ -40,12 +44,18 @@ const useForm = () => {
   );
   watch([() => form.day, () => form.course], () => updateTimeSlots());
 
+  const isEditing = computed(() => sectionStore.isEditing)
+
+  watchEffect(() => {
+    if(sectionStore.sectionEdit){
+      populateWith(sectionStore.sectionEdit)
+    }
+  })
+
   return {
     form,
-    populateWith,
-    updateRooms,
-    updateTimeSlots,
     clearForm,
+    isEditing
   };
 };
 
