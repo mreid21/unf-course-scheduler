@@ -11,6 +11,7 @@ const headers = ref([
   'building',
   'room',
   'campus',
+  'days',
   'time',
   'actions',
 ]);
@@ -47,6 +48,7 @@ const headers = ref([
                   campus,
                   beginTime,
                   endTime,
+                  days,
                   editSection,
                   deleteSection,
                 }"
@@ -56,6 +58,7 @@ const headers = ref([
                 <td>{{ building ? building : 'N/A' }}</td>
                 <td>{{ room ? room : 'N/A' }}</td>
                 <td>{{ campus }}</td>
+                <td>{{ days }}</td>
                 <td>{{ `${beginTime} - ${endTime}` }}</td>
                 <td class="flex">
                   <input

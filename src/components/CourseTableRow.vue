@@ -31,6 +31,7 @@ const deleteSection = async (id: number) => await store.deleteSection(id);
       :campus="section.campus_name"
       :beginTime="beginTime"
       :endTime="endTime"
+      :days="section.slot_days"
       :editSection="editSection"
       :deleteSection="deleteSection"
     ></slot>
