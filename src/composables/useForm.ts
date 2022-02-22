@@ -30,9 +30,7 @@ const useForm = () => {
 
   const clearForm = () => {
     for (let field in form) {
-      if (field !== 'day' && field !== 'campus') {
-        form[field as keyof CourseForm] = undefined;
-      }
+      form[field as keyof CourseForm] = undefined;
     }
   };
 

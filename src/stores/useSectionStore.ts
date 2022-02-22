@@ -10,7 +10,8 @@ const { fetchSections, fetchSection, deleteSection } = useDatabase();
 export const useSectionStore = defineStore('section', {
   state: () => ({
     sections: [] as Section[],
-    sectionEdit: {} as CourseForm | undefined,
+    sectionEdit: {} as CourseForm,
+
   }),
   actions: {
     async getSections() {
@@ -24,40 +25,25 @@ export const useSectionStore = defineStore('section', {
       if (this.$state.sectionEdit && id === this.$state.sectionEdit.sectionID) {
         return;
       }
-
       const section = this.findSectionByID(id);
       const sectionMeta = await fetchSection(id);
 
       if (section && sectionMeta) {
-        this.$state.sectionEdit = {
-          sectionID: section.section_id,
-          course: {
-            id: sectionMeta.course_id,
-            value: section.course_code,
-            meta: section.credit_hours,
-          },
-          instructor: {
-            id: sectionMeta.instructor_id,
-            value: section.instructor_name,
-          },
-          campus: { id: sectionMeta.campus_id, value: section.campus_name },
-          slot: {
-            id: sectionMeta.slot_id,
-            value: `${section.begin_time} - ${section.end_time}`,
-          },
-        };
-        if (sectionMeta.building_id && section.building_number)
-          this.$state.sectionEdit.building = {
-            id: sectionMeta.building_id,
-            value: section.building_number as string,
-          };
-        if (sectionMeta.room_id && section.room_number)
-          this.$state.sectionEdit.building = {
-            id: sectionMeta.room_id,
-            value: section.room_number as string,
-          };
+        
+
+        let model = {
+          course: {id: sectionMeta.section_id, value: section.course_code, meta: section.credit_hours as number},
+          instructor: {id: sectionMeta.section_id, value: section.instructor_name},
+          campus: {id: sectionMeta.campus_id, value: section.campus_name},
+          slot: {id: sectionMeta.slot_id, value: `${section.begin_time} - ${section.end_time}`},
+          day: section.slot_days,
+        } as CourseForm
+
+        if(section.building_number && sectionMeta.building_id) model.building = {id: sectionMeta.building_id, value: `Building ${section.building_number}`}
+        if(section.room_number && sectionMeta.room_id) model.room = {id: sectionMeta.room_id, value: `Room ${section.room_number}`}
+
+        Object.assign(this.sectionEdit, model)
       }
-      console.log(this.$state.sectionEdit);
     },
     async deleteSection(id: number) {
       const section = this.findSectionByID(id);

@@ -17,6 +17,7 @@ const emit = defineEmits(['update:modelValue']);
     <div v-for="(day, index) in days" :key="index">
       <input
         @change="changeSelection"
+        :checked="modelValue === day"
         :id="day.toLowerCase()"
         class="appearance-none"
         :value="day"

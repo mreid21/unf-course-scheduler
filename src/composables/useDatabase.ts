@@ -100,7 +100,7 @@ const useDatabase = () => {
   const fetchSection = async (id: number) => {
     try {
       const { data, error } = await supabase
-        .from<SectionBuilder>('sections')
+        .from<SectionBuilder>('section_meta')
         .select('*')
         .eq('section_id', id)
         .single();

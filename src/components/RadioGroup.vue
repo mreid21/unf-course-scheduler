@@ -30,6 +30,7 @@ const update = (event: any) => {
     >
       <input
         @change="update"
+        :checked="modelValue && modelValue.id === field.value"
         class="absolute appearance-none visibility-hidden hidden"
         type="radio"
         :value="field.value"

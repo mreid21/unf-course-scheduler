@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref, watch } from 'vue';
+import { onMounted, reactive, ref, watch, watchEffect } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -11,6 +11,7 @@ import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
 import { CourseForm } from '../types/courseForm';
 import { useSectionStore } from '../stores/useSectionStore';
+import Option from '../types/option';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 
@@ -30,6 +31,12 @@ onMounted(async () => {
     instructors,
     buildings,
   });
+});
+
+watchEffect(() => {
+  if (sectionStore.sectionEdit !== {}) {
+    Object.assign(form, sectionStore.sectionEdit);
+  }
 });
 </script>
 
