@@ -13,6 +13,14 @@ export const useSectionStore = defineStore('section', {
     sectionEdit: {} as CourseForm,
     isEditing: false
   }),
+  getters: {
+    sectionWithInstructor: (state) => {
+      return (instructorID: number): Section[] | [] => state.sections.filter(s => s.instructor_id === instructorID)
+    },
+    sectionInRoom: (state) => {
+      return (roomID: number): Section[] | [] => state.sections.filter(s => s.room_id === roomID)
+    }
+  },
   actions: {
     async getSections() {
       const result = await fetchSections();

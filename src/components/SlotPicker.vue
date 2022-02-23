@@ -6,7 +6,7 @@ import SlotPickerItem from './SlotPickerItem.vue';
 
 interface Props {
   timeSlots: TimeSlot[];
-  pageSize: number;
+  pageSize?: number;
   modelValue?: Option;
 }
 

@@ -50,6 +50,7 @@ const useForm = () => {
     if(sectionStore.sectionEdit){
       populateWith(sectionStore.sectionEdit)
     }
+    console.log(sectionStore.sectionWithInstructor(9))
   })
 
   return {
