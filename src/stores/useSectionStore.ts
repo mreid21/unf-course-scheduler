@@ -33,7 +33,7 @@ export const useSectionStore = defineStore('section', {
         this.sectionEdit = {
           course: {id: section.course_id, value: section.course_code, meta: section.credit_hours as number},
           instructor: {id: section.instructor_id, value: section.instructor_name},
-          campus: {id: section.campus_id, value: section.campus_name},
+          campus: section.campus_id,
           day: section.slot_days,
           slot: {id: section.slot_id, value: `${section.begin_time} - ${section.end_time}`}
         }

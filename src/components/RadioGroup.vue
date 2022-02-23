@@ -4,7 +4,7 @@ import Option from '../types/option';
 import Radio from '../types/radio';
 
 interface Props {
-  modelValue?: Option;
+  modelValue?: number;
   fields: Radio[];
 }
 
@@ -13,7 +13,7 @@ const { fields } = defineProps<Props>();
 const emit = defineEmits(['update:modelValue']);
 
 const update = (event: any) => {
-  emit('update:modelValue', { id: event.target.value, value: event.target.id });
+  emit('update:modelValue', event.target.value);
 };
 </script>
 
@@ -30,7 +30,7 @@ const update = (event: any) => {
     >
       <input
         @change="update"
-        :checked="modelValue && modelValue.id === field.value"
+        :checked="modelValue === field.value"
         class="absolute appearance-none visibility-hidden hidden"
         type="radio"
         :value="field.value"

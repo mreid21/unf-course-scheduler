@@ -19,7 +19,7 @@ type CourseForm = {
   sectionID?: number;
   course?: Option;
   instructor?: Option;
-  campus?: Option;
+  campus?: number;
   day?: DayOfWeek;
   building?: Option;
   room?: Option;
