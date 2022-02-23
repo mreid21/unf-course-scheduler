@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import useDatabase from '../composables/useDatabase';
 import { CourseForm } from '../types/courseform';
-import { Section, SectionBuilder } from '../types/section';
+import { Section } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
-const { fetchSections, fetchSection, deleteSection } = useDatabase();
+const { fetchSections, deleteSection } = useDatabase();
 
 export const useSectionStore = defineStore('section', {
   state: () => ({
@@ -29,25 +29,20 @@ export const useSectionStore = defineStore('section', {
         return;
       }
       const section = this.findSectionByID(id);
-      const sectionMeta = await fetchSection(id);
-
-      if (section && sectionMeta) {
-        
-
-        let model = {
-          course: {id: sectionMeta.section_id, value: section.course_code, meta: section.credit_hours as number},
-          instructor: {id: sectionMeta.section_id, value: section.instructor_name},
-          campus: {id: sectionMeta.campus_id, value: section.campus_name},
-          slot: {id: sectionMeta.slot_id, value: `${section.begin_time} - ${section.end_time}`},
+      if(section){
+        this.sectionEdit = {
+          course: {id: section.course_id, value: section.course_code, meta: section.credit_hours as number},
+          instructor: {id: section.instructor_id, value: section.instructor_name},
+          campus: {id: section.campus_id, value: section.campus_name},
           day: section.slot_days,
-        } as CourseForm
+          slot: {id: section.slot_id, value: `${section.begin_time} - ${section.end_time}`}
+        }
 
-        if(section.building_number && sectionMeta.building_id) model.building = {id: sectionMeta.building_id, value: `Building ${section.building_number}`}
-        if(section.room_number && sectionMeta.room_id) model.room = {id: sectionMeta.room_id, value: `Room ${section.room_number}`}
-
-        Object.assign(this.sectionEdit, model)
+        if(section.building_id && section.building_number) this.sectionEdit.building = {id: section.building_id, value: `Building ${section.building_number}`}
+        if(section.room_id && section.room_number) this.sectionEdit.room = {id: section.room_id, value: `Room ${section.room_number}`}
+        
+        this.isEditing = true
       }
-      this.isEditing = true
     },
     async deleteSection(id: number) {
       const section = this.findSectionByID(id);

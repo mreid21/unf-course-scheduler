@@ -97,22 +97,6 @@ const useDatabase = () => {
     }
   };
 
-  const fetchSection = async (id: number) => {
-    try {
-      const { data, error } = await supabase
-        .from<SectionBuilder>('section_meta')
-        .select('*')
-        .eq('section_id', id)
-        .single();
-
-      if (error) throw error;
-
-      return data;
-    } catch (error: any) {
-      alert(error.message);
-    }
-  };
-
   const deleteSection = async (id: number) => {
     try {
       const { data, error } = await supabase
@@ -141,7 +125,6 @@ const useDatabase = () => {
     fetchTimeSlots,
     fetchParallel,
     fetchSections,
-    fetchSection,
     deleteSection,
   };
 };

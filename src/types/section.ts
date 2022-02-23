@@ -2,7 +2,9 @@ import { DayOfWeek } from "./courseForm";
 
 type SectionField = keyof Section;
 
-interface Section {
+type Section = SectionData & SectionBuilder
+
+type SectionData = {
   section_id: number;
   course_code: string;
   course_title?: string;
@@ -16,6 +18,7 @@ interface Section {
   end_time: string;
   campus_name: string;
 }
+
 
 type SectionBuilder = {
   section_id: number;
