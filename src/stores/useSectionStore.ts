@@ -11,15 +11,17 @@ export const useSectionStore = defineStore('section', {
   state: () => ({
     sections: [] as Section[],
     sectionEdit: {} as CourseForm,
-    isEditing: false
+    isEditing: false,
   }),
   getters: {
     sectionWithInstructor: (state) => {
-      return (instructorID: number): Section[] | [] => state.sections.filter(s => s.instructor_id === instructorID)
+      return (instructorID: number): Section[] | [] =>
+        state.sections.filter((s) => s.instructor_id === instructorID);
     },
     sectionInRoom: (state) => {
-      return (roomID: number): Section[] | [] => state.sections.filter(s => s.room_id === roomID)
-    }
+      return (roomID: number): Section[] | [] =>
+        state.sections.filter((s) => s.room_id === roomID);
+    },
   },
   actions: {
     async getSections() {
@@ -29,35 +31,59 @@ export const useSectionStore = defineStore('section', {
     findSectionByID(id: number) {
       return this.sections.find((section) => section.section_id === id);
     },
-    stopEditing(){
-      this.isEditing = false
+    stopEditing() {
+      this.isEditing = false;
     },
     async editSection(id: number) {
       if (this.$state.sectionEdit && id === this.$state.sectionEdit.sectionID) {
         return;
       }
       const section = this.findSectionByID(id);
-      if(section){
+      if (section) {
         this.sectionEdit = {
-          course: {id: section.course_id, value: section.course_code, meta: section.credit_hours as number},
-          instructor: {id: section.instructor_id, value: section.instructor_name},
+          course: {
+            id: section.course_id,
+            value: section.course_code,
+            meta: section.credit_hours as number,
+          },
+          instructor: {
+            id: section.instructor_id,
+            value: section.instructor_name,
+          },
           campus: section.campus_id,
           day: section.slot_days,
-          slot: {id: section.slot_id, value: {start: section.begin_time, end: section.end_time}}
-        }
+          slot: {
+            id: section.slot_id,
+            value: `${section.begin_time} - ${section.end_time}`,
+            meta: {
+              start: section.begin_time,
+              end: section.end_time,
+            } as Object,
+          },
+        };
 
-        if(section.building_id && section.building_number) this.sectionEdit.building = {id: section.building_id, value: `Building ${section.building_number}`}
-        if(section.room_id && section.room_number) this.sectionEdit.room = {id: section.room_id, value: `Room ${section.room_number}`}
-        
-        this.isEditing = true
+        if (section.building_id && section.building_number)
+          this.sectionEdit.building = {
+            id: section.building_id,
+            value: `Building ${section.building_number}`,
+          };
+        if (section.room_id && section.room_number)
+          this.sectionEdit.room = {
+            id: section.room_id,
+            value: `Room ${section.room_number}`,
+          };
+
+        this.isEditing = true;
       }
     },
     async deleteSection(id: number) {
+      if (this.isEditing) this.isEditing = false;
       const section = this.findSectionByID(id);
       if (section) {
         this.sections = this.sections.filter(
           (section) => section.section_id !== id
         );
+
         await deleteSection(id);
       }
     },

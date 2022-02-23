@@ -5,9 +5,8 @@ import { useSectionStore } from '../stores/useSectionStore';
 
 const useForm = () => {
   const courseStore = useCourseStore();
-  const sectionStore = useSectionStore()
+  const sectionStore = useSectionStore();
   const form = reactive({}) as CourseForm;
-
 
   const populateWith = (state: CourseForm) => {
     Object.assign(form, state);
@@ -35,7 +34,7 @@ const useForm = () => {
     for (let field in form) {
       form[field as keyof CourseForm] = undefined;
     }
-    sectionStore.stopEditing()
+    sectionStore.stopEditing();
   };
 
   watch(
@@ -44,19 +43,24 @@ const useForm = () => {
   );
   watch([() => form.day, () => form.course], () => updateTimeSlots());
 
-  const isEditing = computed(() => sectionStore.isEditing)
+  const isEditing = computed(() => sectionStore.isEditing);
 
   watchEffect(() => {
-    if(sectionStore.sectionEdit){
-      populateWith(sectionStore.sectionEdit)
+    if (sectionStore.sectionEdit) {
+      populateWith(sectionStore.sectionEdit);
     }
-    console.log(sectionStore.sectionWithInstructor(9))
-  })
+  });
+
+  sectionStore.$onAction(({ name }) => {
+    if (name === 'deleteSection') {
+      clearForm();
+    }
+  });
 
   return {
     form,
     clearForm,
-    isEditing
+    isEditing,
   };
 };
 

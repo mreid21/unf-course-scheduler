@@ -1,7 +1,7 @@
 type Option =
   | {
       id: number;
-      value: string | {start: string, end: string};
+      value: string;
       meta?: Object | string | number;
     }
   | undefined;

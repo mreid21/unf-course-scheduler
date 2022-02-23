@@ -1,8 +1,8 @@
-import { DayOfWeek } from "./courseForm";
+import { DayOfWeek } from './courseForm';
 
 type SectionField = keyof Section;
 
-type Section = SectionData & SectionBuilder
+type Section = SectionData & SectionBuilder;
 
 type SectionData = {
   section_id: number;
@@ -14,11 +14,10 @@ type SectionData = {
   building_number?: string | number;
   building_name?: string;
   begin_time: string;
-  slot_days: DayOfWeek
+  slot_days: DayOfWeek;
   end_time: string;
   campus_name: string;
-}
-
+};
 
 type SectionBuilder = {
   section_id: number;
