@@ -43,7 +43,7 @@ export const useSectionStore = defineStore('section', {
           instructor: {id: section.instructor_id, value: section.instructor_name},
           campus: section.campus_id,
           day: section.slot_days,
-          slot: {id: section.slot_id, value: `${section.begin_time} - ${section.end_time}`}
+          slot: {id: section.slot_id, value: {start: section.begin_time, end: section.end_time}}
         }
 
         if(section.building_id && section.building_number) this.sectionEdit.building = {id: section.building_id, value: `Building ${section.building_number}`}

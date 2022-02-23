@@ -22,7 +22,7 @@ const endTime = computed(() => formatTime(timeSlot.end_time));
     @click="
       emit('selected', {
         id: timeSlot.slot_id,
-        value: `${beginTime} - ${endTime}`,
+        value: {start: timeSlot.begin_time, end: timeSlot.end_time},
       })
     "
     class="px-2 py-4 border border-gray-400 rounded-lg text-center text-sm text-gray-700 transition-transform duration-200 hover:bg-blue-100 cursor-pointer"
