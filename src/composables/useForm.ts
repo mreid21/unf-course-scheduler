@@ -3,10 +3,13 @@ import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 import { useSectionStore } from '../stores/useSectionStore';
 import useValidation from './useValidation';
+import useDatabase from './useDatabase';
+import { SectionBuilder } from '../types/section';
 
 const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
+  const {insertSection} = useDatabase()
   const form = reactive({}) as CourseForm;
   const conflicts = ref()
   const { findConflicts } = useValidation(form);
@@ -33,8 +36,24 @@ const useForm = () => {
     }
   };
 
-  const submit = () => {
+  const submit = (action: string) => {
     conflicts.value = findConflicts();
+    const section: SectionBuilder = {
+      section_id: form.sectionID,
+      course_id: form.course!.id,
+      instructor_id: form.instructor!.id,
+      campus_id: form.campus!,
+      room_id: form.room?.id,
+      slot_id: form.slot!.id,
+    }
+    if(conflicts.value.length > 0) return
+    switch(action){
+      case 'add':
+        insertSection(section)
+        break;
+      case 'save':
+        break;
+    }
   };
 
   const clearConflicts = () => conflicts.value = undefined
