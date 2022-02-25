@@ -12,7 +12,7 @@ import useForm from '../composables/useForm';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
-const { form, clearForm, isEditing } = useForm();
+const { form, clearForm, isEditing, submit } = useForm();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await courseStore.getFieldData([
@@ -29,7 +29,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <form id="course-scheduler">
+  <form id="course-scheduler" @submit.prevent="submit">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field
       v-model="form.course"

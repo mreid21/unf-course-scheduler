@@ -2,11 +2,13 @@ import { computed, reactive, watch, watchEffect } from 'vue';
 import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 import { useSectionStore } from '../stores/useSectionStore';
+import useValidation from './useValidation';
 
 const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
   const form = reactive({}) as CourseForm;
+  const {findConflicts} = useValidation(form)
 
   const populateWith = (state: CourseForm) => {
     Object.assign(form, state);
@@ -29,6 +31,10 @@ const useForm = () => {
       courseStore.timeSlots = [];
     }
   };
+
+  const submit = () => {
+    findConflicts()
+  }
 
   const clearForm = () => {
     for (let field in form) {
@@ -61,6 +67,7 @@ const useForm = () => {
     form,
     clearForm,
     isEditing,
+    submit
   };
 };
 

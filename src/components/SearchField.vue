@@ -44,7 +44,10 @@ const clearSelection = () => {
 const filteredList = computed(() =>
   input.value
     ? items.filter((item: any) =>
-        item[filter].toLowerCase().includes(input.value!.toLowerCase())
+        item[filter]
+          .toString()
+          .toLowerCase()
+          .includes(input.value!.toLowerCase())
       )
     : items
 );

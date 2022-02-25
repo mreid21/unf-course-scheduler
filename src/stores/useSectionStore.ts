@@ -15,12 +15,12 @@ export const useSectionStore = defineStore('section', {
   }),
   getters: {
     sectionWithInstructor: (state) => {
-      return (instructorID: number): Section[] | [] =>
-        state.sections.filter((s) => s.instructor_id === instructorID);
+      return (instructorID: number, sectionID?: number): Section[] | [] =>
+        state.sections.filter((s) => s.instructor_id === instructorID && s.section_id !== sectionID);
     },
     sectionInRoom: (state) => {
-      return (roomID: number): Section[] | [] =>
-        state.sections.filter((s) => s.room_id === roomID);
+      return (roomID: number, sectionID?: number): Section[] | [] =>
+        state.sections.filter((s) => s.room_id === roomID && s.section_id !== sectionID);
     },
   },
   actions: {
@@ -41,6 +41,7 @@ export const useSectionStore = defineStore('section', {
       const section = this.findSectionByID(id);
       if (section) {
         this.sectionEdit = {
+          sectionID: section.section_id,
           course: {
             id: section.course_id,
             value: section.course_code,
@@ -58,7 +59,7 @@ export const useSectionStore = defineStore('section', {
             meta: {
               start: section.begin_time,
               end: section.end_time,
-            } as Object,
+            },
           },
         };
 
