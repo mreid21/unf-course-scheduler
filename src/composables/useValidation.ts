@@ -14,6 +14,8 @@ const useValidation = (form: CourseForm) => {
   const { timeToInt } = useTime();
   const data = ref<CourseForm>(form);
 
+  
+
   const findConflicts = () => {
     const byInstructor = store.sectionWithInstructor(
       data.value.instructor!.id,
@@ -24,6 +26,9 @@ const useValidation = (form: CourseForm) => {
       data.value.sectionID
     );
     const potentialConflicts = new Set([...byInstructor, ...byRoom]);
+
+    let conflicts = []
+
     const potentialSection: SectionLike = {
       start: data.value.slot!.meta.start,
       end: data.value.slot!.meta.end,
@@ -36,10 +41,26 @@ const useValidation = (form: CourseForm) => {
     const sorted = [...simple, potentialSection].sort(
       (a, b) => timeToInt(a.start) - timeToInt(b.start)
     );
+
+    const position = sorted.indexOf(potentialSection)
+
+    //first pass: check all sections before potential
+    for(let i = 0; i < position; i++){
+      if(potentialSection.start < sorted[i].end){
+        conflicts.push(sorted[i])
+      }
+    }
+
+    //second pass: check all sections after potential
+    for(let i = position; i < sorted.length; i++){
+      if(sorted[i].start < potentialSection.end && i !== position){
+        conflicts.push(sorted[i])
+      }
+    }
   };
 
   return {
-    findConflicts,
+    findConflicts
   };
 };
 
