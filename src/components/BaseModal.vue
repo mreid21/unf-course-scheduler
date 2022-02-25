@@ -3,7 +3,7 @@ import { computed, ref } from 'vue';
 import useForm from '../composables/useForm';
 
 const { conflicts } = defineProps<{
-  conflicts: [] | null;
+  conflicts: [];
 }>();
 
 const emit = defineEmits(['close']);

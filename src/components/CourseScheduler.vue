@@ -44,7 +44,7 @@ const closeModal = () => {
   <base-modal
     v-show="showModal"
     @close="closeModal"
-    :conflicts="conflicts"
+    :conflicts="conflicts ? conflicts : []"
   ></base-modal>
   <form id="course-scheduler" @submit.prevent="submit">
     <!-- passes select method down as prop because search field and search field item share the same context -->
