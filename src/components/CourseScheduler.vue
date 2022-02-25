@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watchEffect } from 'vue';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -9,10 +9,12 @@ import DayPicker from './DayPicker.vue';
 import SlotPicker from './SlotPicker.vue';
 import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
+import BaseModal from './BaseModal.vue';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
-const { form, clearForm, isEditing, submit } = useForm();
+const { form, clearForm, isEditing, submit, conflicts, clearConflicts } =
+  useForm();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await courseStore.getFieldData([
@@ -26,9 +28,24 @@ onMounted(async () => {
     buildings,
   });
 });
+
+const showModal = ref(false);
+watch(conflicts, () => {
+  if (conflicts.value) showModal.value = true;
+});
+
+const closeModal = () => {
+  showModal.value = false;
+  clearConflicts();
+};
 </script>
 
 <template>
+  <base-modal
+    v-show="showModal"
+    @close="closeModal"
+    :conflicts="conflicts"
+  ></base-modal>
   <form id="course-scheduler" @submit.prevent="submit">
     <!-- passes select method down as prop because search field and search field item share the same context -->
     <search-field

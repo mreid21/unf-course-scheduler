@@ -1,4 +1,4 @@
-import { computed, reactive, watch, watchEffect } from 'vue';
+import { computed, reactive, ref, watch, watchEffect } from 'vue';
 import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 import { useSectionStore } from '../stores/useSectionStore';
@@ -8,6 +8,7 @@ const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
   const form = reactive({}) as CourseForm;
+  const conflicts = ref()
   const { findConflicts } = useValidation(form);
 
   const populateWith = (state: CourseForm) => {
@@ -33,8 +34,10 @@ const useForm = () => {
   };
 
   const submit = () => {
-    findConflicts();
+    conflicts.value = findConflicts();
   };
+
+  const clearConflicts = () => conflicts.value = undefined
 
   const clearForm = () => {
     for (let field in form) {
@@ -70,6 +73,8 @@ const useForm = () => {
     clearForm,
     isEditing,
     submit,
+    conflicts,
+    clearConflicts
   };
 };
 

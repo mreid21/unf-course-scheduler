@@ -21,10 +21,10 @@ const useValidation = (form: CourseForm) => {
       data.value.instructor!.id,
       data.value.sectionID
     );
-    const byRoom = store.sectionInRoom(
-      data.value.room!.id,
+    const byRoom = data.value.room ? store.sectionInRoom(
+      data.value.room.id,
       data.value.sectionID
-    );
+    ) : []
     const potentialConflicts = new Set([...byInstructor, ...byRoom]);
 
     let conflicts = []
@@ -42,6 +42,7 @@ const useValidation = (form: CourseForm) => {
       (a, b) => timeToInt(a.start) - timeToInt(b.start)
     );
 
+
     const position = sorted.indexOf(potentialSection)
 
     //first pass: check all sections before potential
@@ -57,6 +58,8 @@ const useValidation = (form: CourseForm) => {
         conflicts.push(sorted[i])
       }
     }
+
+    return conflicts
   };
 
   return {
