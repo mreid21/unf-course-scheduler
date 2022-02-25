@@ -32,7 +32,9 @@ const useForm = () => {
 
   const clearForm = () => {
     for (let field in form) {
-      form[field as keyof CourseForm] = undefined;
+      if(field !== 'campus' && field !== 'day'){
+        form[field as keyof CourseForm] = undefined;
+      }
     }
     sectionStore.stopEditing();
   };
