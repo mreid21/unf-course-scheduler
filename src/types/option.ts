@@ -2,7 +2,7 @@ type Option =
   | {
       id: number;
       value: string;
-      meta?: any
+      meta?: any;
     }
   | undefined;
 

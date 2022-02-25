@@ -16,11 +16,15 @@ export const useSectionStore = defineStore('section', {
   getters: {
     sectionWithInstructor: (state) => {
       return (instructorID: number, sectionID?: number): Section[] | [] =>
-        state.sections.filter((s) => s.instructor_id === instructorID && s.section_id !== sectionID);
+        state.sections.filter(
+          (s) => s.instructor_id === instructorID && s.section_id !== sectionID
+        );
     },
     sectionInRoom: (state) => {
       return (roomID: number, sectionID?: number): Section[] | [] =>
-        state.sections.filter((s) => s.room_id === roomID && s.section_id !== sectionID);
+        state.sections.filter(
+          (s) => s.room_id === roomID && s.section_id !== sectionID
+        );
     },
   },
   actions: {

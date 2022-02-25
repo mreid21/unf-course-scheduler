@@ -7,11 +7,11 @@ const useTime = () => {
     return `${hours}:${minutes}${suffix}`;
   };
 
-  const timeToInt = (time: string): number => parseInt(time.replace(':', ''))
+  const timeToInt = (time: string): number => parseInt(time.replace(':', ''));
 
   return {
     formatTime,
-    timeToInt
+    timeToInt,
   };
 };
 

@@ -8,7 +8,7 @@ const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
   const form = reactive({}) as CourseForm;
-  const {findConflicts} = useValidation(form)
+  const { findConflicts } = useValidation(form);
 
   const populateWith = (state: CourseForm) => {
     Object.assign(form, state);
@@ -33,12 +33,12 @@ const useForm = () => {
   };
 
   const submit = () => {
-    findConflicts()
-  }
+    findConflicts();
+  };
 
   const clearForm = () => {
     for (let field in form) {
-      if(field !== 'campus' && field !== 'day'){
+      if (field !== 'campus' && field !== 'day') {
         form[field as keyof CourseForm] = undefined;
       }
     }
@@ -69,7 +69,7 @@ const useForm = () => {
     form,
     clearForm,
     isEditing,
-    submit
+    submit,
   };
 };
 
