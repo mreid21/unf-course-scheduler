@@ -1,11 +1,11 @@
 import { defineStore } from 'pinia';
 import useDatabase from '../composables/useDatabase';
 import { CourseForm } from '../types/courseform';
-import { Section } from '../types/section';
+import { Section, SectionBuilder } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
-const { fetchSections, deleteSection } = useDatabase();
+const { fetchSections, deleteSection, insertSection } = useDatabase();
 
 export const useSectionStore = defineStore('section', {
   state: () => ({
@@ -92,5 +92,10 @@ export const useSectionStore = defineStore('section', {
         await deleteSection(id);
       }
     },
+    async addSection(section: SectionBuilder){
+      if(this.isEditing) this.isEditing = false;
+      await insertSection(section)
+      await this.getSections()
+    }
   },
 });

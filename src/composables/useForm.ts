@@ -49,7 +49,7 @@ const useForm = () => {
     if(conflicts.value.length > 0) return
     switch(action){
       case 'add':
-        insertSection(section)
+        sectionStore.addSection(section)
         break;
       case 'save':
         break;

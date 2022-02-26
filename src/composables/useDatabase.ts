@@ -104,6 +104,7 @@ const useDatabase = () => {
         .insert(section)
       
       if(error) throw error
+
     } catch (error: any) {
       alert(error.message)
     }

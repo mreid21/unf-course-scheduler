@@ -31,7 +31,7 @@ onMounted(async () => {
 
 const showModal = ref(false);
 watch(conflicts, () => {
-  if (conflicts.value) showModal.value = true;
+  if (conflicts.value && conflicts.value.length > 0) showModal.value = true;
 });
 
 const closeModal = () => {
@@ -145,10 +145,9 @@ const closeModal = () => {
       <input
         @click="clearForm"
         type="button"
-        value="Clear"
+        :value="isEditing ? 'Stop Editing' : 'Clear'"
         class="btn btn--reject"
       />
     </div>
   </form>
-  <p>{{ form }}</p>
 </template>
