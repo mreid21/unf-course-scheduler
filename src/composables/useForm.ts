@@ -10,8 +10,14 @@ const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
   const form = reactive({}) as CourseForm;
-  const conflicts = ref()
-  const conflictSections = computed(() => conflicts.value && conflicts.value.length > 0 ? conflicts.value.map((s: any) => sectionStore.findSectionByID(s.section_id)): [])
+  const conflicts = ref();
+  const conflictSections = computed(() =>
+    conflicts.value && conflicts.value.length > 0
+      ? conflicts.value.map((s: any) =>
+          sectionStore.findSectionByID(s.section_id)
+        )
+      : []
+  );
   const { findConflicts } = useValidation(form);
 
   const populateWith = (state: CourseForm) => {
@@ -45,19 +51,19 @@ const useForm = () => {
       campus_id: form.campus!,
       room_id: form.room?.id,
       slot_id: form.slot!.id,
-    }
-    console.log(conflictSections.value)
-    if(conflicts.value.length > 0) return
-    switch(action){
+    };
+    console.log(conflictSections.value);
+    if (conflicts.value.length > 0) return;
+    switch (action) {
       case 'add':
-        sectionStore.addSection(section)
+        sectionStore.addSection(section);
         break;
       case 'save':
         break;
     }
   };
 
-  const clearConflicts = () => conflicts.value = undefined
+  const clearConflicts = () => (conflicts.value = undefined);
 
   const clearForm = () => {
     for (let field in form) {
@@ -94,7 +100,7 @@ const useForm = () => {
     isEditing,
     submit,
     conflictSections,
-    clearConflicts
+    clearConflicts,
   };
 };
 

@@ -28,10 +28,13 @@ onMounted(async () => {
     buildings,
   });
 });
-const modalShowing = ref(false)
-const closeModal = () => modalShowing.value = false
+const modalShowing = ref(false);
+const closeModal = () => (modalShowing.value = false);
 
-watch(() => conflictSections.value.length > 0, () => modalShowing.value = true)
+watch(
+  () => conflictSections.value.length > 0,
+  () => (modalShowing.value = true)
+);
 </script>
 
 <template>
@@ -41,10 +44,10 @@ watch(() => conflictSections.value.length > 0, () => modalShowing.value = true)
     </template>
     <template v-slot:main>
       <p v-for="conflict in conflictSections">
-        {{conflict}}
+        {{ conflict }}
       </p>
     </template>
-    <template v-slot:actions="{close}">
+    <template v-slot:actions="{ close }">
       <div class="flex">
         <button class="btn btn--confirm">Overwrite</button>
         <button @click="close" class="btn btn--reject">Cancel</button>

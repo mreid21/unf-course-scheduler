@@ -1,11 +1,10 @@
 <script setup lang="ts">
-
 const emit = defineEmits(['close']);
 
 const close = () => {
-  console.log('close')
-  emit('close')
-}
+  console.log('close');
+  emit('close');
+};
 </script>
 
 <template>

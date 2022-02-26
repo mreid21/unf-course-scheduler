@@ -99,16 +99,13 @@ const useDatabase = () => {
 
   const insertSection = async (section: Object) => {
     try {
-      const {error} = await supabase
-        .from('sections')
-        .insert(section)
-      
-      if(error) throw error
+      const { error } = await supabase.from('sections').insert(section);
 
+      if (error) throw error;
     } catch (error: any) {
-      alert(error.message)
+      alert(error.message);
     }
-  }
+  };
 
   const deleteSection = async (id: number) => {
     try {
@@ -139,7 +136,7 @@ const useDatabase = () => {
     fetchParallel,
     fetchSections,
     deleteSection,
-    insertSection
+    insertSection,
   };
 };
 

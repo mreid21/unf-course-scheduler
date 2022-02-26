@@ -14,23 +14,24 @@ const useValidation = (form: CourseForm) => {
   const { timeToInt } = useTime();
   const data = ref<CourseForm>(form);
 
-  
-
   const findConflicts = () => {
     const byInstructor = store.sectionWithInstructor(
       data.value.instructor!.id,
       data.value.sectionID
     );
-    const byRoom = data.value.room ? store.sectionInRoom(
-      data.value.room.id,
-      data.value.sectionID
-    ) : []
+    const byRoom = data.value.room
+      ? store.sectionInRoom(data.value.room.id, data.value.sectionID)
+      : [];
 
-    const onlyOnDays = store.findSectionsOnDays(data.value.day!, [...byInstructor, ...byRoom], data.value.sectionID)
-    
+    const onlyOnDays = store.findSectionsOnDays(
+      data.value.day!,
+      [...byInstructor, ...byRoom],
+      data.value.sectionID
+    );
+
     const potentialConflicts = new Set([...onlyOnDays]);
 
-    let conflicts = []
+    let conflicts = [];
 
     const potentialSection: SectionLike = {
       start: data.value.slot!.meta.start,
@@ -45,28 +46,27 @@ const useValidation = (form: CourseForm) => {
       (a, b) => timeToInt(a.start) - timeToInt(b.start)
     );
 
-
-    const position = sorted.indexOf(potentialSection)
+    const position = sorted.indexOf(potentialSection);
 
     //first pass: check all sections before potential
-    for(let i = 0; i < position; i++){
-      if(potentialSection.start < sorted[i].end){
-        conflicts.push(sorted[i])
+    for (let i = 0; i < position; i++) {
+      if (potentialSection.start < sorted[i].end) {
+        conflicts.push(sorted[i]);
       }
     }
 
     //second pass: check all sections after potential
-    for(let i = position; i < sorted.length; i++){
-      if(sorted[i].start < potentialSection.end && i !== position){
-        conflicts.push(sorted[i])
+    for (let i = position; i < sorted.length; i++) {
+      if (sorted[i].start < potentialSection.end && i !== position) {
+        conflicts.push(sorted[i]);
       }
     }
 
-    return conflicts
+    return conflicts;
   };
 
   return {
-    findConflicts
+    findConflicts,
   };
 };
 
