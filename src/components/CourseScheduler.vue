@@ -13,7 +13,7 @@ import BaseModal from './BaseModal.vue';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
-const { form, clearForm, isEditing, submit, conflicts, clearConflicts } =
+const { form, clearForm, isEditing, submit, conflictSections, clearConflicts } =
   useForm();
 
 onMounted(async () => {
@@ -28,24 +28,29 @@ onMounted(async () => {
     buildings,
   });
 });
+const modalShowing = ref(false)
+const closeModal = () => modalShowing.value = false
 
-const showModal = ref(false);
-watch(conflicts, () => {
-  if (conflicts.value && conflicts.value.length > 0) showModal.value = true;
-});
-
-const closeModal = () => {
-  showModal.value = false;
-  clearConflicts();
-};
+watch(() => conflictSections.value.length > 0, () => modalShowing.value = true)
 </script>
 
 <template>
-  <base-modal
-    v-show="showModal"
-    @close="closeModal"
-    :conflicts="conflicts ? conflicts : []"
-  ></base-modal>
+  <base-modal v-show="modalShowing" @close="closeModal">
+    <template v-slot:header>
+      <h3>Hello</h3>
+    </template>
+    <template v-slot:main>
+      <p v-for="conflict in conflictSections">
+        {{conflict}}
+      </p>
+    </template>
+    <template v-slot:actions="{close}">
+      <div class="flex">
+        <button class="btn btn--confirm">Overwrite</button>
+        <button @click="close" class="btn btn--reject">Cancel</button>
+      </div>
+    </template>
+  </base-modal>
   <form
     id="course-scheduler"
     @submit.prevent="isEditing ? submit('save') : submit('add')"

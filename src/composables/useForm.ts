@@ -9,9 +9,9 @@ import { SectionBuilder } from '../types/section';
 const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
-  const {insertSection} = useDatabase()
   const form = reactive({}) as CourseForm;
   const conflicts = ref()
+  const conflictSections = computed(() => conflicts.value && conflicts.value.length > 0 ? conflicts.value.map((s: any) => sectionStore.findSectionByID(s.section_id)): [])
   const { findConflicts } = useValidation(form);
 
   const populateWith = (state: CourseForm) => {
@@ -46,6 +46,7 @@ const useForm = () => {
       room_id: form.room?.id,
       slot_id: form.slot!.id,
     }
+    console.log(conflictSections.value)
     if(conflicts.value.length > 0) return
     switch(action){
       case 'add':
@@ -92,7 +93,7 @@ const useForm = () => {
     clearForm,
     isEditing,
     submit,
-    conflicts,
+    conflictSections,
     clearConflicts
   };
 };
