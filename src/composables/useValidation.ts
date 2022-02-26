@@ -25,7 +25,10 @@ const useValidation = (form: CourseForm) => {
       data.value.room.id,
       data.value.sectionID
     ) : []
-    const potentialConflicts = new Set([...byInstructor, ...byRoom]);
+
+    const onlyOnDays = store.findSectionsOnDays(data.value.day!, [...byInstructor, ...byRoom], data.value.sectionID)
+    
+    const potentialConflicts = new Set([...onlyOnDays]);
 
     let conflicts = []
 

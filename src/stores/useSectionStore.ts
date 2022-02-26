@@ -25,7 +25,7 @@ export const useSectionStore = defineStore('section', {
         state.sections.filter(
           (s) => s.room_id === roomID && s.section_id !== sectionID
         );
-    },
+    }
   },
   actions: {
     async getSections() {
@@ -34,6 +34,12 @@ export const useSectionStore = defineStore('section', {
     },
     findSectionByID(id: number) {
       return this.sections.find((section) => section.section_id === id);
+    },
+    findSectionsOnDays(dayCode: string, sections: Section[], sectionID?: number){
+      const days = dayCode.split('')
+      return sections.filter((s) => 
+        days.some((d) => s.slot_days.includes(d)) && s.section_id !== sectionID
+      )
     },
     stopEditing() {
       this.isEditing = false;
