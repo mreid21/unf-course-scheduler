@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch, watchEffect } from 'vue';
+import { computed, onMounted, ref, watch, watchEffect } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -28,17 +28,18 @@ onMounted(async () => {
     buildings,
   });
 });
-const modalShowing = ref(false);
-const closeModal = () => (modalShowing.value = false);
 
-watch(
-  () => conflictSections.value.length > 0,
-  () => (modalShowing.value = true)
+const closeModal = () => {
+  clearConflicts();
+};
+
+const showModal = computed(() =>
+  conflictSections.value.length > 0 ? true : false
 );
 </script>
 
 <template>
-  <base-modal v-show="modalShowing" @close="closeModal">
+  <base-modal v-show="showModal" @close="closeModal">
     <template v-slot:header>
       <h3>Hello</h3>
     </template>
@@ -149,6 +150,7 @@ watch(
         class="btn btn--edit"
         type="button"
         value="Duplicate"
+        @click="submit('duplicate')"
       />
       <input
         @click="clearForm"

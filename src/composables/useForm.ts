@@ -43,6 +43,7 @@ const useForm = () => {
   };
 
   const submit = (action: string) => {
+    
     conflicts.value = findConflicts();
     const section: SectionBuilder = {
       section_id: form.sectionID,
@@ -52,7 +53,6 @@ const useForm = () => {
       room_id: form.room?.id,
       slot_id: form.slot!.id,
     };
-    console.log(conflictSections.value);
     if (conflicts.value.length > 0) return;
     switch (action) {
       case 'add':
@@ -61,6 +61,8 @@ const useForm = () => {
       case 'save':
         sectionStore.updateSection(section)
         break;
+      case 'duplicate':
+        sectionStore.addSection(section)
     }
   };
 
