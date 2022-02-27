@@ -122,6 +122,19 @@ const useDatabase = () => {
     }
   };
 
+  const updateSection = async (section: SectionBuilder) => {
+    try {
+      const {data, error} = await supabase
+        .from('sections')
+        .update({course_id: section.course_id, instructor_id: section.instructor_id, room_id: section.room_id, campus_id: section.campus_id, slot_id: section.slot_id})
+        .match({section_id: section.section_id})
+
+        if(error) throw error
+    } catch (error: any) {
+      alert(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -137,6 +150,7 @@ const useDatabase = () => {
     fetchSections,
     deleteSection,
     insertSection,
+    updateSection
   };
 };
 

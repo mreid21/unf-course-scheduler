@@ -5,7 +5,7 @@ import { Section, SectionBuilder } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
-const { fetchSections, deleteSection, insertSection } = useDatabase();
+const { fetchSections, deleteSection, insertSection, updateSection } = useDatabase();
 
 export const useSectionStore = defineStore('section', {
   state: () => ({
@@ -109,5 +109,9 @@ export const useSectionStore = defineStore('section', {
       await insertSection(section);
       await this.getSections();
     },
+    async updateSection(section: SectionBuilder){
+      await updateSection(section)
+      await this.getSections()
+    }
   },
 });

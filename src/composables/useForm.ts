@@ -59,6 +59,7 @@ const useForm = () => {
         sectionStore.addSection(section);
         break;
       case 'save':
+        sectionStore.updateSection(section)
         break;
     }
   };
