@@ -53,6 +53,7 @@ export const useSectionStore = defineStore('section', {
       );
     },
     stopEditing() {
+      this.sectionEdit = {}
       this.isEditing = false;
     },
     async editSection(id: number) {
