@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia';
 import useDatabase from '../composables/useDatabase';
+import useTime from '../composables/useTime';
 import { CourseForm } from '../types/courseform';
 import { Section, SectionBuilder } from '../types/section';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the store across your application
 const { fetchSections, deleteSection, insertSection, updateSection } = useDatabase();
+const {formatTime} = useTime()
 
 export const useSectionStore = defineStore('section', {
   state: () => ({
@@ -26,6 +28,9 @@ export const useSectionStore = defineStore('section', {
           (s) => s.room_id === roomID && s.section_id !== sectionID
         );
     },
+    sectionsWithFormattedTime: (state) => state.sections.map(s => {
+      return {...s, begin_time: formatTime(s.begin_time), end_time: formatTime(s.end_time)}
+    })
   },
   actions: {
     async getSections() {

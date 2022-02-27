@@ -6,6 +6,7 @@ const store = useSectionStore();
 
 onMounted(async () => {
   await store.getSections();
+  console.log(store.sectionsWithFormattedTime)
 });
 </script>
 
@@ -15,7 +16,7 @@ onMounted(async () => {
       <slot name="table-header"></slot>
     </thead>
     <tbody class="text-center">
-      <slot name="rows" :sections="store.sections"></slot>
+      <slot name="rows" :sections="store.sectionsWithFormattedTime"></slot>
     </tbody>
   </table>
 </template>
