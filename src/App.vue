@@ -3,7 +3,7 @@ import CourseScheduler from './components/CourseScheduler.vue';
 import CourseTable from './components/CourseTable.vue';
 import CourseTableRow from './components/CourseTableRow.vue';
 import CourseTableHeader from './components/CourseTableHeader.vue';
-import { ref, watch } from 'vue';
+import { ref } from 'vue';
 
 const headers = ref([
   'code',
@@ -32,7 +32,7 @@ const headers = ref([
               </template>
             </course-table-header>
           </template>
-          <template #rows="{ sections }">
+          <template #rows="{ sections, editSection, deleteSection }">
             <course-table-row
               :section="section"
               v-for="section in sections"
@@ -49,8 +49,6 @@ const headers = ref([
                   beginTime,
                   endTime,
                   days,
-                  editSection,
-                  deleteSection,
                 }"
               >
                 <td>{{ code }}</td>

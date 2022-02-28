@@ -1,22 +1,11 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import useTime from '../composables/useTime';
 import { Section } from '../types/section';
 import { useSectionStore } from '../stores/useSectionStore';
 
 const store = useSectionStore();
-
-const { formatTime } = useTime();
 const { section } = defineProps<{
   section: Section;
 }>();
-
-const beginTime = computed(() => formatTime(section.begin_time));
-const endTime = computed(() => formatTime(section.end_time));
-
-const editSection = (id: number) => store.editSection(id);
-
-const deleteSection = async (id: number) => await store.deleteSection(id);
 </script>
 
 <template>
@@ -32,8 +21,6 @@ const deleteSection = async (id: number) => await store.deleteSection(id);
       :beginTime="section.begin_time"
       :endTime="section.end_time"
       :days="section.slot_days"
-      :editSection="editSection"
-      :deleteSection="deleteSection"
     ></slot>
   </tr>
 </template>

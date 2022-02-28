@@ -3,7 +3,6 @@ import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 import { useSectionStore } from '../stores/useSectionStore';
 import useValidation from './useValidation';
-import useDatabase from './useDatabase';
 import { SectionBuilder } from '../types/section';
 
 const useForm = () => {
@@ -43,7 +42,8 @@ const useForm = () => {
   };
 
   const submit = (action: string) => {
-    
+    if(action === 'duplicate') form.sectionID = undefined
+
     conflicts.value = findConflicts();
     const section: SectionBuilder = {
       section_id: form.sectionID,
@@ -54,6 +54,8 @@ const useForm = () => {
       slot_id: form.slot!.id,
     };
     if (conflicts.value.length > 0) return;
+    
+    
     switch (action) {
       case 'add':
         sectionStore.addSection(section);

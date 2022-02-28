@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, watch, watchEffect } from 'vue';
+import { computed, onMounted } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';

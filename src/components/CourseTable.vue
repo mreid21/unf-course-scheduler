@@ -6,8 +6,11 @@ const store = useSectionStore();
 
 onMounted(async () => {
   await store.getSections();
-  console.log(store.sectionsWithFormattedTime)
 });
+
+const editSection = (id: number) => store.editSection(id);
+
+const deleteSection = async (id: number) => await store.deleteSection(id);
 </script>
 
 <template>
@@ -16,7 +19,12 @@ onMounted(async () => {
       <slot name="table-header"></slot>
     </thead>
     <tbody class="text-center">
-      <slot name="rows" :sections="store.sectionsWithFormattedTime"></slot>
+      <slot
+        name="rows"
+        :editSection="editSection"
+        :deleteSection="deleteSection"
+        :sections="store.sectionsWithFormattedTime"
+      ></slot>
     </tbody>
   </table>
 </template>
