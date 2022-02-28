@@ -42,7 +42,7 @@ const useForm = () => {
   };
 
   const submit = (action: string) => {
-    if(action === 'duplicate') form.sectionID = undefined
+    if (action === 'duplicate') form.sectionID = undefined;
 
     conflicts.value = findConflicts();
     const section: SectionBuilder = {
@@ -54,17 +54,16 @@ const useForm = () => {
       slot_id: form.slot!.id,
     };
     if (conflicts.value.length > 0) return;
-    
-    
+
     switch (action) {
       case 'add':
         sectionStore.addSection(section);
         break;
       case 'save':
-        sectionStore.updateSection(section)
+        sectionStore.updateSection(section);
         break;
       case 'duplicate':
-        sectionStore.addSection(section)
+        sectionStore.addSection(section);
     }
   };
 
