@@ -57,7 +57,7 @@ const useForm = () => {
 
     switch (action) {
       case 'add':
-        sectionStore.addSection(section);
+        sectionStore.addSection(section)
         break;
       case 'save':
         sectionStore.updateSection(section);
@@ -65,6 +65,7 @@ const useForm = () => {
       case 'duplicate':
         sectionStore.addSection(section);
     }
+    if(action !== 'save') clearForm()
   };
 
   const clearConflicts = () => (conflicts.value = undefined);
