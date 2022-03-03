@@ -3,18 +3,24 @@ import { CourseForm } from '../types/courseForm';
 import { useCourseStore } from '../stores/useCourseStore';
 import { useSectionStore } from '../stores/useSectionStore';
 import useValidation from './useValidation';
-import { SectionBuilder } from '../types/section';
+import useTime from './useTime';
+import { SectionBuilder, Section } from '../types/section';
 
 const useForm = () => {
   const courseStore = useCourseStore();
   const sectionStore = useSectionStore();
+  const { formatTime } = useTime();
   const form = reactive({}) as CourseForm;
   const conflicts = ref();
   const conflictSections = computed(() =>
     conflicts.value && conflicts.value.length > 0
-      ? conflicts.value.map((s: any) =>
-          sectionStore.findSectionByID(s.section_id)
-        )
+      ? conflicts.value
+          .map((s: Section) => sectionStore.findSectionByID(s.section_id))
+          .map((s: Section) => ({
+            ...s,
+            begin_time: formatTime(s.begin_time),
+            end_time: formatTime(s.end_time),
+          }))
       : []
   );
   const { findConflicts } = useValidation(form);
@@ -57,7 +63,7 @@ const useForm = () => {
 
     switch (action) {
       case 'add':
-        sectionStore.addSection(section)
+        sectionStore.addSection(section);
         break;
       case 'save':
         sectionStore.updateSection(section);
@@ -65,7 +71,7 @@ const useForm = () => {
       case 'duplicate':
         sectionStore.addSection(section);
     }
-    if(action !== 'save') clearForm()
+    if (action !== 'save') clearForm();
   };
 
   const clearConflicts = () => (conflicts.value = undefined);

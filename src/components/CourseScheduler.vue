@@ -41,12 +41,19 @@ const showModal = computed(() =>
 <template>
   <base-modal v-show="showModal" @close="closeModal">
     <template v-slot:header>
-      <h3>Hello</h3>
+      <h3>Please clear the following conflicts:</h3>
     </template>
     <template v-slot:main>
-      <p v-for="conflict in conflictSections">
-        {{ conflict }}
-      </p>
+      <div v-for="conflict in conflictSections" class="my-4">
+        <div class="border flex gap-2 border-gray-400 px-2 py-4 rounded-md">
+          <span>course: {{ conflict.course_code }}</span>
+          <span>instructor: {{ conflict.instructor_name }}</span>
+          <span>days: {{ conflict.slot_days }}</span>
+          <span
+            >time: {{ `${conflict.begin_time} - ${conflict.end_time}` }}</span
+          >
+        </div>
+      </div>
     </template>
     <template v-slot:actions="{ close }">
       <div class="flex">
