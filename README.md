@@ -4,7 +4,7 @@ This template should help get you started developing with Vue 3 and Typescript i
 
 ## Recommended IDE Setup
 
-![relational db diagram for course scheduling app](https://imgur.com/a/TwMXgPp)
+![Course Scheduler Diagram](https://user-images.githubusercontent.com/63518180/156820511-20354be1-ab81-41cc-a3c0-f618cbf7a9e3.png)
 
 ## Type Support For `.vue` Imports in TS
 
