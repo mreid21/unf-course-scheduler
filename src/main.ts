@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import { createPinia } from 'pinia';
 import { library } from '@fortawesome/fontawesome-svg-core';
+import router from './router';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faTrashAlt,
@@ -14,6 +15,8 @@ import {
   faClock,
   faChevronLeft,
   faChevronRight,
+  faArrowCircleLeft,
+  faFileCsv,
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
@@ -31,9 +34,12 @@ library.add(
   faDoorOpen,
   faClock,
   faChevronLeft,
-  faChevronRight
+  faChevronRight,
+  faArrowCircleLeft,
+  faFileCsv
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
   .use(pinia)
+  .use(router)
   .mount('#app');

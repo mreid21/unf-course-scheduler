@@ -148,7 +148,7 @@ const showModal = computed(() =>
 
     <div class="lg:flex">
       <input
-        class="btn btn--confirm"
+        class="btn btn--primary"
         type="submit"
         :value="isEditing ? 'Save' : 'Add'"
       />

@@ -33,8 +33,20 @@
     @apply inline-block w-full py-2 px-4 mx-1 my-1.5 font-bold cursor-pointer border uppercase rounded-md text-sm transition-all duration-200;
   }
 
-  .btn--confirm {
+  .link {
+    @apply inline-block py-2 px-8 mx-1 my-1.5 cursor-pointer border rounded-md text-sm transition-all duration-200;
+  }
+
+  .link--neutral {
+    @apply text-gray-700 bg-gray-50 border;
+  }
+
+  .btn--primary {
     @apply text-blue-500 bg-blue-100 hover:bg-blue-500 hover:text-white border border-blue-500;
+  }
+
+  .btn--confirm {
+    @apply text-green-500 bg-green-100 hover:bg-green-500 hover:text-white border-green-500;
   }
 
   .btn--reject {
