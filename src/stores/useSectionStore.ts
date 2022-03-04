@@ -31,9 +31,9 @@ export const useSectionStore = defineStore('section', {
     },
     sectionsWithoutID: (state) => {
       return state.sections.map((s: any) => {
-        delete s.section_id
-        return s
-      })
+        delete s.section_id;
+        return s;
+      });
     },
     sectionsWithFormattedTime: (state) =>
       state.sections.map((s) => {

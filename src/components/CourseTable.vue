@@ -55,7 +55,7 @@ const closeModal = () => {
     <template v-slot:actions="{ close }">
       <div class="flex">
         <button @click="confirmDelete" class="btn btn--reject">Delete</button>
-        <button @click="close" class="btn btn--confirm">Cancel</button>
+        <button @click="close" class="btn btn--primary">Cancel</button>
       </div>
     </template>
   </base-modal>
