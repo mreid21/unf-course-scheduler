@@ -38,7 +38,7 @@
   }
 
   .link--neutral {
-    @apply text-gray-700 bg-gray-50 border;
+    @apply text-gray-700 border hover:bg-gray-50;
   }
 
   .btn--primary {

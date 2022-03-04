@@ -3,6 +3,7 @@ import CourseScheduler from '../components/CourseScheduler.vue';
 import CourseTable from '../components/CourseTable.vue';
 import CourseTableRow from '../components/CourseTableRow.vue';
 import CourseTableHeader from '../components/CourseTableHeader.vue';
+import { useDownloadCSV } from '../composables/useDownloadCSV';
 
 const headers = [
   'code',
@@ -14,19 +15,21 @@ const headers = [
   'time',
   'actions',
 ];
+
+const { downloadCSV } = useDownloadCSV();
 </script>
 
 <template>
-  <main class="p-2 bg-white border-b-2 border-gray-100 lg:col-span-5">
-    <div class="flex my-2 shadow-sm">
+  <main class="px-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
+    <div class="flex my-2">
       <router-link :to="{ name: 'Plans' }" class="link link--neutral">
         <font-awesome-icon icon="arrow-circle-left"></font-awesome-icon>
         <span class="ml-2">All Plans</span>
       </router-link>
-      <router-link :to="{ name: 'Plans' }" class="link link--neutral">
+      <button @click="downloadCSV" class="link link--neutral">
         <font-awesome-icon icon="file-csv"></font-awesome-icon>
         <span class="ml-2">Export CSV</span>
-      </router-link>
+      </button>
     </div>
     <course-scheduler></course-scheduler>
   </main>
