@@ -4,6 +4,7 @@ The purpose of this is app was to elimate the tedious and error prone process of
 
 ## Demo
 
+![add course demo](https://user-images.githubusercontent.com/63518180/156822070-02188f23-8139-4288-9a84-176ab93ffea0.gif)
 
 
 ## Database Diagram
