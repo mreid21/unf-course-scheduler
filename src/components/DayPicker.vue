@@ -13,9 +13,11 @@ const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
-  <span class="text-red-500" v-show="hasErrors">this field is required</span>
+  <span class="text-red-500" v-show="hasErrors && modelValue === undefined"
+    >this field is required</span
+  >
   <div
-    :class="[hasErrors ? 'border-red-500' : '']"
+    :class="[hasErrors && modelValue === undefined ? 'border-red-500' : '']"
     class="flex flex-wrap justify-center gap-3 border p-2 mb-8 rounded-md"
   >
     <div v-for="(day, index) in days" :key="index">
