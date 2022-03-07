@@ -14,6 +14,11 @@ const router = createRouter({
       name: 'Plans',
       component: Plans,
     },
+    {
+      path: '*',
+      name: 'Catch',
+      component: Home
+    }
   ],
 });
 
