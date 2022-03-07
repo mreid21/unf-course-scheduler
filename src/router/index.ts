@@ -15,9 +15,10 @@ const router = createRouter({
       component: Plans,
     },
     {
-      path: '*',
-      name: 'Catch',
-      component: Home
+      // path: "*",
+      path: "/:catchAll(.*)",
+      name: "NotFound",
+      component: Home,
     }
   ],
 });
