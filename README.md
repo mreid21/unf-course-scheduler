@@ -1,11 +1,11 @@
-# Vue 3 + Typescript + Vite
+# UNF Course Scheduling App
 
-This template should help get you started developing with Vue 3 and Typescript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The purpose of this is app was to elimate the tedious and error prone process of scheduling UNF courses manually using an excel spreadsheet. This app, created with Vue 3 and Supabase, allows users to schedule courses without having to worry about time and space conflicts.
 
-## Recommended IDE Setup
+### Adding Courses
+![add course demo](https://user-images.githubusercontent.com/63518180/156822070-02188f23-8139-4288-9a84-176ab93ffea0.gif)
 
-- [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar)
 
-## Type Support For `.vue` Imports in TS
+### Database Diagram
 
-Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can enable Volar's `.vue` type support plugin by running `Volar: Switch TS Plugin on/off` from VSCode command palette.
+![picture of course scheduler diagram](https://user-images.githubusercontent.com/63518180/156820511-20354be1-ab81-41cc-a3c0-f618cbf7a9e3.png)

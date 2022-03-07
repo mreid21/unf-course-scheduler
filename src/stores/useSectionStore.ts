@@ -29,6 +29,12 @@ export const useSectionStore = defineStore('section', {
           (s) => s.room_id === roomID && s.section_id !== sectionID
         );
     },
+    sectionsWithoutID: (state) => {
+      return state.sections.map((s: any) => {
+        delete s.section_id;
+        return s;
+      });
+    },
     sectionsWithFormattedTime: (state) =>
       state.sections.map((s) => {
         return {
