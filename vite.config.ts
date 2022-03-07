@@ -3,6 +3,6 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/unf-course-scheduler',
+  base: '/unf-course-scheduler/',
   plugins: [vue()],
 });
