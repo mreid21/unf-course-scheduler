@@ -13,8 +13,15 @@ import BaseModal from './BaseModal.vue';
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
-const { form, clearForm, isEditing, submit, conflictSections, clearConflicts } =
-  useForm();
+const {
+  form,
+  clearForm,
+  isEditing,
+  submit,
+  conflictSections,
+  clearConflicts,
+  showErrors,
+} = useForm();
 
 onMounted(async () => {
   const [courses, instructors, buildings] = await courseStore.getFieldData([
@@ -76,6 +83,7 @@ const showModal = computed(() =>
       :filter="'course_code'"
       :id="'course_id'"
       :icon="'graduation-cap'"
+      :hasErrors="showErrors"
     >
       <search-field-item
         :name="item.course_code"
@@ -93,6 +101,7 @@ const showModal = computed(() =>
       :filter="'instructor_name'"
       :id="'instructor_id'"
       :icon="'chalkboard-teacher'"
+      :hasErrors="showErrors"
     >
       <search-field-item
         :name="item.instructor_name"
@@ -100,7 +109,11 @@ const showModal = computed(() =>
       ></search-field-item>
     </search-field>
 
-    <radio-group v-model="form.campus" :fields="options"></radio-group>
+    <radio-group
+      v-model="form.campus"
+      :hasErrors="showErrors"
+      :fields="options"
+    ></radio-group>
 
     <search-field
       v-model="form.building"
@@ -111,6 +124,7 @@ const showModal = computed(() =>
       :filter="'building_number'"
       :id="'building_id'"
       :icon="'building'"
+      :hasErrors="showErrors"
     >
       <search-field-item
         :name="`Building ${item.building_number}`"
@@ -130,6 +144,7 @@ const showModal = computed(() =>
       :filter="'room_number'"
       :id="'room_id'"
       :icon="'door-open'"
+      :hasErrors="showErrors"
     >
       <search-field-item
         :name="`Room ${item.room_number}`"
@@ -138,7 +153,7 @@ const showModal = computed(() =>
       ></search-field-item>
     </search-field>
 
-    <day-picker v-model="form.day"></day-picker>
+    <day-picker v-model="form.day" :hasErrors="showErrors"></day-picker>
 
     <slot-picker
       v-if="courseStore.timeSlots.length > 0"

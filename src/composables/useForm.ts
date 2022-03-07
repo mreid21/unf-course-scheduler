@@ -12,6 +12,7 @@ const useForm = () => {
   const { formatTime } = useTime();
   const form = reactive({}) as CourseForm;
   const conflicts = ref();
+  const submitted = ref(false);
   const conflictSections = computed(() =>
     conflicts.value && conflicts.value.length > 0
       ? conflicts.value
@@ -47,8 +48,29 @@ const useForm = () => {
     }
   };
 
+  const modelIsValid = () => {
+    if (form.course === undefined) return false;
+    if (form.instructor === undefined) return false;
+    if (form.slot === undefined) return false;
+    if (form.day === undefined) return false;
+
+    if (form.campus === undefined) {
+      return false;
+    } else if (form.campus !== 3) {
+      if (form.building === undefined || form.room === undefined) {
+        return false;
+      }
+    }
+    return true;
+  };
+
   const submit = (action: string) => {
+    submitted.value = true;
     if (action === 'duplicate') form.sectionID = undefined;
+
+    if (!modelIsValid()) {
+      return;
+    }
 
     conflicts.value = findConflicts();
     const section: SectionBuilder = {
@@ -72,6 +94,7 @@ const useForm = () => {
         sectionStore.addSection(section);
     }
     if (action !== 'save') clearForm();
+    submitted.value = false;
   };
 
   const clearConflicts = () => (conflicts.value = undefined);
@@ -83,6 +106,7 @@ const useForm = () => {
       }
     }
     sectionStore.stopEditing();
+    submitted.value = false;
   };
 
   watch(
@@ -92,6 +116,9 @@ const useForm = () => {
   watch([() => form.day, () => form.course], () => updateTimeSlots());
 
   const isEditing = computed(() => sectionStore.isEditing);
+  const showErrors = computed(() =>
+    submitted.value === true && !modelIsValid() ? true : false
+  );
 
   watchEffect(() => {
     if (sectionStore.sectionEdit) {
@@ -112,6 +139,7 @@ const useForm = () => {
     submit,
     conflictSections,
     clearConflicts,
+    showErrors,
   };
 };
 

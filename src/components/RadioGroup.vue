@@ -6,6 +6,7 @@ import Radio from '../types/radio';
 interface Props {
   modelValue?: number;
   fields: Radio[];
+  hasErrors?: boolean;
 }
 
 const { fields } = defineProps<Props>();
@@ -18,8 +19,12 @@ const update = (event: any) => {
 </script>
 
 <template>
+  <span v-show="hasErrors && modelValue === undefined" class="text-red-500"
+    >this field is required</span
+  >
   <div
-    class="grid grid-cols-5 items-center text-center text-gray-500 border border-gray-300 rounded-lg mb-4 text-sm"
+    :class="[hasErrors && modelValue === undefined ? ' border-red-500' : '']"
+    class="grid grid-cols-5 items-center text-center text-gray-500 rounded-lg mb-4 text-sm border"
   >
     <!--FIX TAG NAMES-->
     <label

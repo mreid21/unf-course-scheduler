@@ -8,12 +8,16 @@ const changeSelection = (e: any) => {
   emit('update:modelValue', e.target.value);
 };
 
-defineProps<{ modelValue?: string }>();
+defineProps<{ modelValue?: string; hasErrors?: boolean }>();
 const emit = defineEmits(['update:modelValue']);
 </script>
 
 <template>
-  <div class="flex flex-wrap justify-center gap-3 border p-2 mb-8 rounded-md">
+  <span class="text-red-500" v-show="hasErrors">this field is required</span>
+  <div
+    :class="[hasErrors ? 'border-red-500' : '']"
+    class="flex flex-wrap justify-center gap-3 border p-2 mb-8 rounded-md"
+  >
     <div v-for="(day, index) in days" :key="index">
       <input
         @change="changeSelection"

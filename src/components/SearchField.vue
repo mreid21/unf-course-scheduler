@@ -11,6 +11,7 @@ interface Props {
   id: string;
   icon?: string;
   modelValue?: Option | undefined;
+  hasErrors?: boolean;
 }
 
 const { placeholder, items, filter, icon, modelValue } = defineProps<Props>();
@@ -54,7 +55,15 @@ const filteredList = computed(() =>
 </script>
 
 <template>
-  <div class="relative mb-4 w-full">
+  <span class="text-red-500" v-show="hasErrors && modelValue === undefined"
+    >this field is required</span
+  >
+  <div
+    class="relative mb-4 w-full"
+    :class="[
+      hasErrors && modelValue === undefined ? 'border border-red-500' : '',
+    ]"
+  >
     <input
       @focus="showDropdown = true"
       @blur="showDropdown = false"
