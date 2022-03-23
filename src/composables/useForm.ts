@@ -56,7 +56,7 @@ const useForm = () => {
 
     if (form.campus === undefined) {
       return false;
-    } else if (form.campus !== 3) {
+    } else if (form.campus !== 3 && form.campus !== 4 && form.campus !== 5) {
       if (form.building === undefined || form.room === undefined) {
         return false;
       }
