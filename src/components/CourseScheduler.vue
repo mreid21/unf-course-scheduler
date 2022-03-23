@@ -52,13 +52,14 @@ const showModal = computed(() =>
     </template>
     <template v-slot:main>
       <div v-for="conflict in conflictSections" class="my-4">
-        <div class="border flex gap-2 border-gray-400 px-2 py-4 rounded-md">
+        <div class="border flex gap-2 px-2 py-4 rounded-md">
           <span>course: {{ conflict.course_code }}</span>
           <span>instructor: {{ conflict.instructor_name }}</span>
           <span>days: {{ conflict.slot_days }}</span>
           <span
             >time: {{ `${conflict.begin_time} - ${conflict.end_time}` }}</span
           >
+          <span class="text-red-500">{{conflict.reason}}</span>
         </div>
       </div>
     </template>

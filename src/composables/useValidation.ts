@@ -5,6 +5,7 @@ import useTime from './useTime';
 
 type SectionLike = {
   section_id?: number;
+  instructor_id?: number;
   start: string;
   end: string;
 };
@@ -39,6 +40,7 @@ const useValidation = (form: CourseForm) => {
     };
     const simple: SectionLike[] = [...potentialConflicts].map((c) => ({
       section_id: c.section_id,
+      instructor_id: c.instructor_id,
       start: c.begin_time,
       end: c.end_time,
     }));
@@ -62,7 +64,16 @@ const useValidation = (form: CourseForm) => {
       }
     }
 
-    return conflicts;
+    let withReason = conflicts.map(s => {
+      if(s.instructor_id === data.value.instructor!.id){
+        return {...s, reason: 'Instructor conflict'}
+      }
+      else return {...s, reason: 'Time conflict'}
+    })
+
+    console.log(withReason)
+
+    return withReason;
   };
 
   return {
