@@ -5,7 +5,9 @@ import { DayOfWeek } from '../types/courseForm';
 const days = ref<DayOfWeek[]>(['MWF', 'MW', 'TR', 'M', 'T', 'W', 'R']);
 
 const changeSelection = (e: any) => {
-  emit('update:modelValue', e.target.value);
+  !e.target.checked
+    ? emit('update:modelValue', undefined)
+    : emit('update:modelValue', e.target.value);
 };
 
 defineProps<{ modelValue?: string; hasErrors?: boolean }>();
@@ -27,7 +29,7 @@ const emit = defineEmits(['update:modelValue']);
         :id="day.toLowerCase()"
         class="appearance-none"
         :value="day"
-        type="radio"
+        type="checkbox"
         name="radio"
       />
       <label

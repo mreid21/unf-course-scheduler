@@ -101,9 +101,7 @@ const useForm = () => {
 
   const clearForm = () => {
     for (let field in form) {
-      if (field !== 'campus' && field !== 'day') {
-        form[field as keyof CourseForm] = undefined;
-      }
+      form[field as keyof CourseForm] = undefined;
     }
     sectionStore.stopEditing();
     submitted.value = false;

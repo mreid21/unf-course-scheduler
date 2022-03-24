@@ -59,7 +59,7 @@ const showModal = computed(() =>
           <span
             >time: {{ `${conflict.begin_time} - ${conflict.end_time}` }}</span
           >
-          <span class="text-red-500">{{conflict.reason}}</span>
+          <span class="text-red-500">{{ conflict.reason }}</span>
         </div>
       </div>
     </template>
@@ -182,5 +182,6 @@ const showModal = computed(() =>
         class="btn btn--reject"
       />
     </div>
+    <p>{{ form }}</p>
   </form>
 </template>

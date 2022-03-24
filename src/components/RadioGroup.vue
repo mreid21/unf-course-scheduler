@@ -9,12 +9,15 @@ interface Props {
   hasErrors?: boolean;
 }
 
-const { fields } = defineProps<Props>();
+const { fields, modelValue } = defineProps<Props>();
+const inputRef = ref<HTMLInputElement>();
 
 const emit = defineEmits(['update:modelValue']);
 
 const update = (event: any) => {
-  emit('update:modelValue', parseInt(event.target.value));
+  !event.target.checked
+    ? emit('update:modelValue', undefined)
+    : emit('update:modelValue', parseInt(event.target.value));
 };
 </script>
 
@@ -34,10 +37,10 @@ const update = (event: any) => {
       :for="field.id"
     >
       <input
-        @change="update"
+        @input="update"
         :checked="modelValue === field.value"
         class="absolute appearance-none visibility-hidden hidden"
-        type="radio"
+        type="checkbox"
         :value="field.value"
         :id="field.id"
         :name="field.name"
