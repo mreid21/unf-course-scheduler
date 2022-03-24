@@ -68,7 +68,7 @@ const useValidation = (form: CourseForm) => {
       if(s.instructor_id === data.value.instructor!.id){
         return {...s, reason: 'Instructor conflict'}
       }
-      else return {...s, reason: 'Time conflict'}
+      else return {...s, reason: 'Room conflict'}
     })
 
     console.log(withReason)
