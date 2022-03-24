@@ -6,6 +6,7 @@ import CourseTableHeader from '../components/CourseTableHeader.vue';
 import { useDownloadCSV } from '../composables/useDownloadCSV';
 
 const headers = [
+  'id',
   'code',
   'instructors',
   'building',
@@ -61,6 +62,7 @@ const { downloadCSV } = useDownloadCSV();
               days,
             }"
           >
+            <td class="px-4">{{id}}</td>
             <td>{{ code }}</td>
             <td>{{ instructor }}</td>
             <td>{{ building ? building : 'N/A' }}</td>
