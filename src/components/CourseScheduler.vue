@@ -186,6 +186,5 @@ const showModal = computed(() =>
         class="btn btn--reject"
       />
     </div>
-    <p>{{form}}</p>
   </form>
 </template>
