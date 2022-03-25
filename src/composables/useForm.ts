@@ -31,10 +31,10 @@ const useForm = () => {
   };
 
   const updateRooms = async () => {
+    form.room = undefined;
     if (form.building) {
       await courseStore.getRooms(form.building.id);
     } else {
-      form.room = undefined;
       courseStore.rooms = [];
     }
   };
