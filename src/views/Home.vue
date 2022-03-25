@@ -62,14 +62,14 @@ const { downloadCSV } = useDownloadCSV();
               days,
             }"
           >
-            <td class="px-4">{{id}}</td>
+            <td class="px-4">{{ id }}</td>
             <td>{{ code }}</td>
             <td>{{ instructor }}</td>
             <td>{{ building ? building : 'N/A' }}</td>
             <td>{{ room ? room : 'N/A' }}</td>
             <td>{{ campus }}</td>
-            <td>{{ days }}</td>
-            <td>{{ `${beginTime} - ${endTime}` }}</td>
+            <td>{{ days ? days : 'N/A' }}</td>
+            <td>{{ beginTime ? `${beginTime} - ${endTime}` : 'N/A' }}</td>
             <td class="flex">
               <input
                 type="button"

@@ -25,7 +25,7 @@ type SectionBuilder = {
   instructor_id: number;
   room_id?: number;
   campus_id: number;
-  slot_id: number;
+  slot_id?: number;
   building_id?: number;
 };
 

@@ -49,19 +49,18 @@ const useForm = () => {
   };
 
   const modelIsValid = () => {
-    if (form.course === undefined) return false;
-    if (form.instructor === undefined) return false;
-    if (form.slot === undefined) return false;
-    if (form.day === undefined) return false;
-
-    if (form.campus === undefined) {
-      return false;
-    } else if (form.campus !== 3 && form.campus !== 4 && form.campus !== 5) {
-      if (form.building === undefined || form.room === undefined) {
-        return false;
+    if(form.course && form.instructor){
+      if(form.campus && form.campus >= 3){
+        return true
+      }
+      else if(form.building && form.slot && form.day) {
+        return true
+      }
+      else {
+        return false
       }
     }
-    return true;
+    return false
   };
 
   const submit = (action: string) => {
@@ -72,16 +71,16 @@ const useForm = () => {
       return;
     }
 
-    conflicts.value = findConflicts();
+    if(form.campus === 1 || form.campus === 2) conflicts.value = findConflicts();
     const section: SectionBuilder = {
       section_id: form.sectionID,
       course_id: form.course!.id,
       instructor_id: form.instructor!.id,
       campus_id: form.campus!,
       room_id: form.room?.id,
-      slot_id: form.slot!.id,
+      slot_id: form.slot?.id,
     };
-    if (conflicts.value.length > 0) return;
+    if (conflicts.value && conflicts.value.length > 0) return;
 
     switch (action) {
       case 'add':

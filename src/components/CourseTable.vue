@@ -28,10 +28,14 @@ const sectionID = ref(0);
 const showModal = ref(false);
 const section = ref<Section>();
 const beginTime = computed(() =>
-  section.value ? formatTime(section.value.begin_time) : ''
+  section.value && section.value.begin_time
+    ? formatTime(section.value.begin_time)
+    : ''
 );
 const endTime = computed(() =>
-  section.value ? formatTime(section.value.end_time) : ''
+  section.value && section.value.end_time
+    ? formatTime(section.value.end_time)
+    : ''
 );
 
 const openModal = () => {
@@ -48,7 +52,9 @@ const closeModal = () => {
     <template v-slot:main>
       <p v-if="section" class="mt-2 p-6">
         {{
-          `Are you sure you want to delete course ${section.course_code} taught by ${section.instructor_name} from ${beginTime}-${endTime}?`
+          section.begin_time
+            ? `Are you sure you want to delete course ${section.course_code} taught by ${section.instructor_name} from ${beginTime}-${endTime}?`
+            : `Are you sure you want to delete course ${section.course_code} taught by ${section.instructor_name}?`
         }}
       </p>
     </template>

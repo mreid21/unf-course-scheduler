@@ -37,11 +37,13 @@ export const useSectionStore = defineStore('section', {
     },
     sectionsWithFormattedTime: (state) =>
       state.sections.map((s) => {
-        return {
+        return s.begin_time ? {
           ...s,
           begin_time: formatTime(s.begin_time),
           end_time: formatTime(s.end_time),
-        };
+        }
+        :
+        s;
       }),
   },
   actions: {
@@ -86,15 +88,7 @@ export const useSectionStore = defineStore('section', {
             value: section.instructor_name,
           },
           campus: section.campus_id,
-          day: section.slot_days,
-          slot: {
-            id: section.slot_id,
-            value: `${section.begin_time} - ${section.end_time}`,
-            meta: {
-              start: section.begin_time,
-              end: section.end_time,
-            },
-          },
+          day: section.slot_days
         };
 
         if (section.building_id && section.building_number)
@@ -107,6 +101,13 @@ export const useSectionStore = defineStore('section', {
             id: section.room_id,
             value: `Room ${section.room_number}`,
           };
+
+        if(section.slot_id && section.slot_days){
+          this.sectionEdit.slot = {
+            id: section.slot_id,
+            value: section.slot_days
+          }
+        }
 
         this.isEditing = true;
       }
