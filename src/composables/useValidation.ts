@@ -71,8 +71,6 @@ const useValidation = (form: CourseForm) => {
       else return {...s, reason: 'Room conflict'}
     })
 
-    console.log(withReason)
-
     return withReason;
   };
 

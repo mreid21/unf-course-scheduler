@@ -128,7 +128,6 @@ const useDatabase = () => {
     for(let prop in withNulls){
       if(withNulls[prop] === undefined) withNulls[prop] = null
     }
-    console.log(withNulls)
     try {
       const { data, error } = await supabase
         .from('sections')

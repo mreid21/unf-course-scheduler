@@ -2,7 +2,6 @@
 const emit = defineEmits(['close']);
 
 const close = () => {
-  console.log('close');
   emit('close');
 };
 </script>

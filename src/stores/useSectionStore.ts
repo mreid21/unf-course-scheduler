@@ -105,7 +105,8 @@ export const useSectionStore = defineStore('section', {
         if(section.slot_id && section.slot_days){
           this.sectionEdit.slot = {
             id: section.slot_id,
-            value: section.slot_days
+            value: section.slot_days,
+            meta: {start: section.begin_time, end: section.end_time}
           }
         }
 
