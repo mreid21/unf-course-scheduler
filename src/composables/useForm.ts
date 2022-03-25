@@ -53,7 +53,7 @@ const useForm = () => {
       if(form.campus && form.campus >= 3){
         return true
       }
-      else if(form.building && form.slot && form.day) {
+      else if(form.building && form.room && form.slot && form.day) {
         return true
       }
       else {

@@ -118,7 +118,7 @@ const showModal = computed(() =>
 
     <search-field
       v-model="form.building"
-      v-if="courseStore.buildings.length > 0"
+      v-if="courseStore.buildings.length > 0 && form.campus && form.campus < 3"
       v-slot="{ item, select }"
       :placeholder="'Buildings'"
       :items="courseStore.buildings"
@@ -154,7 +154,11 @@ const showModal = computed(() =>
       ></search-field-item>
     </search-field>
 
-    <day-picker v-model="form.day" :hasErrors="showErrors"></day-picker>
+    <day-picker
+      v-if="form.campus !== 3 && form.campus !== 4"
+      v-model="form.day"
+      :hasErrors="showErrors"
+    ></day-picker>
 
     <slot-picker
       v-if="courseStore.timeSlots.length > 0"
