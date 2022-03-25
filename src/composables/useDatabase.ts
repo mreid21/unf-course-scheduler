@@ -123,15 +123,21 @@ const useDatabase = () => {
   };
 
   const updateSection = async (section: SectionBuilder) => {
+
+    let withNulls: any = {...section}
+    for(let prop in withNulls){
+      if(withNulls[prop] === undefined) withNulls[prop] = null
+    }
+    console.log(withNulls)
     try {
       const { data, error } = await supabase
         .from('sections')
         .update({
-          course_id: section.course_id,
-          instructor_id: section.instructor_id,
-          room_id: section.room_id,
-          campus_id: section.campus_id,
-          slot_id: section.slot_id,
+          course_id: withNulls.course_id,
+          instructor_id: withNulls.instructor_id,
+          room_id: withNulls.room_id,
+          campus_id: withNulls.campus_id,
+          slot_id: withNulls.slot_id,
         })
         .match({ section_id: section.section_id });
 
