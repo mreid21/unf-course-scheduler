@@ -15,6 +15,8 @@ const useValidation = (form: CourseForm) => {
   const { timeToInt } = useTime();
   const data = ref<CourseForm>(form);
 
+  console.log(data.value)
+
   const findConflicts = () => {
     const byInstructor = store.sectionWithInstructor(
       data.value.instructor!.id,

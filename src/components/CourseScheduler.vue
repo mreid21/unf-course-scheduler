@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onMounted } from 'vue';
+import { computed, onMounted, watch } from 'vue';
 import useDatabase from '../composables/useDatabase';
 import options from '../assets/campusoptions';
 import RadioGroup from './RadioGroup.vue';
@@ -10,6 +10,7 @@ import SlotPicker from './SlotPicker.vue';
 import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
 import BaseModal from './BaseModal.vue';
+
 
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
@@ -35,7 +36,7 @@ onMounted(async () => {
     buildings,
   });
 });
-
+const hasDayAndTime = computed(() => form.campus !== 3 && form.campus !== 4 ? true : false)
 const closeModal = () => {
   clearConflicts();
 };
@@ -43,6 +44,13 @@ const closeModal = () => {
 const showModal = computed(() =>
   conflictSections.value.length > 0 ? true : false
 );
+
+watch(() => form.campus, () => {
+  if(form.campus && form.campus > 2){
+    form.building = undefined
+    form.room = undefined
+  }
+})
 </script>
 
 <template>
@@ -59,7 +67,7 @@ const showModal = computed(() =>
           <span
             >time: {{ `${conflict.begin_time} - ${conflict.end_time}` }}</span
           >
-          <span class="text-red-500">{{ conflict.reason }}</span>
+          <span class="text-red-500">{{ `(${conflict.reason}: ${conflict.section_id})` }}</span>
         </div>
       </div>
     </template>
@@ -139,7 +147,7 @@ const showModal = computed(() =>
     <search-field
       v-model="form.room"
       v-slot="{ item, select }"
-      v-if="courseStore.rooms.length > 0"
+      v-if="courseStore.rooms.length > 0 && form.campus && form.campus < 3 && hasDayAndTime"
       :placeholder="'Rooms'"
       :items="courseStore.rooms"
       :filter="'room_number'"
@@ -155,13 +163,13 @@ const showModal = computed(() =>
     </search-field>
 
     <day-picker
-      v-if="form.campus !== 3 && form.campus !== 4"
+      v-if="hasDayAndTime"
       v-model="form.day"
       :hasErrors="showErrors"
     ></day-picker>
 
     <slot-picker
-      v-if="courseStore.timeSlots.length > 0"
+      v-if="courseStore.timeSlots.length > 0 && hasDayAndTime"
       v-model="form.slot"
       :timeSlots="courseStore.timeSlots"
     ></slot-picker>
@@ -186,5 +194,6 @@ const showModal = computed(() =>
         class="btn btn--reject"
       />
     </div>
+    <p>{{form}}</p>
   </form>
 </template>

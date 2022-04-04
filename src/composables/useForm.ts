@@ -31,7 +31,7 @@ const useForm = () => {
   };
 
   const updateRooms = async () => {
-    form.room = undefined;
+    
     if (form.building) {
       await courseStore.getRooms(form.building.id);
     } else {
@@ -50,15 +50,17 @@ const useForm = () => {
 
   const modelIsValid = () => {
     if(form.course && form.instructor){
-      if(form.campus && form.campus >= 3){
+      if(form.campus && form.campus > 2 && form.campus < 5){
         return true
       }
-      else if(form.building && form.room && form.slot && form.day) {
-        return true
-      }
-      else {
+      else if(form.slot !== undefined && form.day != undefined){
+        if(form.campus === 5) return true
+
+        if(form.building && form.room) return true
+
         return false
       }
+      else return false
     }
     return false
   };
