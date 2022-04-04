@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useUserStore } from '../stores/useUserStore';
 import { useAuth } from '../composables/useAuth';
+import { useRouter } from 'vue-router';
 import { reactive, ref } from 'vue';
 
 const store = useUserStore();
+const router = useRouter();
 const { signIn } = useAuth();
 const signInError = ref('');
 const fields = reactive({ email: '', password: '' });
@@ -11,9 +13,7 @@ const handleSignIn = async () => {
   const error = await signIn(fields.email, fields.password);
   if (error) signInError.value = error;
 
-  const delay = setTimeout(() => {
-    signInError.value = '';
-  }, 1000 * 5);
+  if (store.user) router.push(`/mreid21/Home`);
 };
 </script>
 
