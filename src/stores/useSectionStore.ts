@@ -26,7 +26,7 @@ export const useSectionStore = defineStore('section', {
     sectionInRoom: (state) => {
       return (roomID: number, sectionID?: number): Section[] | [] =>
         state.sections.filter(
-          (s) => s.room_id === roomID && s.section_id !== sectionID
+          (s) => s.room_id && s.room_id === roomID && s.section_id !== sectionID
         );
     },
     sectionsWithoutID: (state) => {

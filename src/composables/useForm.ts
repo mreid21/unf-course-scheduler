@@ -71,7 +71,7 @@ const useForm = () => {
       return;
     }
 
-    if(form.campus === 1 || form.campus === 2) conflicts.value = findConflicts();
+    if(form.campus === 1 || form.campus === 2 || form.campus == 5) conflicts.value = findConflicts();
     const section: SectionBuilder = {
       section_id: form.sectionID,
       course_id: form.course!.id,
