@@ -9,7 +9,7 @@ export const useAuth = () => {
             const {user, error} = await supabase.auth.signUp({email, password})
 
             if(error) throw error
-            store.user = user
+            console.log(store.user)
             
         }
         catch(error: any) {
@@ -17,7 +17,7 @@ export const useAuth = () => {
         }
     }
 
-    const signIn = async (email: string, password: string): Promise<void> => {
+    const signIn = async (email: string, password: string): Promise<void | string> => {
         try {
             const {user, error} = await supabase.auth.signIn({email, password})
             store.user = user
@@ -26,7 +26,7 @@ export const useAuth = () => {
         }
 
         catch(error: any) {
-            console.error(error.message)
+            return error.message
         }
     }
 

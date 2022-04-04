@@ -1,5 +1,10 @@
 <script setup lang="ts">
+import { sign } from 'crypto';
 import { reactive, ref } from 'vue';
+import { useAuth } from '../composables/useAuth';
+
+const { signUp } = useAuth();
+
 type Department = {
   department_id: number;
   department_name: string;
@@ -16,10 +21,13 @@ const fields = reactive({
   username: '',
   department: {} as { id: number; value: string },
 });
+
+const handleSignUp = async () => await signUp(fields.email, fields.password);
 </script>
 
 <template>
   <form
+    @submit.prevent="handleSignUp"
     class="col-start-5 col-end-9 self-center flex flex-col gap-4 mb-8 p-8 rounded-lg shadow-sm bg-white"
   >
     <h1 class="text-2xl text-slate-800 font-bold">Register a new account.</h1>
@@ -31,6 +39,7 @@ const fields = reactive({
           type="text"
           name="username"
           id="username"
+          v-model="fields.username"
         />
         <input
           class="appearance-none rounded-md py-2 px-2 mb-4 border-2 border-gray-100 w-full"
@@ -38,6 +47,7 @@ const fields = reactive({
           type="password"
           name="pass"
           id="pass"
+          v-model="fields.password"
         />
       </div>
       <input
@@ -46,12 +56,14 @@ const fields = reactive({
         type="text"
         name="email"
         id="email"
+        v-model="fields.email"
       />
       <div class="flex justify-center">
         <div class="mb-3 w-full">
           <select
             class="form-select appearance-none block w-full px-2 py-2 text-base font-normal bg-white bg-clip-padding bg-no-repeat border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:bg-white focus:text-slate-800 focus:border-blue-600 focus:outline-none"
             aria-label="Default select example"
+            v-model="fields.department"
           >
             <option disabled selected>Department</option>
             <option
@@ -70,7 +82,7 @@ const fields = reactive({
       </div>
 
       <div>
-        <input class="btn btn--primary" type="submit" value="Sign In" />
+        <input class="btn btn--primary" type="submit" value="Register" />
         <router-link :to="{ name: 'Login' }"
           ><span class="text-sm underline"
             >Already have an account?</span
@@ -78,5 +90,6 @@ const fields = reactive({
         >
       </div>
     </fieldset>
+    <p>{{ fields }}</p>
   </form>
 </template>
