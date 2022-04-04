@@ -11,7 +11,6 @@ import { useCourseStore } from '../stores/useCourseStore';
 import useForm from '../composables/useForm';
 import BaseModal from './BaseModal.vue';
 
-
 const { fetchCourses, fetchInstructors, fetchBuildings } = useDatabase();
 const courseStore = useCourseStore();
 const {
@@ -36,7 +35,9 @@ onMounted(async () => {
     buildings,
   });
 });
-const hasDayAndTime = computed(() => form.campus !== 3 && form.campus !== 4 ? true : false)
+const hasDayAndTime = computed(() =>
+  form.campus !== 3 && form.campus !== 4 ? true : false
+);
 const closeModal = () => {
   clearConflicts();
 };
@@ -45,12 +46,18 @@ const showModal = computed(() =>
   conflictSections.value.length > 0 ? true : false
 );
 
-watch(() => form.campus, () => {
-  if(form.campus && form.campus > 2){
-    form.building = undefined
-    form.room = undefined
+watch(
+  () => form.campus,
+  () => {
+    if (form.campus && form.campus > 2) {
+      form.building = undefined;
+      form.room = undefined;
+    }
+    if (form.campus === 3 || form.campus === 4) {
+      form.slot = undefined;
+    }
   }
-})
+);
 </script>
 
 <template>
@@ -67,7 +74,9 @@ watch(() => form.campus, () => {
           <span
             >time: {{ `${conflict.begin_time} - ${conflict.end_time}` }}</span
           >
-          <span class="text-red-500">{{ `(${conflict.reason}: ${conflict.section_id})` }}</span>
+          <span class="text-red-500">{{
+            `(${conflict.reason}: ${conflict.section_id})`
+          }}</span>
         </div>
       </div>
     </template>
@@ -147,7 +156,12 @@ watch(() => form.campus, () => {
     <search-field
       v-model="form.room"
       v-slot="{ item, select }"
-      v-if="courseStore.rooms.length > 0 && form.campus && form.campus < 3 && hasDayAndTime"
+      v-if="
+        courseStore.rooms.length > 0 &&
+        form.campus &&
+        form.campus < 3 &&
+        hasDayAndTime
+      "
       :placeholder="'Rooms'"
       :items="courseStore.rooms"
       :filter="'room_number'"
@@ -194,6 +208,6 @@ watch(() => form.campus, () => {
         class="btn btn--reject"
       />
     </div>
-    <p>{{form}}</p>
+    <p>{{ form }}</p>
   </form>
 </template>
