@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
+      path: '/Home',
       name: 'Home',
       component: () => import('../views/Home.vue'),
     },
@@ -17,7 +17,7 @@ const router = createRouter({
       // path: "*",
       path: "/:catchAll(.*)",
       name: "NotFound",
-      component: () => import('../views/Home.vue'),
+      component: () => import('../views/Login.vue'),
     }
   ],
 });
