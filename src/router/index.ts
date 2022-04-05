@@ -12,17 +12,17 @@ const router = createRouter({
       component: () => import('../views/Login.vue')
     },
     {
-      path: '/:username/Plans/:planID',
-      name: 'Home',
-      component: () => import('../views/Home.vue'),
+      path: '/:username/Plans',
+      name: 'Plans',
+      component: () => import('../views/Plans.vue'),
       meta: {
         requiresAuth: true
       }
     },
     {
-      path: '/:username/Plans',
-      name: 'Plans',
-      component: () => import('../views/Plans.vue'),
+      path: '/:username/Plans/:planID',
+      name: 'Home',
+      component: () => import('../views/Home.vue'),
       meta: {
         requiresAuth: true
       }

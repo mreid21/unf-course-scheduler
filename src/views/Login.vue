@@ -13,7 +13,7 @@ const handleSignIn = async () => {
   const error = await signIn(fields.email, fields.password);
   if (error) signInError.value = error;
 
-  if (store.user) router.push(`/${store.user.user_metadata.username}/Home`);
+  if (store.user) router.push(`/${store.user.user_metadata.username}/Plans`);
 };
 </script>
 
