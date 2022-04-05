@@ -10,7 +10,7 @@ export const useAuth = () => {
         const meta = {
             username: userData.username,
             email: userData.email,
-            department_id: userData.department.department_id
+            department_id: userData.department_id
         }
 
         try {
