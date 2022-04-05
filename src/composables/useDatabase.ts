@@ -6,8 +6,10 @@ import Instructor from '../types/instructor';
 import Room from '../types/room';
 import { Section, SectionBuilder } from '../types/section';
 import TimeSlot from '../types/timeSlot';
+import {useUserStore} from '../stores/useUserStore'
 
 const useDatabase = () => {
+  const store = useUserStore()
   const fetchCourses = async () => {
     try {
       const { data, error } = await supabase
@@ -85,8 +87,9 @@ const useDatabase = () => {
   const fetchSections = async () => {
     try {
       const { data, error } = await supabase
-        .from<Section>('all_courses')
+        .from('all_courses')
         .select('*')
+        .eq('schedule_id', store.planID)
         .order('section_id', { ascending: true });
 
       if (error) throw error;
@@ -98,8 +101,9 @@ const useDatabase = () => {
   };
 
   const insertSection = async (section: Object) => {
+    const withScheduleID = {...section, schedule_id: store.planID}
     try {
-      const { error } = await supabase.from('sections').insert(section);
+      const { error } = await supabase.from('sections').insert(withScheduleID);
 
       if (error) throw error;
     } catch (error: any) {

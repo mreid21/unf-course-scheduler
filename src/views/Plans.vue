@@ -44,6 +44,7 @@ onMounted(async () => {
     </div>
     <base-plan
       v-for="plan in plans"
+      @click="store.setCurrentPlan(plan.schedule_id)"
       :key="plan.schedule_id"
       :name="plan.schedule_name"
       :id="plan.schedule_id"

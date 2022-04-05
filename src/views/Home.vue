@@ -4,6 +4,7 @@ import CourseTable from '../components/CourseTable.vue';
 import CourseTableRow from '../components/CourseTableRow.vue';
 import CourseTableHeader from '../components/CourseTableHeader.vue';
 import { useDownloadCSV } from '../composables/useDownloadCSV';
+import { useUserStore } from '../stores/useUserStore';
 
 const headers = [
   'id',
@@ -16,6 +17,8 @@ const headers = [
   'time',
   'actions',
 ];
+const store = useUserStore();
+const resetPlanID = () => store.$patch({ planID: null });
 
 const { downloadCSV } = useDownloadCSV();
 </script>
@@ -23,7 +26,11 @@ const { downloadCSV } = useDownloadCSV();
 <template>
   <main class="px-4 bg-white border-b-2 border-gray-100 lg:col-span-5">
     <div class="flex my-2">
-      <router-link :to="{ name: 'Plans' }" class="link link--neutral">
+      <router-link
+        @click="resetPlanID"
+        :to="{ name: 'Plans' }"
+        class="link link--neutral"
+      >
         <font-awesome-icon icon="arrow-circle-left"></font-awesome-icon>
         <span class="ml-2">All Plans</span>
       </router-link>
