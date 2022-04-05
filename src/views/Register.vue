@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { sign } from 'crypto';
 import { reactive, ref } from 'vue';
 import { useAuth } from '../composables/useAuth';
 
@@ -19,10 +18,10 @@ const fields = reactive({
   email: '',
   password: '',
   username: '',
-  department: {} as { id: number; value: string },
+  department: {} as Department,
 });
 
-const handleSignUp = async () => await signUp(fields.email, fields.password);
+const handleSignUp = async () => await signUp(fields);
 </script>
 
 <template>
@@ -71,8 +70,8 @@ const handleSignUp = async () => await signUp(fields.email, fields.password);
               v-for="department in departments"
               :key="department.department_id"
               :value="{
-                id: department.department_id,
-                name: department.department_name,
+                department_id: department.department_id,
+                department_name: department.department_name,
               }"
             >
               {{ department.department_name }}

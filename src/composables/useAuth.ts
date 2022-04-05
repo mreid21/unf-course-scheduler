@@ -1,18 +1,42 @@
 import {supabase} from '../supabase'
+import {User} from '@supabase/supabase-js'
 import {useUserStore} from '../stores/useUserStore'
+import AppUser from '../types/AppUser'
 
 export const useAuth = () => {
     const store = useUserStore()
 
-    const signUp = async (email: string, password: string): Promise<void> => {
+    const signUp = async (userData: AppUser): Promise<void> => {
+        const meta = {
+            username: userData.username,
+            email: userData.email,
+            department_id: userData.department.department_id
+        }
+
         try {
-            const {user, error} = await supabase.auth.signUp({email, password})
+            const {user, error} = await supabase.auth.signUp({email: userData.email, password: userData.password}, {data: {...meta}})
 
             if(error) throw error
-            console.log(store.user)
+            store.user = user
+            createProfile(meta)
+            
             
         }
         catch(error: any) {
+            console.error(error.message)
+        }
+    }
+
+    const createProfile = async (meta: Object) => {
+        const id = store.user!.id
+
+        try {
+            
+            let {error} = await supabase.from('user_profiles').upsert({...meta, id})
+
+            if(error) throw error
+        }
+        catch(error: any){
             console.error(error.message)
         }
     }
