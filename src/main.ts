@@ -17,6 +17,7 @@ import {
   faChevronRight,
   faArrowCircleLeft,
   faFileCsv,
+  faPlus
 } from '@fortawesome/free-solid-svg-icons';
 import App from './App.vue';
 import './index.css';
@@ -36,7 +37,8 @@ library.add(
   faChevronLeft,
   faChevronRight,
   faArrowCircleLeft,
-  faFileCsv
+  faFileCsv,
+  faPlus
 );
 createApp(App)
   .component('font-awesome-icon', FontAwesomeIcon)
