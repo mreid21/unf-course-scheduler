@@ -6,6 +6,11 @@ import AppUser from '../types/AppUser'
 export const useAuth = () => {
     const store = useUserStore()
 
+    const getUser = () => {
+        store.user = supabase.auth.user();
+        console.log(store.user)
+    }
+
     const signUp = async (userData: AppUser): Promise<void> => {
         const meta = {
             username: userData.username,
@@ -59,6 +64,8 @@ export const useAuth = () => {
             const {error} = await supabase.auth.signOut()
 
             if(error) throw error
+
+            store.user = null
         }
         catch(error: any){
             console.error(error.message)
@@ -67,6 +74,7 @@ export const useAuth = () => {
     return {
         signIn,
         signOut,
-        signUp
+        signUp,
+        getUser
     }
 }

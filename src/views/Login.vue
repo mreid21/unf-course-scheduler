@@ -2,18 +2,23 @@
 import { useUserStore } from '../stores/useUserStore';
 import { useAuth } from '../composables/useAuth';
 import { useRouter } from 'vue-router';
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 
 const store = useUserStore();
 const router = useRouter();
-const { signIn } = useAuth();
+const { signIn, getUser } = useAuth();
 const signInError = ref('');
 const fields = reactive({ email: '', password: '' });
+
 const handleSignIn = async () => {
   const error = await signIn(fields.email, fields.password);
   if (error) signInError.value = error;
 
-  if (store.user) router.push(`/${store.user.user_metadata.username}/Plans`);
+  if (store.user) redirect();
+};
+
+const redirect = () => {
+  router.push(`/${store.user!.user_metadata.username}/Plans`);
 };
 </script>
 
