@@ -146,6 +146,23 @@ const useDatabase = () => {
     }
   };
 
+
+  const fetchSchedules = async (userID: string) => {
+    try {
+      const {data, error} = await supabase
+            .from('schedules')
+            .select('*')
+            .eq('user_id', userID)
+      
+      if(error) throw error
+
+      return data
+    }
+    catch(error: any){
+      console.error(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -157,6 +174,7 @@ const useDatabase = () => {
     fetchBuildings,
     fetchRooms,
     fetchTimeSlots,
+    fetchSchedules,
     fetchParallel,
     fetchSections,
     deleteSection,
