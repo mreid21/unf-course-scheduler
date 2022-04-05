@@ -6,9 +6,12 @@ import { Section } from '../types/section';
 import BaseModal from './BaseModal.vue';
 const store = useSectionStore();
 const { formatTime } = useTime();
+const sectionsReady = ref(false);
 
 onMounted(async () => {
+  sectionsReady.value = false;
   await store.getSections();
+  sectionsReady.value = true;
 });
 
 const editSection = (id: number) => store.editSection(id);
@@ -71,6 +74,7 @@ const closeModal = () => {
     </thead>
     <tbody class="text-center">
       <slot
+        v-if="sectionsReady"
         name="rows"
         :editSection="editSection"
         :deleteSection="deleteSection"
