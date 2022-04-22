@@ -167,6 +167,19 @@ const useDatabase = () => {
     }
   }
 
+  const deleteSchedule = async(planID: number) => {
+    try {
+      const {error} = await supabase
+            .from('schedules')
+            .delete()
+            .match({schedule_id: planID})
+      
+      if(error) throw error
+    } catch (error: any) {
+        console.error(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -184,6 +197,7 @@ const useDatabase = () => {
     deleteSection,
     insertSection,
     updateSection,
+    deleteSchedule
   };
 };
 

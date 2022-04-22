@@ -56,6 +56,9 @@ router.beforeEach((to) => {
       console.log(to.query.userId)
       return {name: 'Login'}
   }
+  if(to.name === 'Home'){
+    store.setCurrentPlan(parseInt(to.params.planID as string))
+  }
 })
 
 export default router;
