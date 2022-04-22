@@ -10,7 +10,8 @@ import BaseModal from '../components/BaseModal.vue';
 const router = useRouter();
 const store = useUserStore();
 const { signOut } = useAuth();
-const { fetchSchedules, deleteSchedule } = useDatabase();
+const { fetchSchedules, deleteSchedule, copySchedule, createSchedule } =
+  useDatabase();
 
 const handleLogOut = async () => {
   await signOut();
@@ -18,44 +19,55 @@ const handleLogOut = async () => {
 };
 
 const plans = ref<any[]>([]);
-const currentPlan = reactive<{id?: number, name?: string}>({
+const currentPlan = reactive<{ id?: number; name?: string }>({
   id: undefined,
-  name: undefined
-})
-const showModal = ref(false)
+  name: undefined,
+});
+const showModal = ref(false);
+
+const setPlans = async () => {
+  const result = await fetchSchedules(store.user!.id);
+  if (result) plans.value = result;
+};
 
 onMounted(async () => {
-  const result = await fetchSchedules(store.user!.id);
-
-  if (result) plans.value = result;
+  await setPlans();
 });
 
 const deletePlan = async () => {
-
-  if(currentPlan.id){
-    plans.value = plans.value.filter(plan => plan.schedule_id !== currentPlan.id)
-    closeModal()
-    await deleteSchedule(currentPlan.id)
+  if (currentPlan.id) {
+    plans.value = plans.value.filter(
+      (plan) => plan.schedule_id !== currentPlan.id
+    );
+    closeModal();
+    await deleteSchedule(currentPlan.id);
+  } else {
+    closeModal();
+    return;
   }
-  else {
-    closeModal()
-    return
-  }
-  
-  currentPlan.id = undefined
-  currentPlan.name = undefined
-}
 
-const openDeleteModal = (plan: {id: number, name: string}) => {
-  currentPlan.id = plan.id
-  currentPlan.name = plan.name
+  currentPlan.id = undefined;
+  currentPlan.name = undefined;
+};
 
-  showModal.value = true
-}
+const openDeleteModal = (plan: { id: number; name: string }) => {
+  currentPlan.id = plan.id;
+  currentPlan.name = plan.name;
+
+  showModal.value = true;
+};
 const closeModal = () => {
-  showModal.value = false
-}
+  showModal.value = false;
+};
 
+const createCopy = async () => {
+  const resultingID = await createSchedule('test');
+
+  if (resultingID) {
+    await copySchedule(12, resultingID);
+    await setPlans();
+  }
+};
 </script>
 <template>
   <div
@@ -85,15 +97,20 @@ const closeModal = () => {
     ></base-plan>
     <base-modal v-show="showModal" @close="closeModal">
       <template v-slot:main>
-        <p>{{`Are you sure you would like to delete plan ${currentPlan.name}?`}}</p>
+        <p>
+          {{
+            `Are you sure you would like to delete plan ${currentPlan.name}?`
+          }}
+        </p>
       </template>
       <template v-slot:actions="{ close }">
-      <div class="flex">
-        <button @click="deletePlan" class="btn btn--reject">Delete</button>
-        <button @click="close" class="btn btn--primary">Cancel</button>
-      </div>
-    </template>
+        <div class="flex">
+          <button @click="deletePlan" class="btn btn--reject">Delete</button>
+          <button @click="close" class="btn btn--primary">Cancel</button>
+        </div>
+      </template>
     </base-modal>
+    <button @click="createCopy">COPY TEST</button>
   </div>
   <span v-else>Loading...</span>
 </template>

@@ -180,6 +180,37 @@ const useDatabase = () => {
     }
   }
 
+  const copySchedule = async(source: number, dest: number) => {
+    try {
+      const {data, error} = await supabase
+            .rpc('copy_schedule', {
+              source_plan: source,
+              destination_plan: dest
+            })
+    
+      if(error) throw error
+    } catch (error: any) {
+      console.error(error.message)
+    }
+  }
+
+  const createSchedule = async(name: string) => {
+    if(!store.user) return
+    try {
+      const {data, error} = await supabase
+          .from('schedules')
+          .insert({user_id: store.user.id, schedule_name: name})
+          .single()
+      
+      
+      if(error) throw error
+      return data.schedule_id
+
+    } catch (error: any) {
+      console.error(error.message)
+    }
+  }
+
   const fetchParallel = async (resources: AsyncFn[]) => {
     const calls = resources.map((fn) => fn());
     return await Promise.all(calls);
@@ -197,7 +228,9 @@ const useDatabase = () => {
     deleteSection,
     insertSection,
     updateSection,
-    deleteSchedule
+    deleteSchedule,
+    copySchedule,
+    createSchedule
   };
 };
 
