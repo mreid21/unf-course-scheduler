@@ -5,6 +5,7 @@ type SectionField = keyof Section;
 type Section = SectionData & SectionBuilder;
 
 type SectionData = {
+  section_row: number;
   section_id: number;
   course_code: string;
   course_title?: string;

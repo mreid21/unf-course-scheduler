@@ -90,7 +90,7 @@ const useDatabase = () => {
         .from('all_courses')
         .select('*')
         .eq('schedule_id', store.planID)
-        .order('section_id', { ascending: true });
+        .order('section_row', { ascending: true });
 
       if (error) throw error;
 

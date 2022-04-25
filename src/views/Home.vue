@@ -59,6 +59,7 @@ const { downloadCSV } = useDownloadCSV();
           <template
             #row="{
               id,
+              row,
               code,
               instructor,
               building,
@@ -69,7 +70,7 @@ const { downloadCSV } = useDownloadCSV();
               days,
             }"
           >
-            <td class="px-4">{{ id }}</td>
+            <td class="px-4">{{ row }}</td>
             <td>{{ code }}</td>
             <td>{{ instructor }}</td>
             <td>{{ building ? building : 'N/A' }}</td>

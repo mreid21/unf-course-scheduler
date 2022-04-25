@@ -62,7 +62,7 @@ export const useSectionStore = defineStore('section', {
       const days = dayCode.split('');
       return sections.filter(
         (s) =>
-          days.some((d) => s.slot_days.includes(d)) &&
+          days.some((d) => s.slot_days !== null && s.slot_days.includes(d)) &&
           s.section_id !== sectionID
       );
     },

@@ -12,6 +12,7 @@ const { section } = defineProps<{
   <tr>
     <slot
       name="row"
+      :row="section.section_row"
       :id="section.section_id"
       :code="section.course_code"
       :instructor="section.instructor_name"
