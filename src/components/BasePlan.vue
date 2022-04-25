@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const { name, id, username } =
   defineProps<{ name: string; id: number; username: string }>();
-const emit = defineEmits(['delete'])
+const emit = defineEmits(['delete', 'copy']);
 </script>
 
 <template>
@@ -12,6 +12,9 @@ const emit = defineEmits(['delete'])
     >
       <p>{{ name }}</p>
     </router-link>
-    <button class="grow-0" @click="emit('delete', {id: id, name: name})">Delete</button>
+    <div class="flex grow-0 gap-4">
+      <button @click="emit('copy', id)">Copy</button>
+      <button @click="emit('delete', { id: id, name: name })">Delete</button>
+    </div>
   </div>
 </template>

@@ -60,15 +60,6 @@ const closeModal = () => {
   showModal.value = false;
 };
 
-const createCopy = async () => {
-  const resultingID = await createSchedule('test');
-
-  if (resultingID) {
-    await copySchedule(12, resultingID);
-    await setPlans();
-  }
-};
-
 const showCreateDialog = ref(false);
 const scheduleName = ref<string>('');
 const closeCreateDialog = () => (showCreateDialog.value = false);
@@ -81,6 +72,27 @@ const createNewSchedule = async () => {
 
   closeCreateDialog();
   await setPlans();
+  scheduleName.value = '';
+};
+
+const showCopyDialog = ref(false);
+const copyID = ref<number>(-1);
+const closeCopyDialog = () => (showCopyDialog.value = false);
+const openCopyDialog = (originalID: number) => {
+  showCopyDialog.value = true;
+  copyID.value = originalID;
+};
+const createCopy = async () => {
+  const resultingID = await createSchedule('test');
+
+  if (resultingID && copyID.value !== -1) {
+    await copySchedule(copyID.value, resultingID);
+    await setPlans();
+  } else {
+    closeCopyDialog();
+  }
+
+  closeCopyDialog();
 };
 </script>
 <template>
@@ -107,6 +119,7 @@ const createNewSchedule = async () => {
     <base-plan
       v-for="plan in plans"
       @delete="openDeleteModal"
+      @copy="openCopyDialog"
       :key="plan.schedule_id"
       :name="plan.schedule_name"
       :id="plan.schedule_id"
@@ -151,7 +164,19 @@ const createNewSchedule = async () => {
         </div>
       </template>
     </base-modal>
-    <button @click="createCopy">COPY TEST</button>
+    <base-modal v-show="showCopyDialog" @close="closeCopyDialog">
+      <template v-slot:main>
+        <p>Enter a name for the copy.</p>
+      </template>
+      <template v-slot:actions="{ close }">
+        <div class="flex">
+          <button @click="createCopy" class="btn btn--primary">
+            Duplicate
+          </button>
+          <button @click="close" class="btn btn--reject">Cancel</button>
+        </div>
+      </template>
+    </base-modal>
   </div>
   <span v-else>Loading...</span>
 </template>
