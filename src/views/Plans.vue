@@ -68,6 +68,20 @@ const createCopy = async () => {
     await setPlans();
   }
 };
+
+const showCreateDialog = ref(false);
+const scheduleName = ref<string>('');
+const closeCreateDialog = () => (showCreateDialog.value = false);
+const openCreateDialog = () => (showCreateDialog.value = true);
+
+const createNewSchedule = async () => {
+  if (scheduleName.value) {
+    await createSchedule(scheduleName.value);
+  } else return;
+
+  closeCreateDialog();
+  await setPlans();
+};
 </script>
 <template>
   <div
@@ -83,7 +97,10 @@ const createCopy = async () => {
           Sign Out
         </button></span
       >
-      <span class="mr-1 cursor-pointer hover:scale-110">
+      <span
+        @click="openCreateDialog"
+        class="mr-1 cursor-pointer hover:scale-110"
+      >
         <font-awesome-icon icon="plus" size="lg"></font-awesome-icon>
       </span>
     </div>
@@ -107,6 +124,30 @@ const createCopy = async () => {
         <div class="flex">
           <button @click="deletePlan" class="btn btn--reject">Delete</button>
           <button @click="close" class="btn btn--primary">Cancel</button>
+        </div>
+      </template>
+    </base-modal>
+    <base-modal v-show="showCreateDialog" @close="closeCreateDialog">
+      <template v-slot:main>
+        <p>Enter a name for the new schedule.</p>
+      </template>
+      <template v-slot:actions="{ close }">
+        <input
+          class="appearance-none rounded-md py-1 px-2 border-2 border-gray-100 w-full"
+          type="text"
+          name="name"
+          id="schedule-name"
+          v-model="scheduleName"
+        />
+        <div class="flex">
+          <button
+            @click="createNewSchedule"
+            :disabled="scheduleName === ''"
+            class="btn btn--primary"
+          >
+            Add
+          </button>
+          <button @click="close" class="btn btn--reject">Cancel</button>
         </div>
       </template>
     </base-modal>
