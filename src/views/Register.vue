@@ -1,8 +1,13 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { useAuth } from '../composables/useAuth';
+import {useRouter} from 'vue-router'
+import {useUserStore} from '../stores/useUserStore'
 
 const { signUp } = useAuth();
+
+const store = useUserStore();
+const signUpError = ref('')
 
 const departments = ref([
   { department_id: 1, department_name: 'Computing' },
@@ -16,7 +21,21 @@ const fields = reactive({
   department_id: 1,
 });
 
-const handleSignUp = async () => await signUp(fields);
+const router = useRouter()
+
+const handleSignUp = async () => {
+  const error = await signUp(fields);
+
+  if(error){
+    signUpError.value = error
+  }
+
+  if (store.user) redirect(); 
+}
+
+const redirect = () => {
+  router.push(`/${store.user!.user_metadata.username}/Plans`);
+};
 </script>
 
 <template>
@@ -81,6 +100,8 @@ const handleSignUp = async () => await signUp(fields);
         >
       </div>
     </fieldset>
-    <p>{{ fields }}</p>
+    <span v-if="signUpError" class="text-base text-red-500">{{
+          signUpError
+        }}</span>
   </form>
 </template>

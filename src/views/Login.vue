@@ -23,7 +23,6 @@ const redirect = () => {
 </script>
 
 <template>
-  <p v-if="store.user">Logged in...</p>
   <form
     @submit.prevent="handleSignIn"
     class="col-start-5 col-end-9 self-center flex flex-col gap-4 mb-8 p-8 rounded-lg shadow-sm bg-white"

@@ -28,7 +28,7 @@ export const useAuth = () => {
             
         }
         catch(error: any) {
-            console.error(error.message)
+            return error.message
         }
     }
 
@@ -42,7 +42,7 @@ export const useAuth = () => {
             if(error) throw error
         }
         catch(error: any){
-            console.error(error.message)
+            return error.message
         }
     }
 
