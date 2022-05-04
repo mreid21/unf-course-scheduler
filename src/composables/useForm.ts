@@ -65,6 +65,18 @@ const useForm = () => {
     return false
   };
 
+  const addIgnoringConflicts = () => {
+    const section: SectionBuilder = {
+      section_id: form.sectionID,
+      course_id: form.course!.id,
+      instructor_id: form.instructor!.id,
+      campus_id: form.campus!,
+      room_id: form.room?.id,
+      slot_id: form.slot?.id,
+    };
+    sectionStore.addSection(section)
+  }
+
   const submit = (action: string) => {
     submitted.value = true;
     if (action === 'duplicate') form.sectionID = undefined;
@@ -139,6 +151,7 @@ const useForm = () => {
     conflictSections,
     clearConflicts,
     showErrors,
+    addIgnoringConflicts
   };
 };
 

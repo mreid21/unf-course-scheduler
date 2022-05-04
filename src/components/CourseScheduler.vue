@@ -20,6 +20,7 @@ const {
   submit,
   conflictSections,
   clearConflicts,
+  addIgnoringConflicts,
   showErrors,
 } = useForm();
 
@@ -45,6 +46,11 @@ const closeModal = () => {
 const showModal = computed(() =>
   conflictSections.value.length > 0 ? true : false
 );
+
+const overrideConflict = () => {
+  addIgnoringConflicts()
+  closeModal()
+}
 
 watch(
   () => form.campus,
@@ -82,7 +88,7 @@ watch(
     </template>
     <template v-slot:actions="{ close }">
       <div class="flex">
-        <button class="btn btn--confirm">Overwrite</button>
+        <button @click="overrideConflict" class="btn btn--confirm">Override</button>
         <button @click="close" class="btn btn--reject">Cancel</button>
       </div>
     </template>
