@@ -11,7 +11,7 @@ export const useAuth = () => {
         console.log(store.user)
     }
 
-    const signUp = async (userData: AppUser): Promise<void> => {
+    const signUp = async (userData: AppUser) => {
         const meta = {
             username: userData.username,
             email: userData.email,

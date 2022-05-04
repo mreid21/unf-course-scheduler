@@ -26,9 +26,8 @@ const router = useRouter()
 const handleSignUp = async () => {
   const error = await signUp(fields);
 
-  if(error){
-    signUpError.value = error
-  }
+  if(error) signUpError.value = error
+  
 
   if (store.user) redirect(); 
 }
